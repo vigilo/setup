@@ -1,0 +1,87 @@
+Documentation de post-installation sur MES-5
+--------------------------------------------
+
+Répertoire /etc/vigilo-vigiconf/conf.d sous SVN (voir /etc/vigilo-vigiconf/README.source)
+Régler l'hôte localhost dans les hôtes à tester
+Régler les serveurs de sup dans /etc/vigilo-vigiconf/conf.d/general/appgroups-servers.py
+Générer la clé SSH de vigiconf et la mettre dans dans les authorized_keys:
+	ssh-keygen -t rsa -b 1024 -f /var/lib/vigilo-vigiconf/db/vigiconf.key
+	mkdir -p /var/lib/vigilo-vigiconf/.ssh
+	cp /var/lib/vigilo-vigiconf/db/vigiconf.key.pub /var/lib/vigilo-vigiconf/.ssh/authorized_keys
+	chmod 700 /var/lib/vigilo-vigiconf/.ssh
+	chown vigiconf:vigiconf -R /var/lib/vigilo-vigiconf/
+Dévérouiller le compte vigiconf:
+	dd if=/dev/urandom bs=1 count=16 | base64 | passwd vigiconf --stdin
+Régler sudo
+	echo "vigiconf ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+Adapter le fichier de conf Nagios:
+	patch -b /etc/nagios/nagios.cfg < /usr/share/doc/vigilo-vigiconf/nagios.cfg-mes-5.diff
+Copier nagios.cfg en nagios-test.cfg et adapter:
+	cp /etc/nagios/nagios.cfg /etc/nagios/nagios-test.cfg
+	sed -i -e 's,/etc/vigilo-vigiconf/prod/nagios.cfg,/etc/vigilo-vigiconf/new/nagios.cfg,' /etc/nagios/nagios-test.cfg
+Mettre en place le lien symbolique pour NDO:
+	mv /etc/nagios/ndomod.cfg /etc/nagios/ndomod.cfg.orig
+	ln -s /etc/vigilo-vigiconf/prod/ndomod.cfg /etc/nagios/ndomod.cfg
+Désactiver la génération DNS dans /etc/vigilo-vigiconf/conf.d/general/appgroups-servers.py
+
+Démarrer SpoolMe : service vigilo-spoolme start
+
+Configurer VigiBoard et sa base de données
+	urpmi mysql
+	service mysqld start
+	mysqladmin create dashboard
+	echo "GRANT ALL PRIVILEGES ON dashboard.* TO 'dashboard'@localhost IDENTIFIED BY 'XXXXXX'" | mysql
+	mysqladmin reload
+	mysql dashboard < /usr/share/doc/vigilo-dashboard/dashboard.sql
+	service httpd restart
+Attention au firewall..........
+Reporter le nom de la base VigiBoard dans /etc/vigilo-vigiconf/conf.d/filetemplates/dashboard_db/header.tpl
+Reporter le nom de la base VigiBoard dans /etc/sysconfig/vigilo-dashboardinjector et redémarrer:
+	service vigilo-dashboardinjector restart
+
+Autoriser les accès à Nagios depuis l'extérieur dans /etc/httpd/conf/webapps.d/nagios.conf et recharger apache
+
+Autoriser Apache à voir les logs Nagios :
+	chgrp -R apache /var/log/nagios/
+Régler les permissions des CGIs Nagios:
+	sed -i -e 's/#default_user_name=guest/default_user_name=nagios/' /etc/nagios/cgi.cfg
+
+Paramétrer NDO :
+	mysqladmin create nagios
+	echo "GRANT ALL PRIVILEGES ON nagios.* TO 'ndouser'@localhost IDENTIFIED BY 'XXXXX'" | mysql
+	mysqladmin reload
+	sed 's/CREATE TABLE `/CREATE TABLE `nagios_/' /usr/share/doc/ndoutils/db/mysql.sql | mysql nagios
+Dans la conf de NDO: /etc/nagios/ndo2db.cfg, passer "socket_type=unix" et reporter les identifiants de base de données
+Redémarrer NDO2DB: service ndo2db restart
+
+Configurer le SNMP, au moins avec les valeurs suivantes:
+	cat >> /etc/snmp/snmpd.conf << EOF
+com2sec readonly default public	
+group ROGroup v1 readonly
+group ROGroup v2c readonly
+view all included .1
+access ROGroup "" any noauth exact all none none
+EOF
+Et recharger le SNMP: service snmpd restart
+
+Configurer NRPE :
+	cp /usr/share/doc/vigilo-nagios-plugins/nrpe_local.cfg /etc/nagios/
+	echo 'include=/etc/nagios/nrpe_local.cfg' >> /etc/nagios/nrpe.cfg
+	Éditer dans /etc/nagios/nrpe.cfg la directive allowed_hosts et mettre l'IP du collecteur
+	Éditer dans /etc/nagios/nrpe_local.cfg l'adresse du serveur NTP
+	sed -i -e 's/^dont_blame_nrpe=0/dont_blame_nrpe=1/g' /etc/nagios/nrpe.cfg
+Redémarrer NRPE : service nrpe restart
+
+Configurer StoreMe:
+	ln -s /etc/vigilo-vigiconf/prod/storeme.conf.py /etc/vigilo-storeme/storeme.conf.py
+	service vigilo-storeme restart
+
+Configurer RRDGraph:
+	ln -s /etc/vigilo-vigiconf/prod/rrdgraph.conf.py /etc/vigilo-rrdgraph/graphs.py
+	urpmi fonts-ttf-dejavu (https://qa.mandriva.com/show_bug.cgi?id=52619)
+
+Configurer SupNavigator:
+	ln -s /etc/vigilo-vigiconf/prod/apacheRP.conf /etc/httpd/conf/webapps.d/vigilo-supnavigator-proxy.conf
+	ln -s /etc/vigilo-vigiconf/prod/navconf.py /etc/vigilo-supnavigator/navconf.py
+	sed -r -i -e 's,^\s*</Proxy>,        Allow from all\n    </Proxy>,g' /etc/httpd/modules.d/30_mod_proxy.conf
+	service httpd restart
