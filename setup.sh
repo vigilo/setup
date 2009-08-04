@@ -10,7 +10,7 @@ else
 fi
 
 # All those scripts must be idempotent
-for script in $SETUP_SCRIPTS/*.sh ; do
+for script in $SETUP_SCRIPTS/*.{sh,py} 2>/dev/null; do
 	if [ -x $script ]; then
 		bash $script
         RETVAL=$?

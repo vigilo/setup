@@ -4,6 +4,7 @@ Documentation de post-installation sur MES-5
 Répertoire /etc/vigilo-vigiconf/conf.d sous SVN (voir /etc/vigilo-vigiconf/README.source)
 Régler l'hôte localhost dans les hôtes à tester
 Régler les serveurs de sup dans /etc/vigilo-vigiconf/conf.d/general/appgroups-servers.py
+Désactiver la génération DNS dans /etc/vigilo-vigiconf/conf.d/general/appgroups-servers.py
 Générer la clé SSH de vigiconf et la mettre dans dans les authorized_keys:
 	ssh-keygen -t rsa -b 1024 -f /var/lib/vigilo-vigiconf/db/vigiconf.key
 	mkdir -p /var/lib/vigilo-vigiconf/.ssh
@@ -22,7 +23,6 @@ Copier nagios.cfg en nagios-test.cfg et adapter:
 Mettre en place le lien symbolique pour NDO:
 	mv /etc/nagios/ndomod.cfg /etc/nagios/ndomod.cfg.orig
 	ln -s /etc/vigilo-vigiconf/prod/ndomod.cfg /etc/nagios/ndomod.cfg
-Désactiver la génération DNS dans /etc/vigilo-vigiconf/conf.d/general/appgroups-servers.py
 
 Démarrer SpoolMe : service vigilo-spoolme start
 
