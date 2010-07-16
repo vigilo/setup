@@ -36,6 +36,7 @@ make \
 rm -rf $RPM_BUILD_ROOT
 make install \
 	DESTDIR=$RPM_BUILD_ROOT \
+	SBINDIR=%{_sbindir} \
 	LIBEXECDIR=%{_libexecdir} \
 	SYSCONFDIR=%{_sysconfdir}
 
@@ -46,7 +47,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root)
 %doc COPYING
-%{_bindir}/vigilo-setup
+%{_sbindir}/vigilo-setup
 %{_libexecdir}/vigilo
 %dir %{_sysconfdir}/vigilo/
 %config %{_sysconfdir}/vigilo/%{module}
