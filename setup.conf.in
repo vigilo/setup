@@ -1,12 +1,16 @@
 # Configuration du script de setup
 
 # setup
-export SETUP_MODULES=@LIBEXECDIR@/vigilo/setup
-
+SETUP_MODULES=@LIBEXECDIR@/vigilo/setup
+export SETUP_MODULES
 
 # vigiboard
-export VIGIBOARD_SVN=file:///var/lib/svn/vigiconf
+VIGIBOARD_SVN=file:///var/lib/svn/vigiconf
+export VIGIBOARD_SVN
 
 # Emplacement des RPMs
-export VIGILO_REPO=http://vigilo-dev.si.c-s.fr/pkg/mandriva/vigilo/mes5/`uname -m`
-export VIGILO_DEPS_REPO=http://vigilo-dev.si.c-s.fr/pkg/mandriva/vigilo-deps/mes5/`uname -m`
+VIGILO_REPO=http://vigilo-dev.si.c-s.fr/pkg/mandriva/vigilo/mes5/`uname -m`
+VIGILO_DEPS_REPO=http://vigilo-dev.si.c-s.fr/pkg/mandriva/vigilo-deps/mes5/`uname -m`
+export VIGILO_REPO
+export VIGILO_DEPS_REPO
+
