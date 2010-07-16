@@ -14,7 +14,7 @@ fi
 vigilo_call_script() {
     script=$1
     pushd `dirname $script` > /dev/null
-    . ./`basename $script`
+    bash ./`basename $script`
     RETVAL=$?
     if [ $RETVAL != 0 ]; then
         echo "Script $script failed !"
