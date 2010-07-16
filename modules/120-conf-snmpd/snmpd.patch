@@ -1,0 +1,36 @@
+--- snmpd.conf.orig	2010-02-16 16:55:50.000000000 +0100
++++ snmpd.conf	2010-02-16 16:57:39.000000000 +0100
+@@ -50,7 +50,7 @@
+ # First, map the community name "public" into a "security name"
+ 
+ #       sec.name  source          community
+-com2sec notConfigUser  default       public
++com2sec mynetwork default         public
+ 
+ ####
+ # Second, map the security name into a group name:
+@@ -86,13 +86,13 @@
+ 
+ ##     group.name sec.model  sec.name
+ #group MyRWGroup  any        local
+-#group MyROGroup  any        mynetwork
++group  MyROGroup  v2c        mynetwork
+ #
+ #group MyRWGroup  any        otherv3user
+ #...
+ 
+ ##           incl/excl subtree                          mask
+-#view all    included  .1                               80
++view all    included  .1                               80
+ 
+ ## -or just the mib2 tree-
+ 
+@@ -100,7 +100,7 @@
+ 
+ 
+ ##                context sec.model sec.level prefix read   write  notif
+-#access MyROGroup ""      any       noauth    0      all    none   none
++access MyROGroup  ""      any       noauth    exact  all    none   none
+ #access MyRWGroup ""      any       noauth    0      all    all    all
+ 
+ ###############################################################################

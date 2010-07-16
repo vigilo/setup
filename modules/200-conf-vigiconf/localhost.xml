@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<hosts>
+<host name="localhost" address="127.0.0.1">
+    <class>linux</class>
+    <class>ucd</class>
+    <template>linux</template>
+    <attribute name="cpulist">2</attribute>
+    <test name="Interface">
+        <arg name="label">eth0</arg>
+        <arg name="ifname">eth0</arg>
+    </test>
+    <group>Linux servers</group>
+</host>
+</hosts>

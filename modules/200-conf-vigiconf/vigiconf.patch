@@ -1,0 +1,25 @@
+diff -p -up /etc/vigilo/vigiconf/conf.d/general/apps.py.orig /etc/vigilo/vigiconf/conf.d/general/apps.py
+--- /etc/vigilo/vigiconf/conf.d/general/apps.py.orig	2010-02-16 15:58:39.000000000 +0100
++++ /etc/vigilo/vigiconf/conf.d/general/apps.py	2010-02-16 15:58:54.000000000 +0100
+@@ -47,7 +47,7 @@
+ appsByAppGroups = {
+     'collect'           : ['nagios', 'collector', 'perfdata'],
+     'metrology'         : ['connector-metro', 'rrdgraph'],
+-    'trap'              : ['corrtrap'],
++    'trap'              : [],
+     'correlation'       : ['nagios-hls'],
+ }
+ 
+ 
+diff -p -up /etc/vigilo/vigiconf/settings.ini.orig /etc/vigilo/vigiconf/settings.ini
+--- /etc/vigilo/vigiconf/settings.ini.orig	2010-02-16 14:49:11.000000000 +0100
++++ /etc/vigilo/vigiconf/settings.ini	2010-02-16 15:30:07.000000000 +0100
+@@ -6,7 +6,7 @@ targetconfdir = /etc/vigilo/vigiconf
+ lockfile = /var/lock/vigilo-vigiconf/vigiconf.token
+ svnusername = vigiconf
+ svnpassword = svnpass
+-svnrepository = http://svnrepo/path/to/svn/repo
++svnrepository = file:///var/lib/svn/vigilo
+ simulate = False
+ silent = False
+ default_language = fr
