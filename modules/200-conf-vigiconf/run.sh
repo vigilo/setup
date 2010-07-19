@@ -9,14 +9,14 @@ if [ ! -d /etc/vigilo/vigiconf/conf.d ]; then
     exit 0
 fi
 
-[ -f /etc/vigilo/vigiconf/conf.d/hosts/localhost.xml ] || \
-    cp -p localhost.xml /etc/vigilo/vigiconf/conf.d/hosts/
+[ -f /etc/vigilo/vigiconf/conf.d.example/hosts/localhost.xml ] || \
+    cp -p localhost.xml /etc/vigilo/vigiconf/conf.d.example/hosts/
 
 # sudo
 grep -qs ^vigiconf /etc/sudoers || echo 'vigiconf ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
 
 # serveur de supervision
-sed -i -e 's/supserver.example.com/localhost/' /etc/vigilo/vigiconf/conf.d/general/appgroups-servers.py
+sed -i -e 's/supserver.example.com/localhost/' /etc/vigilo/vigiconf/conf.d.example/general/appgroups-servers.py
 
 # Désactivation de CorrTrap
 if [ ! -f /etc/vigilo/vigiconf/conf.d/general/apps.py.orig ]; then
