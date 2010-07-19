@@ -1,6 +1,6 @@
 #!/bin/sh
 
-svnurl=${VIGIBOARD_SVN:-file:///var/lib/svn/vigiconf}
+svnurl=${VIGICONF_SVN:-file:///var/lib/svn/vigiconf}
 
 echo "Configuration de VigiConf"
 
@@ -46,12 +46,18 @@ sed -i -e 's/supserver.example.com/localhost/' /etc/vigilo/vigiconf/conf.d/gener
 
 # settings.ini
 if [ ! -f /etc/vigilo/vigiconf/conf.d/settings.ini.orig ]; then
+    sed -i -e 's,^\(svnrepository[[:space:]]*=[[:space:]]*\).*,\1'$svnurl',' \
+        /etc/vigilo/vigiconf/conf.d/settings.ini
+fi
+
+# permissions
+chown vigiconf: -R /etc/vigilo/vigiconf/conf.d /etc/vigilo/vigiconf/settings.ini
+
+# Désactivation de CorrTrap
+if [ ! -f /etc/vigilo/vigiconf/conf.d/general/apps.py.orig ]; then
     cwd=`pwd`
     pushd /etc/vigilo/vigiconf
     patch -b -p4 -N < $cwd/vigiconf.patch || :
     popd
 fi
-
-# permissions
-chown vigiconf: -R /etc/vigilo/vigiconf/conf.d /etc/vigilo/vigiconf/settings.ini
 

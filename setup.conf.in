@@ -4,9 +4,9 @@
 SETUP_MODULES=@LIBEXECDIR@/vigilo/setup
 export SETUP_MODULES
 
-# vigiboard
-VIGIBOARD_SVN=file:///var/lib/svn/vigiconf
-export VIGIBOARD_SVN
+# vigiconf
+export VIGICONF_SVN=file:///var/lib/svn/vigiconf
+export VIGICONF_SVN
 
 # Emplacement des RPMs
 VIGILO_REPO=http://vigilo-dev.si.c-s.fr/pkg/mandriva/vigilo/mes5/`uname -m`
