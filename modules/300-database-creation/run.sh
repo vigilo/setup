@@ -21,6 +21,6 @@ if ! psql -U postgres -A -t -l | grep -qs '^'$dbname; then
     mkdir -p log
     vigilo-models-init-db
     echo "Remplissage de la base de données PostgreSQL"
-    vigilo-models-demo exemple1
+    vigilo-models-demo example1
 fi
 
