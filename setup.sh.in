@@ -44,3 +44,4 @@ echo "Maintenant, vérifiez dans /var/log/messages que tout s'est bien passé. N
 echo "VigiBoard est accessible sur http://`hostname -f`/vigilo/vigiboard/"
 echo "VigiMap est accessible sur http://`hostname -f`/vigilo/vigimap/"
 echo "VigiGraph est accessible sur http://`hostname -f`/vigilo/vigigraph/"
+echo "Nagios est accessible sur http://`hostname -f`/nagios/ avec le login \"nagios\" et le mot de passe \""`cat /etc/nagios/passwd.plaintext`"\""
