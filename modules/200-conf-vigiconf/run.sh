@@ -21,8 +21,8 @@ sed -i -e 's/supserver.example.com/localhost/' /etc/vigilo/vigiconf/conf.d.examp
 # Désactivation de CorrTrap
 if [ ! -f /etc/vigilo/vigiconf/conf.d/general/apps.py.orig ]; then
     cwd=`pwd`
-    pushd /etc/vigilo/vigiconf
-    patch -b -p4 -N < $cwd/vigiconf.patch || :
+    pushd /etc/vigilo/vigiconf/conf.d.example
+    patch -b -p5 -N < $cwd/vigiconf.patch || :
     popd
 fi
 
