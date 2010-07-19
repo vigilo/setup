@@ -54,9 +54,10 @@ chown vigiconf:vigiconf -R conf.d
 popd
 
 # settings.ini
-if [ ! -f /etc/vigilo/vigiconf/conf.d/settings.ini.orig ]; then
+if [ ! -f /etc/vigilo/vigiconf/settings.ini.orig ]; then
+    cp  /etc/vigilo/vigiconf/settings.ini /etc/vigilo/vigiconf/settings.ini.orig
     sed -i -e 's,^\(svnrepository[[:space:]]*=[[:space:]]*\).*,\1'$svnurl',' \
-        /etc/vigilo/vigiconf/conf.d/settings.ini
+        /etc/vigilo/vigiconf/settings.ini
 fi
 
 # permissions
