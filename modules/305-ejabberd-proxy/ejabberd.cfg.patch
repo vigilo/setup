@@ -1,0 +1,17 @@
+--- /etc/ejabberd/ejabberd.cfg.orig	2010-08-31 17:13:14.000000000 +0200
++++ /etc/ejabberd/ejabberd.cfg	2010-08-31 17:16:24.000000000 +0200
+@@ -506,7 +506,13 @@
+   {mod_ping,     []},
+   {mod_privacy,  []},
+   {mod_private,  []},
+-  %%{mod_proxy65,[]},
++  {mod_proxy65,  [
++		  {access, all},
++		  {host, "proxy65.localhost"},
++		  {ip, {0,0,0,0},
++		  {name, "SOCKS5 BytesStreams"},
++		  {port , 7777}
++		 ]},
+   {mod_pubsub,   [
+ 		  {access_createnode, pubsub_createnode},
+ 		  {ignore_pep_from_offline, true}, % reduce resource comsumption, but XEP incompliant
