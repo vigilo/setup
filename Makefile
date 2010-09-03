@@ -1,8 +1,6 @@
-PREFIX = /usr
-SYSCONFDIR = /etc
+NAME = setup
 SBINDIR = $(PREFIX)/sbin
 LIBEXECDIR = $(PREFIX)/libexec
-DESTDIR =
 
 all: setup.sh setup.conf
 
@@ -19,4 +17,4 @@ install: setup.sh setup.conf
 	cp -pr modules/* $(DESTDIR)$(LIBEXECDIR)/vigilo/setup/
 
 
-.PHONY: install
+.PHONY: all install
