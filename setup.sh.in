@@ -1,5 +1,52 @@
 #!/bin/sh
 
+print_help (){
+    cat << HELPMSG
+setup [all|sup]
+
+Purpose: setup configure vigilo server.
+
+Usage:  setup [--admin|--metro|--sup [--help|-h]
+--admin installe un serveur "Administration Centrale"
+--metro installe un serveur "Stockage de données de métrlogie"
+--sup   installe un serveur "Collecte de Supervision"
+
+HELPMSG
+    exit 0
+}
+while [ ! -z "$1" ]; do
+    case "$1" in
+        --help|-h)
+            print_help
+            ;;
+        --admin)
+            TAG="$TAG|admin"
+            shift
+        ;;
+        --metro)
+            TAG="$TAG|metro"
+            shift
+        ;;
+        --sup)
+            TAG="$TAG|sup"
+            shift
+        ;;
+        *)
+            print_help
+        ;;
+    esac
+done
+
+# by default do all modules
+if [ -z "$TAG" ]; then
+    TAG="all"
+fi
+
+# remove caracter "|" if first of all
+if [ "${TAG:0:1}" == "|" ];then
+    TAG=${TAG:1}
+fi
+
 CONF=${CONF:-@SYSCONFDIR@/vigilo/setup/setup.conf}
 
 if [ -f $CONF ]; then
@@ -13,6 +60,12 @@ fi
 # Ils seront lancés depuis leur répertoire.
 vigilo_call_script() {
     script=$1
+    dir=`dirname $script`
+    tag=`cat $dir/TAG 2> /dev/null`
+    # check if this module is needed
+    if [ "$TAG" != "all" ]; then
+        echo "$tag" | grep -E -q "$TAG" || return 0
+    fi
     pushd `dirname $script` > /dev/null
     bash ./`basename $script`
     RETVAL=$?
@@ -38,10 +91,39 @@ for script in `ls $SETUP_MODULES/{3,4,5,6,7,8,9}*/run.sh 2>/dev/null`; do
     vigilo_call_script $script
 done
 
+if [ "$TAG" == "all" ]; then
+    echo
+    echo "Maintenant, vérifiez dans /var/log/messages que tout s'est bien passé. Nagios devrait tourner."
+    echo "VigiBoard est accessible sur http://`hostname -f`/vigilo/vigiboard/"
+    echo "VigiMap est accessible sur http://`hostname -f`/vigilo/vigimap/"
+    echo "VigiGraph est accessible sur http://`hostname -f`/vigilo/vigigraph/"
+    echo "Nagios est accessible sur http://`hostname -f`/nagios/ avec le login \"nagios\" et le mot de passe \""`cat /etc/nagios/passwd.plaintext`"\""
+fi
 
-echo
-echo "Maintenant, vérifiez dans /var/log/messages que tout s'est bien passé. Nagios devrait tourner."
-echo "VigiBoard est accessible sur http://`hostname -f`/vigilo/vigiboard/"
-echo "VigiMap est accessible sur http://`hostname -f`/vigilo/vigimap/"
-echo "VigiGraph est accessible sur http://`hostname -f`/vigilo/vigigraph/"
-echo "Nagios est accessible sur http://`hostname -f`/nagios/ avec le login \"nagios\" et le mot de passe \""`cat /etc/nagios/passwd.plaintext`"\""
+echo "$TAG" | grep -E -q "sup"
+if [ "$?" == "0" ]; then
+    echo
+    echo "Maintenant, vérifiez dans /var/log/messages que tout s'est bien passé. Nagios devrait tourner."
+    echo "Nagios est accessible sur http://`hostname -f`/nagios/ avec le login \"nagios\" et le mot de passe \"`cat /etc/nagios/passwd.plaintext`\" "
+fi
+
+echo "$TAG" | grep -E -q "admin"
+if [ "$?" == "0" ]; then
+    echo
+    echo "Maintenant, vérifiez dans /var/log/messages que tout s'est bien passé."
+    echo "VigiBoard est accessible sur http://`hostname -f`/vigilo/vigiboard/"
+    echo "VigiMap est accessible sur http://`hostname -f`/vigilo/vigimap/"
+    echo "VigiGraph est accessible sur http://`hostname -f`/vigilo/vigigraph/"
+fi
+
+echo "$TAG" | grep -E -q "metro"
+if [ "$?" == "0" ]; then
+    echo
+    echo "Maintenant, vérifiez dans /var/log/messages que tout s'est bien passé."
+    echo "VigiRRD est accessible sur http://`hostname -f`/vigilo/vigirrd/"
+fi
+
+#TODO remplacer automatiquement les noms des serveurs dans les fichiers de configuration
+#echo "Veuillez entrer l'adresse du serveur d'administation Centrale"
+#echo "Veuillez entrer l'adresse du serveur de stockage des données de métrologie"
+#echo "Veuillez entrer l'adresse du serveur de supervision"
