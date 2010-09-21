@@ -45,7 +45,7 @@ make install \
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(-,root,root)
+%defattr(644,root,root,755)
 %doc COPYING
 %{_sbindir}/vigilo-setup
 %{_libexecdir}/vigilo
