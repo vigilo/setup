@@ -8,6 +8,7 @@ urpmi   postgresql8.3-server \
         subversion-tools \
         patch \
         socat \
+        net-snmp \
         ejabberd \
         apache-mpm-prefork \
         glibc-devel
