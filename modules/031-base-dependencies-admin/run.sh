@@ -8,7 +8,9 @@ urpmi   postgresql8.3-server \
         subversion-tools \
         patch \
         socat \
-        ejabberd
+        ejabberd \
+        glibc-devel
+# glibc-devel : pour eviter un choix interactif après
 
 
 # Besoin de sqlalchemy >= 0.5
