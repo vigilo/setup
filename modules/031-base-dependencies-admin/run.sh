@@ -8,7 +8,10 @@ urpmi   postgresql8.3-server \
         subversion-tools \
         patch \
         socat \
+        nagios-check_nrpe \
+        nagios-check_ntp \
         net-snmp \
+        nrpe \
         ejabberd \
         apache-mpm-prefork \
         glibc-devel
