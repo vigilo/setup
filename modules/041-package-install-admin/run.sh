@@ -6,4 +6,5 @@ urpmi   vigilo-connector-vigiboard \
         vigilo-vigiboard \
         vigilo-vigiconf \
         vigilo-vigimap \
-        vigilo-vigigraph
+        vigilo-vigigraph \
+        vigilo-vigiconf-local

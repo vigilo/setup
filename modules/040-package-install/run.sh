@@ -11,6 +11,7 @@ urpmi   vigilo-collector \
         vigilo-perfdata2vigilo \
         vigilo-vigiboard \
         vigilo-vigiconf \
+        vigilo-vigiconf-local \
         vigilo-vigimap \
         vigilo-vigigraph \
         vigilo-vigirrd \
