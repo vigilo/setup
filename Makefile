@@ -51,6 +51,7 @@ rpm: clean pkg/$(NAME).$(DISTRO).spec
 				 --define "_builddir %{_topdir}/BUILD" \
 				 --define "svn .svn$(SVN_REV)" \
 				 --define "dist .$(DIST_TAG)" \
+				 $(RPMBUILD_OPTS) \
 				 build/rpm/$(NAME)/vigilo-$(NAME).spec
 	mkdir -p dist
 	find build/rpm/$(NAME) -type f -name "*.rpm" | xargs cp -a -f -t dist/
