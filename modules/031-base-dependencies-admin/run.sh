@@ -9,7 +9,9 @@ urpmi   postgresql8.3-server \
         patch \
         socat \
         ejabberd \
+        apache-mpm-prefork \
         glibc-devel
+# apache-mpm-prefork : pour eviter un choix interactif après
 # glibc-devel : pour eviter un choix interactif après
 
 
