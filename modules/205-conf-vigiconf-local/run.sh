@@ -11,13 +11,13 @@ if ! grep -qs ^vigiconf /etc/sudoers; then
     echo 'vigiconf ALL=(ALL) NOPASSWD: INIT, VALID, TRAP' >> /etc/sudoers
 fi
 
-# configuration de vigiconf pour un serveur de collecte seul
+# configuration de vigiconf pour un serveur recevant la configuration depuis l'exterieur
 
-[ -e /var/lib/vigilo/vigiconf/.ssh/authorized_keys ] || ( \
-echo "la Clef ssh vigiconf du serveur d'amdinistration Centrale n'a pas encore été importée, vous devriez réaliser cette opération manuelle maintenant.
+if [[ -e /var/lib/vigilo/vigiconf/.ssh/authorized_keys && ! -e /etc/vigilo/vigiconf/conf.d/]]; then
+    echo "la Clef ssh vigiconf du serveur d'amdinistration Centrale n'a pas encore été importée, vous devriez réaliser cette opération manuelle maintenant.
 Emplacement de la clef /var/lib/vigilo/vigiconf/.ssh/authorized_keys" | fmt
-echo "Appuyer sur ENTREZ pour continuer, ou Faite Ctrl-C pour arrêter le script" | fmt
-read )
-chown vigiconf:vigiconf -R /var/lib/vigilo/vigiconf/
+    echo "Appuyer sur ENTREZ pour continuer, ou Faite Ctrl-C pour arrêter le script" | fmt
+    read
+fi
 
 
