@@ -12,15 +12,6 @@ fi
 [ -f /etc/vigilo/vigiconf/conf.d.example/hosts/localhost.xml ] || \
     cp -p localhost.xml /etc/vigilo/vigiconf/conf.d.example/hosts/
 
-# sudo
-if ! grep -qs ^vigiconf /etc/sudoers; then
-    echo '# VigiConf' >> /etc/sudoers
-    echo 'Cmnd_Alias INIT = /etc/init.d/*' >> /etc/sudoers
-    echo 'Cmnd_Alias VALID = /usr/sbin/nagios' >> /etc/sudoers
-    echo 'Cmnd_Alias TRAP = /usr/sbin/snmptrapd' >> /etc/sudoers
-    echo 'vigiconf ALL=(ALL) NOPASSWD: INIT, VALID, TRAP' >> /etc/sudoers
-fi
-
 # serveur de supervision
 sed -i -e 's/supserver.example.com/localhost/' /etc/vigilo/vigiconf/conf.d.example/general/appgroups-servers.py
 

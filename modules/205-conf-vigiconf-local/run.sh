@@ -7,8 +7,7 @@ if ! grep -qs ^vigiconf /etc/sudoers; then
     echo '# VigiConf' >> /etc/sudoers
     echo 'Cmnd_Alias INIT = /etc/init.d/*' >> /etc/sudoers
     echo 'Cmnd_Alias VALID = /usr/sbin/nagios' >> /etc/sudoers
-    echo 'Cmnd_Alias TRAP = /usr/sbin/snmptrapd' >> /etc/sudoers
-    echo 'vigiconf ALL=(ALL) NOPASSWD: INIT, VALID, TRAP' >> /etc/sudoers
+    echo 'vigiconf ALL=(ALL) NOPASSWD: INIT, VALID' >> /etc/sudoers
 fi
 
 # configuration de vigiconf pour un serveur recevant la configuration depuis l'exterieur
