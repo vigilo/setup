@@ -8,4 +8,4 @@ echo "Configuration de Nagios"
 # Si la machine VigiConf a aussi un Nagios installé, il faut l'ajouter au
 # groupe vigiconf pour qu'il puisse valider la configuration (qui se trouve
 # dans /var/lib/vigiconf, accessible uniquement au groupe vigiconf.
-getent group vigiconf > /dev/null && useradd -a -G vigiconf nagios
+getent group vigiconf > /dev/null && usermod -a -G vigiconf nagios
