@@ -8,7 +8,7 @@
 +  {mod_proxy65,  [
 +		  {access, all},
 +		  {host, "proxy65.localhost"},
-+		  {ip, {0,0,0,0},
++		  {ip, {0,0,0,0}},
 +		  {name, "SOCKS5 BytesStreams"},
 +		  {port , 7777}
 +		 ]},
