@@ -14,6 +14,8 @@ urpmi   postgresql8.3-server \
         socat \
         net-snmp \
         nrpe \
+        vigilo-nagios-plugins-cpu \
+        vigilo-nagios-plugins-raid \
         ejabberd \
         glibc-devel
 # glibc-devel : pour eviter un choix interactif après

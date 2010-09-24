@@ -5,4 +5,6 @@ urpmi   nagios-check_nrpe \
         net-snmp \
         patch \
         nrpe \
+        vigilo-nagios-plugins-cpu \
+        vigilo-nagios-plugins-raid
 

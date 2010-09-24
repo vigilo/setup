@@ -12,6 +12,8 @@ urpmi   postgresql8.3-server \
         nagios-check_ntp \
         net-snmp \
         nrpe \
+        vigilo-nagios-plugins-cpu \
+        vigilo-nagios-plugins-raid \
         ejabberd \
         apache-mpm-prefork \
         glibc-devel
