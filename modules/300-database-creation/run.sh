@@ -9,6 +9,7 @@ dbuser=`awk -F= '/^sqlalchemy_url/ {gsub("\\\\w+://","",$2); gsub(":.*","",$2); 
 dbpasswd=`awk -F= '/^sqlalchemy_url/ {gsub("\\\\w+://vigilo:","",$2); gsub("@.*","",$2); print $2}' /etc/vigilo/models/settings.ini`
 [ -n "$dbname" -a -n "$dbuser" -a -n "$dbpasswd" ]
 echo "Base configurée: $dbname. Utilisateur configuré: $dbuser."
+sleep 5
 
 # Utilisateur
 psql -U postgres -A -t -c '\du' | grep -qs '^'$dbuser || \
