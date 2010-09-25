@@ -1,6 +1,6 @@
 #!/bin/sh
 
-service vigilo-connector-nagios metro
+service vigilo-connector-metro start
 
 echo -n "Attente de la création des noeuds pubsub..."
 sleep 5
