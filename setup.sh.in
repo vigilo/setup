@@ -22,15 +22,15 @@ while [ ! -z "$1" ]; do
             print_help
             ;;
         --admin)
-            TAG="$TAG|admin"
+            DO_admin="YES"
             shift
         ;;
         --metro)
-            TAG="$TAG|metro"
+            DO_metro="YES"
             shift
         ;;
         --sup)
-            TAG="$TAG|sup"
+            DO_sup="YES"
             shift
         ;;
         *)
@@ -39,25 +39,20 @@ while [ ! -z "$1" ]; do
     esac
 done
 
-# by default do all modules
-if [ -z "$TAG" ]; then
-    TAG="all"
-fi
+TAG="all"
+# if one variable is positionned don't do all
+[ -z "$DO_admin" ] || TAG="admin"
+[ -z "$DO_metro" ] || TAG="$TAG,metro"
+[ -z "$DO_sup"   ] || TAG="$TAG,sup"
 
-# try to figure if the list is equivalent to "all"
-vigilo_is_list_all() {
-    for i in admin metro sup ; do
-        echo "$i" | grep -E -q "$TAG" || return 0
-    done
-    TAG="all"
-}
-vigilo_is_list_all
+# if all variable is positionned do all
+[ ! -z "$DO_admin" ] && [ ! -z "$DO_metro" ] && [ ! -z "$DO_sup" ] && TAG="all"
 
-# remove caracter "|" if first of all
-if [ "${TAG:0:1}" == "|" ];then
+
+# remove caracter "," if first of all
+if [ "${TAG:0:1}" == "," ];then
     TAG=${TAG:1}
 fi
-
 CONF=${CONF:-@SYSCONFDIR@/vigilo/setup/setup.conf}
 
 if [ -f $CONF ]; then
@@ -72,10 +67,17 @@ fi
 vigilo_call_script() {
     script=$1
     dir=`dirname $script`
-    tag=`cat $dir/TAG 2> /dev/null`
+    tag=`cat $dir/TAG 2> /dev/null | sort -u | sed -e 's/ //g' -e '/^$/d' -e '/^#/d'`
     # check if this module is needed
-    if [ "$TAG" != "all" ]; then
-        echo "$tag" | grep -E -q "$TAG" || return 0
+    if [ "$TAG" != "all" ] ; then
+        TAG_found="NO"
+        for i in "$tag" ; do
+            [ -z "$i" ] && return 0
+            echo "$TAG" | grep -E -q "$i" && TAG_found="YES"
+        done
+        if [ "$TAG_found" != "YES" ]; then
+            return 0
+        fi
     fi
     pushd `dirname $script` > /dev/null
     bash ./`basename $script`
