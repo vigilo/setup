@@ -1,3 +1,3 @@
 #!/bin/sh
 
-service nrpe status &> /dev/null || service snmpd start
+service snmpd status &> /dev/null || service snmpd start
