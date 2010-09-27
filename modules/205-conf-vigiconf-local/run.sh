@@ -12,9 +12,12 @@ fi
 
 # configuration de vigiconf pour un serveur recevant la configuration depuis l'exterieur
 
-if [[ -e /var/lib/vigilo/vigiconf/.ssh/authorized_keys && ! -e /etc/vigilo/vigiconf/conf.d/ ]]; then
-    echo "la Clef ssh vigiconf du serveur d'amdinistration Centrale n'a pas encore été importée, vous devriez réaliser cette opération manuelle maintenant.
-Emplacement de la clef /var/lib/vigilo/vigiconf/.ssh/authorized_keys" | fmt
+if [[ ! -e /var/lib/vigilo/vigiconf/.ssh/authorized_keys && ! -e /etc/vigilo/vigiconf/conf.d/ ]]; then
+    echo "la Clef publique vigiconf du serveur d'amdinistration Centrale n'a pas encore été importée, vous devriez réaliser cette opération manuelle maintenant.
+Emplacement de la clef publique sur le serveur d'Administration Centrale:
+    - /etc/vigilo/vigiconf/ssh/vigiconf.key.pub
+Emplacement de la clef publique sur le serveur de local:
+    - /var/lib/vigilo/vigiconf/.ssh/authorized_keys" | fmt
     echo "Appuyer sur ENTREZ pour continuer, ou Faite Ctrl-C pour arrêter le script" | fmt
     read
 fi
