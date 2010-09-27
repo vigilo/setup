@@ -10,3 +10,12 @@ for connector in connector-nagios connector-metro connector-vigiboard connector-
     su ejabberd -c "ejabberdctl --node ejabberd@localhost register '$connector' localhost '$password'" || :
 done
 
+echo -n "Attente prise en compte création des comptes"
+i=0
+while [ $i -lt 15 ]; do
+    sleep 1
+    let "i += 1"
+    echo -n "."
+done
+echo ""
+
