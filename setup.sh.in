@@ -6,7 +6,7 @@ setup [--admin|--metro|--sup [--help|-h]]
 
 Purpose: setup configure vigilo server.
 
-Usage:  setup [--admin|--metro|--sup [--help|-h]]
+Usage:  setup [--admin|--metro|--sup|--no-verify-rpm|--auto|--default-password [--help|-h]]
 Par défaut installe un serveur avec toutes les options.
 
 --admin installe un serveur "Administration Centrale" (experimental)
@@ -112,7 +112,7 @@ done
 
 echo
 echo "La suite de ce script va créer les utilisateurs et les bases. C'est le moment de changer les mots de passe par défaut. Pour cela, arrêtez ce script (Ctrl-C), changez les mots de passe dans /etc/vigilo/*/settings.ini et relancez ce script. Appuyez sur Entrée pour continuer avec les mots de passe par défaut." | fmt
-[ ! -z "$DEFAULT_PASSWORD" ] && read
+[ -z "$DEFAULT_PASSWORD" ] && read
 
 # Ensuite, les scripts qui utilisent les données de configuration locales
 # (notamment les mots de passe)
