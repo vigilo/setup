@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "Installation des paquets Vigilo pour un serveur de collecte"
-urpmi   --auto $1 $2 \
+urpmi   $RPM_SIGNATURE_CHECK $AUTO_INSTALL \
         vigilo-collector \
         vigilo-collector-enterprise \
         vigilo-connector-nagios \

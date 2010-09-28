@@ -1,6 +1,6 @@
 #!/bin/sh
 
-urpmi   --auto $1 $2 \
+urpmi   $RPM_SIGNATURE_CHECK $AUTO_INSTALL \
         nagios-check_nrpe \
         nagios-check_ntp \
         net-snmp \

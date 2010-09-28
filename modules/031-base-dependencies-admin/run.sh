@@ -1,6 +1,6 @@
 #!/bin/sh
 
-urpmi   --auto $1 $2 \
+urpmi   $RPM_SIGNATURE_CHECK $AUTO_INSTALL \
         postgresql8.3-server \
         postgresql8.3 \
         python-psycopg2 \

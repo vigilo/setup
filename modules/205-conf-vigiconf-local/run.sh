@@ -19,7 +19,7 @@ Emplacement de la clef publique sur le serveur d'Administration Centrale:
 Emplacement de la clef publique sur le serveur de local:
     - /var/lib/vigilo/vigiconf/.ssh/authorized_keys" | fmt
     echo "Appuyer sur ENTREZ pour continuer, ou Faite Ctrl-C pour arrêter le script" | fmt
-    read
+    [ ! -z "$DEFAULT_PASSWORD" ] && read
 fi
 
 

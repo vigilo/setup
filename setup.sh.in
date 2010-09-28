@@ -14,6 +14,7 @@ Par défaut installe un serveur avec toutes les options.
 --sup   installe un serveur "Collecte de Supervision
 --no-verify-rpm ne vérifie pas la signature rpm des paquets
 --auto ne demande pas de confirmation pour l'installation des dépendances des paquets
+--default-password ne demande pas de confirmation pour l'installation des mots de passe par défaut
 "
 
 HELPMSG
@@ -37,11 +38,15 @@ while [ ! -z "$1" ]; do
             shift
         ;;
         --no-verify-rpm)
-            RPM_SIGNATURE_CHECK="--no-verify-rpm"
+            export RPM_SIGNATURE_CHECK="--no-verify-rpm"
             shift
         ;;
         --auto)
-            AUTO_INSTALL="--auto"
+            export AUTO_INSTALL="--auto"
+            shift
+        ;;
+        --default-password)
+            export DEFAULT_PASSWORD="--default-password"
             shift
         ;;
         *)
@@ -91,7 +96,7 @@ vigilo_call_script() {
         fi
     fi
     pushd `dirname $script` > /dev/null
-    bash ./`basename $script` $RPM_SIGNATURE_CHECK $AUTO_INSTALL
+    bash ./`basename $script`
     RETVAL=$?
     if [ $RETVAL != 0 ]; then
         echo "Script $script failed !"
@@ -107,7 +112,7 @@ done
 
 echo
 echo "La suite de ce script va créer les utilisateurs et les bases. C'est le moment de changer les mots de passe par défaut. Pour cela, arrêtez ce script (Ctrl-C), changez les mots de passe dans /etc/vigilo/*/settings.ini et relancez ce script. Appuyez sur Entrée pour continuer avec les mots de passe par défaut." | fmt
-read
+[ ! -z "$DEFAULT_PASSWORD" ] && read
 
 # Ensuite, les scripts qui utilisent les données de configuration locales
 # (notamment les mots de passe)
