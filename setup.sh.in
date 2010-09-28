@@ -11,7 +11,10 @@ Par défaut installe un serveur avec toutes les options.
 
 --admin installe un serveur "Administration Centrale"
 --metro installe un serveur "Stockage de données de métrlogie"
---sup   installe un serveur "Collecte de Supervision"
+--sup   installe un serveur "Collecte de Supervision
+--no-verify-rpm ne vérifie pas la signature rpm des paquets
+--auto ne demande pas de confirmation pour l'installation des dépendances des paquets
+"
 
 HELPMSG
     exit 0
@@ -31,6 +34,14 @@ while [ ! -z "$1" ]; do
         ;;
         --sup)
             DO_sup="YES"
+            shift
+        ;;
+        --no-verify-rpm)
+            RPM_SIGNATURE_CHECK="--no-verify-rpm"
+            shift
+        ;;
+        --auto)
+            AUTO_INSTALL="--auto"
             shift
         ;;
         *)
@@ -80,7 +91,7 @@ vigilo_call_script() {
         fi
     fi
     pushd `dirname $script` > /dev/null
-    bash ./`basename $script`
+    bash ./`basename $script` $RPM_SIGNATURE_CHECK $AUTO_INSTALL
     RETVAL=$?
     if [ $RETVAL != 0 ]; then
         echo "Script $script failed !"

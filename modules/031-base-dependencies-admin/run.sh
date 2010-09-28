@@ -1,6 +1,7 @@
 #!/bin/sh
 
-urpmi   postgresql8.3-server \
+urpmi   --auto $1 $2 \
+        postgresql8.3-server \
         postgresql8.3 \
         python-psycopg2 \
         memcached \
@@ -21,6 +22,4 @@ urpmi   postgresql8.3-server \
 # glibc-devel : pour eviter un choix interactif après
 
 
-# Besoin de sqlalchemy >= 0.5
-rpm -Uvh $VIGILO_DEPS_REPO/python-sqlalchemy-0.5.6-1mdvmes2009.0.noarch.rpm || :
 

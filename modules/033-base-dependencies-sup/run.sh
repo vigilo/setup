@@ -1,6 +1,7 @@
 #!/bin/sh
 
-urpmi   nagios \
+urpmi   --auto $1 $2 \
+        nagios \
         nagios-www \
         nagios-check_nrpe \
         nagios-check_ntp \

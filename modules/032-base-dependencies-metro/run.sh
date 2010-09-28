@@ -1,6 +1,7 @@
 #!/bin/sh
 
-urpmi   nagios-check_nrpe \
+urpmi   --auto $1 $2 \
+        nagios-check_nrpe \
         nagios-check_ntp \
         net-snmp \
         patch \
