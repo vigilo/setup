@@ -11,8 +11,8 @@ if ! grep -qs ^vigiconf /etc/sudoers; then
 fi
 
 # configuration de vigiconf pour un serveur recevant la configuration depuis l'exterieur
-
-if [[ ! -e /var/lib/vigilo/vigiconf/.ssh/authorized_keys && ! -e /etc/vigilo/vigiconf/conf.d/ ]]; then
+rpm -qa --queryformat "%{name}\n" | grep -q '^vigilo-vigiconf$'
+if [ "$?" != "0" ] ; then
     echo "la Clef publique vigiconf du serveur d'amdinistration Centrale n'a pas encore été importée, vous devriez réaliser cette opération manuelle maintenant.
 Emplacement de la clef publique sur le serveur d'Administration Centrale:
     - /etc/vigilo/vigiconf/ssh/vigiconf.key.pub
