@@ -9,8 +9,8 @@ Purpose: setup configure vigilo server.
 Usage:  setup [--admin|--metro|--sup [--help|-h]]
 Par défaut installe un serveur avec toutes les options.
 
---admin installe un serveur "Administration Centrale"
---metro installe un serveur "Stockage de données de métrlogie"
+--admin installe un serveur "Administration Centrale" (experimental)
+--metro installe un serveur "Stockage de données de métrlogie" (experimental)
 --sup   installe un serveur "Collecte de Supervision
 --no-verify-rpm ne vérifie pas la signature rpm des paquets
 --auto ne demande pas de confirmation pour l'installation des dépendances des paquets
