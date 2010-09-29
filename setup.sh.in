@@ -10,7 +10,7 @@ Usage:  setup [--admin|--metro|--sup|--no-verify-rpm|--auto|--default-password [
 Par défaut installe un serveur avec toutes les options.
 
 --admin installe un serveur "Administration Centrale" (experimental)
---metro installe un serveur "Stockage de données de métrlogie" (experimental)
+--metro installe un serveur "Stockage de données de métrologie" (experimental)
 --sup   installe un serveur "Collecte de Supervision
 --no-verify-rpm ne vérifie pas la signature rpm des paquets
 --auto ne demande pas de confirmation pour l'installation des dépendances des paquets
