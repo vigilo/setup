@@ -11,4 +11,4 @@ if [ -z "$VIGILO_DEPS_REPO" ]; then
     echo "La variable VIGILO_DEPS_REPO doit être déclarée"
     exit 1
 fi
-urpmq --list-media | grep -qs vigilo_deps || urpmi.addmedia vigilo_deps $VIGILO_DEPS_REPO
+urpmq --list-media | grep -qs vigilo-deps || urpmi.addmedia vigilo-deps $VIGILO_DEPS_REPO
