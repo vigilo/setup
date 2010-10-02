@@ -1,25 +1,11 @@
 #!/bin/sh
 
-urpmi   $RPM_SIGNATURE_CHECK $AUTO_INSTALL \
-        postgresql8.3-server \
-        postgresql8.3 \
-        python-psycopg2 \
-        memcached \
-        subversion \
-        subversion-tools \
-        patch \
-        socat \
-        nagios-check_nrpe \
-        nagios-check_ntp \
-        net-snmp \
-        nrpe \
-        vigilo-nagios-plugins-cpu \
-        vigilo-nagios-plugins-raid \
-        ejabberd \
-        apache-mpm-prefork \
-        glibc-devel
-# apache-mpm-prefork : pour eviter un choix interactif après
-# glibc-devel : pour eviter un choix interactif après
+pkglist=$DISTRO.pkgs
 
+if [ ! -f $pkglist ]; then
+    echo "Can't find the list of packages to install for your distribution ($DISTRO)"
+    exit 1
+fi
 
-
+pkgs=`grep -v '^[[:space:]]*#' $pkglist | grep -v '^[[:space:]]*$'`
+$PKG_INSTALLER $pkgs

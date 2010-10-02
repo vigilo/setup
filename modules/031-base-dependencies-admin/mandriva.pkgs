@@ -1,0 +1,18 @@
+postgresql8.3-server
+postgresql8.3
+python-psycopg2
+memcached
+subversion
+subversion-tools
+patch
+socat
+nagios-check_ntp
+net-snmp
+nrpe
+vigilo-nagios-plugins-cpu
+vigilo-nagios-plugins-raid
+ejabberd
+apache-mpm-prefork
+glibc-devel
+# apache-mpm-prefork : pour eviter un choix interactif après
+# glibc-devel : pour eviter un choix interactif après

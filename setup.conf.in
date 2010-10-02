@@ -9,8 +9,8 @@ export VIGICONF_SVN=file:///var/lib/svn/vigiconf
 export VIGICONF_SVN
 
 # Emplacement des RPMs
-VIGILO_REPO=http://vigilo-dev.si.c-s.fr/pkg/mandriva/vigilo/mes5/`uname -m`
-VIGILO_DEPS_REPO=http://vigilo-dev.si.c-s.fr/pkg/mandriva/vigilo-deps/mes5/`uname -m`
+VIGILO_REPO=http://vigilo-dev.si.c-s.fr/pkg/$DISTRO/vigilo/$DIST_TAG/`uname -m`
+VIGILO_DEPS_REPO=http://vigilo-dev.si.c-s.fr/pkg/$DISTRO/deps/$DIST_TAG/`uname -m`
 export VIGILO_REPO
 export VIGILO_DEPS_REPO
 

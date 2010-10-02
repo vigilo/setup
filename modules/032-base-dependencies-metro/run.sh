@@ -1,11 +1,11 @@
 #!/bin/sh
 
-urpmi   $RPM_SIGNATURE_CHECK $AUTO_INSTALL \
-        nagios-check_nrpe \
-        nagios-check_ntp \
-        net-snmp \
-        patch \
-        nrpe \
-        vigilo-nagios-plugins-cpu \
-        vigilo-nagios-plugins-raid
+pkglist=$DISTRO.pkgs
 
+if [ ! -f $pkglist ]; then
+    echo "Can't find the list of packages to install for your distribution ($DISTRO)"
+    exit 1
+fi
+
+pkgs=`grep -v '^[[:space:]]*#' $pkglist | grep -v '^[[:space:]]*$'`
+$PKG_INSTALLER $pkgs

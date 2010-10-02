@@ -38,11 +38,11 @@ while [ ! -z "$1" ]; do
             shift
         ;;
         --no-verify-rpm)
-            export RPM_SIGNATURE_CHECK="--no-verify-rpm"
+            export RPM_SIGNATURE_CHECK=1
             shift
         ;;
         --auto)
-            export AUTO_INSTALL="--auto"
+            export AUTO_INSTALL=1
             shift
         ;;
         --default-password)
@@ -64,11 +64,34 @@ TAG="all"
 # if all variable is positionned do all
 [ ! -z "$DO_admin" ] && [ ! -z "$DO_metro" ] && [ ! -z "$DO_sup" ] && TAG="all"
 
-
 # remove caracter "," if first of all
 if [ "${TAG:0:1}" == "," ];then
     TAG=${TAG:1}
 fi
+
+# Detection de la distribution
+if [ -f /etc/mandriva-release ]; then
+    DISTRO=mandriva
+    DIST_VER=`sed -e 's/.* release \([0-9]\+\).*/\1/' /etc/mandriva-release`
+    DIST_TAG=mes$DIST_VER
+    PKG_INSTALLER="urpmi ${AUTO_INSTALL:+"--auto"} ${RPM_SIGNATURE_CHECK:+"--no-verify-rpm"}"
+elif [ -f /etc/redhat-release ]; then
+    DISTRO=redhat
+    DIST_VER=`sed -e 's/.* release \([0-9]\+\).*/\1/' /etc/redhat-release`
+    DIST_TAG=rhel$DIST_VER
+    PKG_INSTALLER="yum ${AUTO_INSTALL:+"-y"} ${RPM_SIGNATURE_CHECK:+"--nogpgcheck"}"
+else
+    echo "WARNING: unsupported distribution. Do you want to proceed anyway ? (y/N)"
+    read answer
+    if [ "$answer" != "y" ]; then
+        echo "Aborting on user request."
+        exit 0
+    fi
+if 
+export DISTRO DIST_VER DIST_TAG PKG_INSTALLER
+
+
+# Lecture de la conf
 CONF=${CONF:-@SYSCONFDIR@/vigilo/setup/setup.conf}
 
 if [ -f $CONF ]; then
@@ -156,3 +179,5 @@ fi
 #echo "Veuillez entrer l'adresse du serveur d'administation Centrale"
 #echo "Veuillez entrer l'adresse du serveur de stockage des données de métrologie"
 #echo "Veuillez entrer l'adresse du serveur de supervision"
+
+# vim: set et sw=4 ts=4:

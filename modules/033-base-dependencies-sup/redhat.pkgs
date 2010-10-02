@@ -1,0 +1,9 @@
+nagios
+nagios-plugins-ping
+nagios-plugins-ssh
+nagios-plugins-nrpe
+nagios-plugins-ntp
+nrpe
+vigilo-nagios-plugins-cpu
+vigilo-nagios-plugins-raid
+net-snmp
