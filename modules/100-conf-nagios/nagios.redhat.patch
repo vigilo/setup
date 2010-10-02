@@ -1,0 +1,157 @@
+--- /etc/nagios/nagios.cfg.orig	2010-10-01 15:49:05.000000000 +0200
++++ /etc/nagios/nagios.cfg	2010-10-02 09:04:38.000000000 +0200
+@@ -27,13 +27,13 @@
+ # if you wish (as shown below), or keep them all in a single config file.
+ 
+ # You can specify individual object config files as shown below:
+-cfg_file=/etc/nagios/objects/commands.cfg
+-cfg_file=/etc/nagios/objects/contacts.cfg
+-cfg_file=/etc/nagios/objects/timeperiods.cfg
+-cfg_file=/etc/nagios/objects/templates.cfg
++#cfg_file=/etc/nagios/objects/commands.cfg
++#cfg_file=/etc/nagios/objects/contacts.cfg
++#cfg_file=/etc/nagios/objects/timeperiods.cfg
++#cfg_file=/etc/nagios/objects/templates.cfg
+ 
+ # Definitions for monitoring the local (Linux) host
+-cfg_file=/etc/nagios/objects/localhost.cfg
++#cfg_file=/etc/nagios/objects/localhost.cfg
+ 
+ # Definitions for monitoring a Windows machine
+ #cfg_file=/etc/nagios/objects/windows.cfg
+@@ -54,7 +54,14 @@
+ #cfg_dir=/etc/nagios/switches
+ #cfg_dir=/etc/nagios/routers
+ 
++# Command definitions for Nagios plugins
++cfg_file=/etc/nagios/plugin-commands.cfg
+ 
++# Vigilo specific file
++cfg_file=/etc/nagios/vigilo.cfg
++
++# Vigiconf-generated conf file
++cfg_dir=/etc/vigilo/vigiconf/prod/nagios
+ 
+ 
+ # OBJECT CACHE FILE
+@@ -337,7 +344,7 @@
+ # this value to 0.  If passive checks should be logged, set
+ # this value to 1.
+ 
+-log_passive_checks=1
++log_passive_checks=0
+ 
+ 
+ 
+@@ -378,7 +385,7 @@
+ # program start time that an initial check of all services should
+ # be completed.  Default is 30 minutes.
+ 
+-max_service_check_spread=30
++max_service_check_spread=5
+ 
+ 
+ 
+@@ -439,7 +446,7 @@
+ # This is the frequency (in seconds!) that Nagios will process
+ # the results of host and service checks.
+ 
+-check_result_reaper_frequency=10
++check_result_reaper_frequency=3
+ 
+ 
+ 
+@@ -606,8 +613,8 @@
+ # ocsp command, and performance data commands.  All values are in
+ # seconds.
+ 
+-service_check_timeout=60
+-host_check_timeout=30
++service_check_timeout=30
++host_check_timeout=10
+ event_handler_timeout=30
+ notification_timeout=30
+ ocsp_timeout=5
+@@ -728,7 +735,7 @@
+ # by Nagios Enterprises from the update check is processed in accordance 
+ # with our privacy policy - see http://api.nagios.org for details.
+ 
+-check_for_updates=1
++check_for_updates=0
+ 
+ 
+ 
+@@ -751,7 +758,7 @@
+ # on what aggressive host check is or check out the source code in
+ # base/checks.c
+ 
+-use_aggressive_host_checking=0
++use_aggressive_host_checking=1
+ 
+ 
+ 
+@@ -828,7 +835,7 @@
+ # performance data.
+ # Values: 1 = process performance data, 0 = do not process performance data
+ 
+-process_performance_data=0
++process_performance_data=1
+ 
+ 
+ 
+@@ -840,8 +847,8 @@
+ # define in your host configuration file.  Read the HTML docs for
+ # more information on performance data.
+ 
+-#host_perfdata_command=process-host-perfdata
+-#service_perfdata_command=process-service-perfdata
++host_perfdata_command=process-host-perfdata
++service_perfdata_command=process-service-perfdata
+ 
+ 
+ 
+@@ -1012,7 +1019,7 @@
+ # check the "freshness" of service check results.  If you have
+ # disabled service freshness checking, this option has no effect.
+ 
+-service_freshness_check_interval=60
++service_freshness_check_interval=10
+ 
+ 
+ 
+@@ -1023,7 +1030,7 @@
+ # manner.
+ # Values: 1 = enabled freshness checking, 0 = disable freshness checking
+ 
+-check_host_freshness=0
++check_host_freshness=1
+ 
+ 
+ 
+@@ -1032,7 +1039,7 @@
+ # check the "freshness" of host check results.  If you have
+ # disabled host freshness checking, this option has no effect.
+ 
+-host_freshness_check_interval=60
++host_freshness_check_interval=10
+ 
+ 
+ 
+@@ -1059,7 +1066,7 @@
+ # Values: 1 = enable flap detection
+ #         0 = disable flap detection (default)
+ 
+-enable_flap_detection=1
++enable_flap_detection=0
+ 
+ 
+ 
+@@ -1084,7 +1091,7 @@
+ #	strict-iso8601	(YYYY-MM-DDTHH:MM:SS)
+ #
+ 
+-date_format=us
++date_format=euro
+ 
+ 
+ 

@@ -2,6 +2,7 @@
 
 if [ ! -f /etc/ejabberd/ejabberd.cfg.orig ]; then
     echo "Patch /etc/ejabberd/ejabberd.cfg"
-    patch -N -b /etc/ejabberd/ejabberd.cfg < ejabberd.cfg.patch
+    cfgpatch=ejabberd.$DISTRO.patch
+    patch -N -b /etc/ejabberd/ejabberd.cfg < $cfgpatch
     chown root:ejabberd /etc/ejabberd/ejabberd.cfg
 fi

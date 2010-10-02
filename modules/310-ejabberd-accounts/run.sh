@@ -1,16 +1,19 @@
 #!/bin/sh
 
+[ -f /etc/init.d/ejabberd ] || exit 0
+
 echo "Création des comptes sur le bus XMPP"
+chkconfig ejabberd on
 service ejabberd status &> /dev/null  || service ejabberd start
 sleep 2
 for connector in connector-nagios connector-metro connector-vigiboard connector-diode correlator; do
     password=`awk '/^password/ {print $3}' /etc/vigilo/$connector/settings.ini`
     # case where a server dont have all the connector.
     [ -z "$password" ] && password=$connector
-    su ejabberd -c "ejabberdctl --node ejabberd@localhost register '$connector' localhost '$password'" || :
+    sudo -u ejabberd ejabberdctl --node ejabberd@localhost register $connector localhost $password || :
 done
 
-echo -n "Attente prise en compte création des comptes"
+echo -n "Attente de la création effective des comptes"
 i=0
 while [ $i -lt 15 ]; do
     sleep 1
