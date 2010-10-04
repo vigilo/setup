@@ -17,20 +17,21 @@ if grep -qs 'local \+all \+all \+ident \+sameuser' /var/lib/pgsql/data/pg_hba.co
     if ! grep -qs vigilo /var/lib/pgsql/data/pg_hba.conf; then
         echo "Attention, l'utilisateur vigilo n'est pas autorisé à se connecter à la base de données. Je l'ajoute, mais il faudra vérifier les permissions dans /var/lib/pgsql/data/pg_hba.conf" | fmt
         sed -i -e '/^# TYPE\s\+DATABASE\s\+USER\s\+CIDR-ADDRESS\s\+METHOD\s*$/a host vigilo vigilo 127.0.0.1/32 md5' /var/lib/pgsql/data/pg_hba.conf
+        service postgresql reload
     fi
 fi
 
 
 # Utilisateur
-psql -U postgres -A -t -c '\du' | grep -qs '^'$dbuser || \
-    psql -U postgres -c "CREATE ROLE $dbuser PASSWORD '$dbpasswd' NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN;"
+sudo -u postgres psql -A -t -c '\du' | grep -qs '^'$dbuser || \
+    sudo -u postgres psql -c "CREATE ROLE $dbuser PASSWORD '$dbpasswd' NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN;"
 
 # Base de données
-if ! psql -U postgres -A -t -l | grep -qs '^'$dbname; then
-    createdb -U postgres $dbname --owner $dbuser --encoding UTF8
+if ! sudo -u postgres psql -A -t -l | grep -qs '^'$dbname; then
+    sudo -u postgres createdb $dbname --owner $dbuser --encoding UTF8 || exit $?
     echo "Création des tables dans la base de données PostgreSQL"
     mkdir -p log
-    vigilo-models-init-db
+    vigilo-models-init-db || exit $?
     echo "(Désactivé) Remplissage de la base de données PostgreSQL"
     #vigilo-models-demo example1
     rm -rf log
