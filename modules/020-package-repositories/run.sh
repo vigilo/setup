@@ -15,8 +15,9 @@ if [ "$DISTRO" == "mandriva" ]; then
     urpmq --list-media | grep -qs vigilo || urpmi.addmedia vigilo $VIGILO_REPO
     urpmq --list-media | grep -qs vigilo-deps || urpmi.addmedia vigilo-deps $VIGILO_DEPS_REPO
 elif [ "$DISTRO" == "redhat" ]; then
-    [ -f /etc/yum.repos.d/vigilo.repo ] && exit 0
-    cat > /etc/yum.repos.d/vigilo.repo << EOF
+    [ -f /etc/yum.repos.d/epel.repo ] || cp -p epel.repo /etc/yum.repos.d/
+    [ -f /etc/yum.repos.d/vigilo.repo ] || \
+        cat > /etc/yum.repos.d/vigilo.repo << EOF
 [vigilo]
 name=Vigilo
 baseurl=$VIGILO_REPO
