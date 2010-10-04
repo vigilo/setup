@@ -13,4 +13,23 @@ cfgpatch=nagios.$DISTRO.patch
 # Si la machine VigiConf a aussi un Nagios installé, il faut l'ajouter au
 # groupe vigiconf pour qu'il puisse valider la configuration (qui se trouve
 # dans /var/lib/vigiconf, accessible uniquement au groupe vigiconf.
-getent group vigiconf > /dev/null && usermod -a -G vigiconf nagios
+getent group vigiconf > /dev/null && usermod -a -G vigiconf nagios || exit $?
+
+if [ -f /etc/httpd/conf.d/nagios.conf ] && \
+            grep -qs "deny from all" /etc/httpd/conf.d/nagios.conf; then
+    sed -i -e "/^\s*deny from all/d" /etc/httpd/conf.d/nagios.conf
+    service httpd reload
+fi
+
+if [ "$DISTRO" == "redhat" -a -f /usr/share/nagios/html/index.php ]; then
+    $PKG_INSTALLER php
+fi
+
+if [ ! -f /etc/nagios/passwd.plaintext ]; then
+    passwd=`dd if=/dev/urandom bs=1 count=6 2>/dev/null | base64`
+    touch /etc/nagios/passwd.plaintext
+    chmod 600 /etc/nagios/passwd.plaintext
+    echo $passwd > /etc/nagios/passwd.plaintext
+    htpasswd -c -b /etc/nagios/passwd nagios $passwd
+    sed -i -e "s/nagiosadmin/nagios/g" /etc/nagios/cgi.cfg
+fi
