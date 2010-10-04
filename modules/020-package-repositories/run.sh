@@ -34,3 +34,6 @@ EOF
     [ -f /etc/yum.repos.d/epel.repo ] || yum -y --nogpgcheck install epel-release
 fi
 
+[ -f /etc/yum/pluginconf.d/fastestmirror.conf ] && \
+    sed -i -e 's/^enabled=1$/enabled=0/' /etc/yum/pluginconf.d/fastestmirror.conf
+
