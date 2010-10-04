@@ -79,7 +79,7 @@ elif [ -f /etc/redhat-release ]; then
     DISTRO=redhat
     DIST_VER=`sed -e 's/.* release \([0-9]\+\).*/\1/' /etc/redhat-release`
     DIST_TAG=rhel$DIST_VER
-    PKG_INSTALLER="yum ${AUTO_INSTALL:+"-y"} ${RPM_SIGNATURE_CHECK:+"--nogpgcheck"} install"
+    PKG_INSTALLER="yum ${AUTO_INSTALL:+"-y"} ${RPM_SIGNATURE_CHECK:+"--nogpgcheck"} -y install"
 else
     echo "WARNING: unsupported distribution. Do you want to proceed anyway ? (y/N)"
     read answer
