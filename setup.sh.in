@@ -20,7 +20,7 @@ Par défaut installe un serveur avec toutes les options.
 HELPMSG
     exit 0
 }
-while [ ! -z "$1" ]; do
+while [ -n "$1" ]; do
     case "$1" in
         --help|-h)
             print_help
@@ -62,7 +62,7 @@ TAG="all"
 [ -z "$DO_sup"   ] || TAG="$TAG,sup"
 
 # if all variable is positionned do all
-[ ! -z "$DO_admin" ] && [ ! -z "$DO_metro" ] && [ ! -z "$DO_sup" ] && TAG="all"
+[ -n "$DO_admin" ] && [ -n "$DO_metro" ] && [ -n "$DO_sup" ] && TAG="all"
 
 # remove caracter "," if first of all
 if [ "${TAG:0:1}" == "," ];then
@@ -87,7 +87,7 @@ else
         echo "Aborting on user request."
         exit 0
     fi
-if 
+fi
 export DISTRO DIST_VER DIST_TAG PKG_INSTALLER
 
 
