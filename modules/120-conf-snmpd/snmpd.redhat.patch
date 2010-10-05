@@ -14,7 +14,7 @@
  ##     group.name sec.model  sec.name
  #group MyRWGroup  any        local
 -#group MyROGroup  any        mynetwork
-+group MyROGroup  any        mynetwork
++group MyROGroup  v2c        mynetwork
  #
  #group MyRWGroup  any        otherv3user
  #...
@@ -30,7 +30,7 @@
  
  ##                context sec.model sec.level prefix read   write  notif
 -#access MyROGroup ""      any       noauth    0      all    none   none
-+access MyROGroup ""      any       noauth    0      all    none   none
++access MyROGroup ""      any       noauth    exact      all    none   none
  #access MyRWGroup ""      any       noauth    0      all    all    all
  
  
