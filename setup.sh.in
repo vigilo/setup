@@ -2,20 +2,17 @@
 
 print_help (){
     cat << HELPMSG
-setup [--admin|--metro|--sup [--help|-h]]
+Usage : $0 [--admin|--metro|--sup|--no-verify-rpm|--auto|--default-password [--help|-h]]
 
-Purpose: setup configure vigilo server.
+Par défaut, installe un serveur avec toutes les options.
 
-Usage:  setup [--admin|--metro|--sup|--no-verify-rpm|--auto|--default-password [--help|-h]]
-Par défaut installe un serveur avec toutes les options.
-
---admin installe un serveur "Administration Centrale" (experimental)
---metro installe un serveur "Stockage de données de métrologie" (experimental)
---sup   installe un serveur "Collecte de Supervision
---no-verify-rpm ne vérifie pas la signature rpm des paquets
+Options :
+--admin installe un serveur "Administration Centrale" (expérimental)
+--metro installe un serveur "Stockage de données de métrologie" (expérimental)
+--sup   installe un serveur "Collecte de Supervision"
+--no-verify-rpm ne vérifie pas la signature RPM des paquets
 --auto ne demande pas de confirmation pour l'installation des dépendances des paquets
 --default-password ne demande pas de confirmation pour l'installation des mots de passe par défaut
-"
 
 HELPMSG
     exit 0
@@ -97,7 +94,7 @@ CONF=${CONF:-@SYSCONFDIR@/vigilo/setup/setup.conf}
 if [ -f $CONF ]; then
     . $CONF
 else
-    echo "Can't find $CONF. Abort"
+    echo "Can't find $CONF. Aborting"
     exit 1
 fi
 
