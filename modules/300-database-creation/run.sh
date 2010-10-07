@@ -1,4 +1,4 @@
-#!bin/sh
+#!/bin/sh
 
 echo "Création de la base de données PostgreSQL"
 chkconfig postgresql on
