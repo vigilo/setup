@@ -2,7 +2,6 @@
 
 echo "Installation des paquets Vigilo pour un serveur d'administration Centrale"
 pkgs="
-vigilo-connector-vigiboard
 vigilo-correlator
 vigilo-perfdata2vigilo
 vigilo-vigiboard
