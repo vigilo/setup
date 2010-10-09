@@ -31,7 +31,6 @@ enabled=1
 gpgcheck=1
 metadata_expire=1d
 EOF
-    [ -f /etc/yum.repos.d/epel.repo ] || yum -y --nogpgcheck install epel-release
 fi
 
 [ -f /etc/yum/pluginconf.d/fastestmirror.conf ] && \
