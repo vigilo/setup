@@ -39,6 +39,7 @@ svn import . $svnurl -m "Initial import"
 cd ..
 svn co $svnurl conf.d
 svn propset svn:keywords Rev conf.d/general/apps.py
+svn propset svn:ignore "*.pyc\n*.pyo\n" conf.d/general
 chown vigiconf:vigiconf -R conf.d
 popd
 
