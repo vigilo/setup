@@ -36,3 +36,6 @@ fi
 [ -f /etc/yum/pluginconf.d/fastestmirror.conf ] && \
     sed -i -e 's/^enabled=1$/enabled=0/' /etc/yum/pluginconf.d/fastestmirror.conf
 
+# pour éviter de sortir en erreur si le fichier /etc/yum/pluginconf.d/fastestmirror.conf n'existe pas
+:
+
