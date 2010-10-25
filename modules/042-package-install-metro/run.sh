@@ -7,6 +7,7 @@ vigilo-connector-metro-vigiconf
 vigilo-vigirrd
 vigilo-vigirrd-vigiconf
 vigilo-vigiconf-local
+vigilo-nagios-plugins-rrd
 "
 
 $PKG_INSTALLER `echo $pkgs | tr '\n' ' '`
