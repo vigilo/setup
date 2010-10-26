@@ -7,8 +7,9 @@ chkconfig ejabberd on
 service ejabberd status &> /dev/null  || service ejabberd start || exit $?
 sleep 5
 for connector in connector-nagios connector-metro connector-diode correlator; do
-    [ -f /etc/vigilo/$connector/settings.ini ] || continue
-    password=`awk '/^password/ {print $3}' /etc/vigilo/$connector/settings.ini`
+    if [ -f /etc/vigilo/$connector/settings.ini ] ; then
+        password=`awk '/^password/ {print $3}' /etc/vigilo/$connector/settings.ini`
+    fi
     # case where a server dont have all the connector.
     [ -z "$password" ] && password=$connector
     ejabberdctl register $connector localhost $password || :
