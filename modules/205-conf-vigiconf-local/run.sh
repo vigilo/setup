@@ -5,6 +5,7 @@ echo "Configuration de VigiConf-local"
 # sudo
 if ! grep -qs ^vigiconf /etc/sudoers; then
     echo '# VigiConf' >> /etc/sudoers
+    echo 'Defaults:vigiconf !requiretty' >> /etc/sudoers
     echo 'Cmnd_Alias INIT = /etc/init.d/*' >> /etc/sudoers
     echo 'Cmnd_Alias VALID = /usr/sbin/nagios' >> /etc/sudoers
     echo 'vigiconf ALL=(ALL) NOPASSWD: INIT, VALID' >> /etc/sudoers
@@ -21,5 +22,3 @@ Emplacement de la clef publique sur le serveur de local:
     echo "Appuyer sur ENTREZ pour continuer, ou Faite Ctrl-C pour arrêter le script" | fmt
     [ -z "$DEFAULT_PASSWORD" ] && read || :
 fi
-
-
