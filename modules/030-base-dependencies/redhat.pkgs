@@ -6,7 +6,7 @@ nagios-plugins-ntp
 nrpe
 vigilo-nagios-plugins-cpu
 vigilo-nagios-plugins-raid
-postgresql-server
+postgresql84-server
 net-snmp
 ejabberd
 memcached
