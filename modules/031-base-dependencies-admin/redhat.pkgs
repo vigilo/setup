@@ -1,5 +1,7 @@
 nagios-plugins-ntp
 nrpe
+nagios-plugins-ping
+nagios-plugins-ssh
 vigilo-nagios-plugins-cpu
 vigilo-nagios-plugins-raid
 postgresql84-server
