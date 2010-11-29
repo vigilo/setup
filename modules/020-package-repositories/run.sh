@@ -1,14 +1,14 @@
 #!/bin/sh
 
 if [ -z "$VIGILO_REPO" ]; then
-    echo "La variable VIGILO_REPO doit être déclarée"
-    exit 1
+    echo "La variable VIGILO_REPO n'est pas déclarée."
+    exit 0
 fi
 
 
 if [ -z "$VIGILO_DEPS_REPO" ]; then
-    echo "La variable VIGILO_DEPS_REPO doit être déclarée"
-    exit 1
+    echo "La variable VIGILO_DEPS_REPO n'est pas déclarée"
+    exit 0
 fi
 
 if [ "$DISTRO" == "mandriva" ]; then
