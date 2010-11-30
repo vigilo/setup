@@ -154,6 +154,7 @@ if [ "$?" == "0" ]; then
     echo
     echo "Maintenant, vérifiez dans /var/log/messages que tout s'est bien passé. Nagios devrait tourner."
     echo "Nagios est accessible sur http://`hostname -f`/nagios/ avec le login \"nagios\" et le mot de passe \"`cat /etc/nagios/passwd.plaintext`\" "
+    echo "Pensez à régler ce mot de passe dans les fichiers settings.ini des interfaces web."
 fi
 
 echo "$TAG" | grep -E -q "admin"
