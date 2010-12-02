@@ -1,0 +1,20 @@
+#!/bin/sh
+
+echo "Configuration de snmptt"
+
+if [ ! -f /etc/snmp/snmptrapd.conf.orig ]; then
+    echo "Patch /etc/snmp/snmptrapd.conf"
+    cfgpatch=snmptrapd.$DISTRO.patch
+    patch -N -b /etc/snmp/snmptrapd.conf < $cfgpatch
+fi
+
+if [ ! -f /etc/snmp/snmptt.conf.orig ];then
+    mv /etc/snmp/snmptt.conf /etc/snmp/snmptt.conf.orig
+    ln -s /etc/vigilo/vigiconf/prod/snmptt/snmptt.conf /etc/snmp/snmptt.conf
+fi
+
+TARGET="@LIBEXECDIR@/vigilo/snmptt"
+if [ ! -d "$TARGET"  ];then
+    mkdir $TARGET
+    cp README $TARGET
+fi

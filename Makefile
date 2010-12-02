@@ -20,13 +20,17 @@ endef
 DISTRO := $(shell $(find-distro))
 DIST_TAG = $(DISTRO)
 
+modules/150-conf-snmptt/run.sh: modules/150-conf-snmptt/run.sh.in
+	sed -e 's,@LIBEXECDIR@,$(LIBEXECDIR),g' $^ > $@
+	rm modules/150-conf-snmptt/run.sh.in
+
 setup.sh: setup.sh.in
 	sed -e 's,@SYSCONFDIR@,$(SYSCONFDIR),g' $^ > $@
 
 setup.conf: setup.conf.in
 	sed -e 's,@LIBEXECDIR@,$(LIBEXECDIR),g' $^ > $@
 
-install: setup.sh setup.conf $(PYTHON)
+install: setup.sh setup.conf modules/150-conf-snmptt/run.sh $(PYTHON)
 	install -D -m 755 -p setup.sh $(DESTDIR)$(SBINDIR)/vigilo-setup
 	install -D -m 644 -p setup.conf $(DESTDIR)$(SYSCONFDIR)/vigilo/setup/setup.conf
 	mkdir -p $(DESTDIR)$(LIBEXECDIR)/vigilo/setup

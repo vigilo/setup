@@ -8,6 +8,8 @@ nrpe
 vigilo-nagios-plugins-cpu
 vigilo-nagios-plugins-raid
 glibc-devel
+snmptt
+net-snmp-trapd
 # glibc-devel : pour eviter un choix interactif après
 
 
