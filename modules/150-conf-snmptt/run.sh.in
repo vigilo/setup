@@ -4,8 +4,14 @@ echo "Configuration de snmptt"
 
 if [ ! -f /etc/snmp/snmptrapd.conf.orig ]; then
     echo "Patch /etc/snmp/snmptrapd.conf"
-    cfgpatch=snmptrapd.$DISTRO.patch
+    cfgpatch=snmptrapd.conf.$DISTRO.patch
     patch -N -b /etc/snmp/snmptrapd.conf < $cfgpatch
+fi
+
+if [ ! -f /etc/sysconfig/snmptrapd.orig ]; then
+    echo "Patch /etc/sysconfig/snmptrad"
+    cfgpatch=snmptrapd.init.$DISTRO.patch
+    patch -N -b /etc/sysconfig/snmptrapd < $cfgpatch
 fi
 
 if [ ! -f /etc/snmp/snmptt.conf.orig ];then
