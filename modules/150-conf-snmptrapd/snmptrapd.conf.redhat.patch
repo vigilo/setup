@@ -1,0 +1,5 @@
+--- /etc/snmp/snmptrapd.conf.orig	2010-12-16 17:30:03.000000000 +0100
++++ /etc/snmp/snmptrapd.conf	2010-12-16 17:29:53.000000000 +0100
+@@ -0,0 +1,2 @@
++traphandle default /usr/sbin/snmptthandler
++authCommunity log,execute public
