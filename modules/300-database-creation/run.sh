@@ -2,7 +2,7 @@
 
 echo "Création de la base de données PostgreSQL"
 chkconfig postgresql on
-pgrep postmaster > /dev/null || service postgresql start
+pgrep postmaster > /dev/null || (/etc/init.d/postgresql initdb &> /dev/null; /etc/init.d/postgresql start)
 
 dbname=`awk -F= '/^sqlalchemy_url/ {gsub(".*/","",$2); print $2}' /etc/vigilo/models/settings.ini`
 dbuser=`awk -F= '/^sqlalchemy_url/ {gsub("\\\\w+://","",$2); gsub(":.*","",$2); print $2}' /etc/vigilo/models/settings.ini`
