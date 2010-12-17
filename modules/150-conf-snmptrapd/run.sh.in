@@ -8,14 +8,19 @@ if [ ! -f /etc/snmp/snmptrapd.conf.orig ]; then
     patch -N -b /etc/snmp/snmptrapd.conf < $cfgpatch
 fi
 
-if [ ! -f /etc/sysconfig/snmptrapd.orig ]; then
+file="/etc/sysconfig/snmptrapd"
+if [ $DISTRO == "redhat" ]; then
+    file="/etc/sysconfig/snmptrapd.options"
+fi
+
+if [ ! -f $file.orig ]; then
     echo "Patch /etc/sysconfig/snmptrad"
     cfgpatch=snmptrapd.init.$DISTRO.patch
-    patch -N -b /etc/sysconfig/snmptrapd < $cfgpatch
+    patch -N -b $file < $cfgpatch
 fi
 
 if [ ! -f /etc/snmp/snmptt.conf.orig ];then
-    mv /etc/snmp/snmptt.conf /etc/snmp/snmptt.conf.orig
+    mv /etc/snmp/snmptt.conf /etc/snmp/snmptt.conf.orig || touch /etc/snmp/snmptt.conf.orig
     ln -s /etc/vigilo/vigiconf/prod/snmptt/snmptt.conf /etc/snmp/snmptt.conf
 fi
 
