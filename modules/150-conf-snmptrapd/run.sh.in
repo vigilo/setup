@@ -20,7 +20,8 @@ if [ ! -f $file.orig ]; then
 fi
 
 if [ ! -f /etc/snmp/snmptt.conf.orig ];then
-    mv /etc/snmp/snmptt.conf /etc/snmp/snmptt.conf.orig || touch /etc/snmp/snmptt.conf.orig
+    [ -f /etc/snmp/snmptt.conf ] || touch /etc/snmp/snmpt.conf
+    mv /etc/snmp/snmptt.conf /etc/snmp/snmptt.conf.orig
     ln -s /etc/vigilo/vigiconf/prod/snmptt/snmptt.conf /etc/snmp/snmptt.conf
 fi
 
