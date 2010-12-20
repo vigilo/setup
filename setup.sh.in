@@ -72,11 +72,13 @@ if [ -f /etc/mandriva-release ]; then
     DIST_VER=`sed -e 's/.* release \([0-9]\+\).*/\1/' /etc/mandriva-release`
     DIST_TAG=mes$DIST_VER
     PKG_INSTALLER="urpmi ${AUTO_INSTALL:+"--auto"} ${RPM_SIGNATURE_CHECK:+"--no-verify-rpm"}"
+    PYTHON=/usr/bin/python
 elif [ -f /etc/redhat-release ]; then
     DISTRO=redhat
     DIST_VER=`sed -e 's/.* release \([0-9]\+\).*/\1/' /etc/redhat-release`
     DIST_TAG=rhel$DIST_VER
     PKG_INSTALLER="yum ${AUTO_INSTALL:+"-y"} ${RPM_SIGNATURE_CHECK:+"--nogpgcheck"} install"
+    PYTHON=/usr/bin/python2.6
 else
     echo "WARNING: unsupported distribution. Do you want to proceed anyway ? (y/N)"
     read answer
@@ -85,7 +87,7 @@ else
         exit 0
     fi
 fi
-export DISTRO DIST_VER DIST_TAG PKG_INSTALLER
+export DISTRO DIST_VER DIST_TAG PKG_INSTALLER PYTHON
 
 
 # Lecture de la conf
