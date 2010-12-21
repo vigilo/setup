@@ -10,6 +10,7 @@ nodes=(
     /vigilo/perf
     /vigilo/state
     /vigilo/nagios
+    /vigilo/command
     /vigilo/statistics
 )
 
