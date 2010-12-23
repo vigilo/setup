@@ -3,6 +3,7 @@ nagios-plugins-ping
 nagios-plugins-ssh
 nagios-plugins-nrpe
 nagios-plugins-ntp
+nagios-plugins-dummy
 nrpe
 vigilo-nagios-plugins-cpu
 vigilo-nagios-plugins-raid

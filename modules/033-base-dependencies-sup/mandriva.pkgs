@@ -2,6 +2,7 @@ nagios
 nagios-www
 nagios-check_nrpe
 nagios-check_ntp
+nagios-check_dummy
 net-snmp
 patch
 nrpe
