@@ -155,3 +155,12 @@
  
  
  
+@@ -1224,7 +1231,7 @@
+ # Values: 1 - Enabled tweaks
+ #         0 - Disable tweaks (default)
+ 
+-use_large_installation_tweaks=0
++use_large_installation_tweaks=1
+ 
+ 
+ 
