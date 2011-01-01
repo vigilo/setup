@@ -164,3 +164,12 @@
  
  
  
+@@ -1238,7 +1245,7 @@
+ # Values: 1 - Enable environment variable macros (default)
+ #         0 - Disable environment variable macros
+ 
+-enable_environment_macros=1
++enable_environment_macros=0
+ 
+ 
+ 
