@@ -8,3 +8,4 @@ nrpe
 vigilo-nagios-plugins-cpu
 vigilo-nagios-plugins-raid
 net-snmp
+snmptt
