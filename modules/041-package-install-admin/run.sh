@@ -10,6 +10,7 @@ vigilo-vigiconf-local
 vigilo-vigimap
 vigilo-vigigraph
 vigilo-vigiadmin
+vigilo-repoze.who.plugins.vigilo.kerberos
 "
 
 $PKG_INSTALLER `echo $pkgs | tr '\n' ' '`
