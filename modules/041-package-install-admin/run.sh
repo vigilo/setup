@@ -9,6 +9,7 @@ vigilo-vigiconf
 vigilo-vigiconf-local
 vigilo-vigimap
 vigilo-vigigraph
+vigilo-vigiadmin
 "
 
 $PKG_INSTALLER `echo $pkgs | tr '\n' ' '`
