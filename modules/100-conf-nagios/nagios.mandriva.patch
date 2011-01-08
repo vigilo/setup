@@ -29,6 +29,15 @@ diff -Nru /etc/nagios.orig/nagios.cfg /etc/nagios/nagios.cfg
  
  
  # OBJECT CACHE FILE
+@@ -329,7 +335,7 @@
+ # checks - see the option below for controlling whether or not
+ # passive checks are logged.
+ 
+-log_external_commands=1
++log_external_commands=0
+ 
+ 
+ 
 @@ -338,7 +344,7 @@
  # this value to 0.  If passive checks should be logged, set
  # this value to 1.
