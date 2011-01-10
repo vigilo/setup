@@ -7,5 +7,6 @@ nagios-plugins-dummy
 nrpe
 vigilo-nagios-plugins-cpu
 vigilo-nagios-plugins-raid
+vigilo-nrpe-config
 net-snmp
 snmptt

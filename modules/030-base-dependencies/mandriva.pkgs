@@ -14,6 +14,7 @@ net-snmp
 nrpe
 vigilo-nagios-plugins-cpu
 vigilo-nagios-plugins-raid
+vigilo-nrpe-config
 ejabberd
 glibc-devel
 # glibc-devel : pour eviter un choix interactif après

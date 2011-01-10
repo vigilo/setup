@@ -4,3 +4,4 @@ patch
 nrpe
 vigilo-nagios-plugins-cpu
 vigilo-nagios-plugins-raid
+vigilo-nrpe-config
