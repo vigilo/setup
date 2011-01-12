@@ -1,5 +1,22 @@
 --- /etc/ejabberd/ejabberd.cfg.orig	2010-08-31 17:13:14.000000000 +0200
 +++ /etc/ejabberd/ejabberd.cfg	2010-08-31 17:16:24.000000000 +0200
+@@ -342,6 +342,7 @@
+ %% The "fast" shaper limits traffic speed to 50.000 B/s
+ %%
+ {shaper, fast, {maxrate, 50000}}.
++{shaper, veryfast, {maxrate, 100000000}}. % 100 KB/s
+ 
+ 
+ %%%.   ====================
+@@ -401,7 +402,7 @@
+ 
+ %% For C2S connections, all users except admins use "normal" shaper
+ {access, c2s_shaper, [{none, admin},
+-		      {normal, all}]}.
++		      {veryfast, all}]}.
+ 
+ %% All S2S connections use "fast" shaper
+ {access, s2s_shaper, [{fast, all}]}.
 @@ -506,7 +506,13 @@
    {mod_ping,     []},
    {mod_privacy,  []},
