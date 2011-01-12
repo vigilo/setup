@@ -8,6 +8,7 @@ patch
 nrpe
 vigilo-nagios-plugins-cpu
 vigilo-nagios-plugins-raid
+vigilo-nagios-config
 vigilo-nrpe-config
 glibc-devel
 snmptt

@@ -3,4 +3,5 @@ nrpe
 net-snmp
 vigilo-nagios-plugins-cpu
 vigilo-nagios-plugins-raid
+vigilo-nagios-config
 vigilo-nrpe-config

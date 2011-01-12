@@ -5,12 +5,9 @@ echo "Configuration de Nagios"
 cfgpatch=nagios.$DISTRO.patch
 
 [ -f /etc/nagios/nagios.cfg.orig ] || patch -N -b /etc/nagios/nagios.cfg < $cfgpatch
-[ -f /etc/nagios/vigilo.cfg ] || cp nagios-vigilo.cfg /etc/nagios/vigilo.cfg
 
 if [ "$DISTRO" == "redhat" ]; then
-    # Sur Red Hat, les plugins ne sont pas fournis avec leur fichier de conf
-    cp -p plugin-commands.cfg /etc/nagios/
-    # Et les permissions du fichier de commandes externes ne permettent pas aux CGIs d'y écrire
+    # Sur RedHat, les permissions du fichier de commandes externes ne permettent pas aux CGIs d'y écrire
     usermod -G nagios apache
 fi
 

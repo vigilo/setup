@@ -24,7 +24,7 @@
  #cfg_dir=/etc/nagios/routers
  
 +# Command definitions for Nagios plugins
-+cfg_file=/etc/nagios/plugin-commands.cfg
++cfg_file=/etc/nagios/objects/plugin-commands.cfg
  
 +# Vigilo specific file
 +cfg_file=/etc/nagios/vigilo.cfg
