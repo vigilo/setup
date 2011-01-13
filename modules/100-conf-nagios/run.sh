@@ -43,5 +43,5 @@ else
 fi
 if ! grep -qs $crdir /etc/fstab; then
     echo "tmpfs    $crdir    tmpfs   defaults    0 0" >> /etc/fstab
-    mount /var/log/nagios/spool/checkresults
+    mount $crdir
 fi
