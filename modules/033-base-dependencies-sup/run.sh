@@ -13,5 +13,5 @@ $PKG_INSTALLER $pkgs
 
 if [ "$DISTRO" == "mandriva"  ] ; then
     # on désactive le configuration de la commande de check_dummy (on la définit dans vigilo.cfg)
-    mv /etc/nagios/plugins.d/check_dummy.cfg /etc/nagios/plugins.d/check_dummy.cfg.old
+    ([ -f /etc/nagios/plugins.d/check_dummy.cfg ] && mv /etc/nagios/plugins.d/check_dummy.cfg /etc/nagios/plugins.d/check_dummy.cfg.old) || :
 fi
