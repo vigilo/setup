@@ -34,3 +34,14 @@ if [ ! -f /etc/nagios/passwd.plaintext ]; then
     htpasswd -c -b /etc/nagios/passwd nagios $passwd
     sed -i -e "s/nagiosadmin/nagios/g" /etc/nagios/cgi.cfg
 fi
+
+# Optimisation: mettre le répertoire des résultats de Nagios en RAM
+if [ "$DISTRO" == "redhat" ]; then
+    crdir=/var/log/nagios/spool/checkresults
+else
+    crdir=/var/spool/nagios/checkresults
+fi
+if ! grep -qs $crdir /etc/fstab; then
+    echo "tmpfs    $crdir    tmpfs   defaults    0 0" >> /etc/fstab
+    mount /var/log/nagios/spool/checkresults
+fi

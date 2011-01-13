@@ -34,6 +34,33 @@
  
  
  # OBJECT CACHE FILE
+@@ -103,7 +110,7 @@
+ # The contents of the status file are deleted every time Nagios
+ #  restarts.
+ 
+-status_file=/var/log/nagios/status.dat
++status_file=/dev/shm/nagios-status.dat
+ 
+ 
+ 
+@@ -198,7 +205,7 @@
+ # is created, used, and deleted throughout the time that Nagios is
+ # running.
+ 
+-temp_file=/var/log/nagios/nagios.tmp
++temp_file=/dev/shm/nagios.tmp
+ 
+ 
+ 
+@@ -206,7 +213,7 @@
+ # This is path where Nagios can create temp files for service and
+ # host check results, etc.
+ 
+-temp_path=/tmp
++temp_path=/dev/shm
+ 
+ 
+ 
 @@ -328,7 +335,7 @@
  # checks - see the option below for controlling whether or not
  # passive checks are logged.
