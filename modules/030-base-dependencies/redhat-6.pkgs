@@ -1,0 +1,14 @@
+nagios
+nagios-plugins-ping
+nagios-plugins-ssh
+nagios-plugins-nrpe
+nagios-plugins-ntp
+nrpe
+vigilo-nagios-plugins-cpu
+vigilo-nagios-plugins-raid
+vigilo-nagios-config
+vigilo-nrpe-config
+postgresql-server
+net-snmp
+ejabberd
+memcached
