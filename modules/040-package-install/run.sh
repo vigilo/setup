@@ -19,4 +19,10 @@ vigilo-vigirrd
 vigilo-vigirrd-vigiconf
 "
 
+rpm -q mod_python &> /dev/null
+if [ "$?" == "0" ] ; then
+    echo "Conflit détecté: mod_python est installé (incompatible avec mod_wsgi)"
+    exit 1
+fi
+
 $PKG_INSTALLER `echo $pkgs | tr '\n' ' '`
