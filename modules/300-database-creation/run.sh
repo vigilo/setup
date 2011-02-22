@@ -32,7 +32,7 @@ if ! sudo -u postgres psql -A -t -l | grep -qs '^'$dbname; then
     sudo -u postgres createdb $dbname --owner $dbuser --encoding UTF8 || exit $?
     echo "Création des tables dans la base de données PostgreSQL"
     mkdir -p log
-    vigilo-models-init-db || exit $?
+    vigilo-updatedb || exit $?
     echo "(Désactivé) Remplissage de la base de données PostgreSQL"
     #vigilo-models-demo example1
     rm -rf log
