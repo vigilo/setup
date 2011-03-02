@@ -168,6 +168,15 @@ diff -Nru /etc/nagios.orig/nagios.cfg /etc/nagios/nagios.cfg
  
  
  
+@@ -1145,7 +1151,7 @@
+ # be used in host names, service descriptions, or names of other
+ # object types.
+ 
+-illegal_object_name_chars=`~!$%^&*|'"<>?,()=
++illegal_object_name_chars=`~!$%^&*|"<>?,()=
+ 
+ 
+ 
 @@ -1225,7 +1231,7 @@
  # Values: 1 - Enabled tweaks
  #         0 - Disable tweaks (default)
