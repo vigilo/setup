@@ -7,6 +7,7 @@ vigilo-perfdata2vigilo
 vigilo-vigiboard
 vigilo-vigiconf
 vigilo-vigiconf-local
+vigilo-connector-syncevents
 vigilo-vigimap
 vigilo-vigigraph
 vigilo-vigiadmin

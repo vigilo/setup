@@ -8,6 +8,7 @@ vigilo-connector-nagios
 vigilo-connector-metro
 vigilo-connector-metro-vigiconf
 vigilo-connector-diode
+vigilo-connector-syncevents
 vigilo-correlator
 vigilo-perfdata2vigilo
 vigilo-vigiboard
