@@ -1,6 +1,6 @@
 %define module  setup
 %define name    vigilo-%{module}
-%define version 2.0.0
+%define version @VERSION@
 %define release 1%{?svn}%{?dist}
 
 Name:       %{name}
@@ -8,7 +8,7 @@ Summary:    Install scripts for Vigilo
 Summary(fr): Scripts d'install de Vigilo
 Version:    %{version}
 Release:    %{release}
-Source0:    %{module}.tar.bz2
+Source0:    %{name}-%{version}.tar.gz
 URL:        http://www.projet-vigilo.org
 Group:      System/Servers
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-build
@@ -25,7 +25,7 @@ Ce module contient les scripts d'installation de Vigilo.
 Ce programme fait partie du projet Vigilo <http://vigilo-project.org>
 
 %prep
-%setup -q -n %{module}
+%setup -q
 
 %build
 make \
