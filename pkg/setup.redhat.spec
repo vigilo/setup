@@ -46,7 +46,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc COPYING
+%doc COPYING.txt
 %attr(755,root,root) %{_sbindir}/vigilo-setup
 %{_libexecdir}/vigilo
 %dir %{_sysconfdir}/vigilo/
