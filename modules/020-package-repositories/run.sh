@@ -1,4 +1,6 @@
 #!/bin/sh
+# Copyright (C) 2006-2011 CS-SI
+# License: GNU GPL v2 <http://www.gnu.org/licenses/gpl-2.0.html>
 
 if [ -z "$VIGILO_REPO" ]; then
     echo "La variable VIGILO_REPO n'est pas déclarée."
