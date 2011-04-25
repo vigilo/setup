@@ -10,9 +10,11 @@ vigilo-connector-metro-vigiconf
 vigilo-connector-diode
 vigilo-connector-syncevents
 vigilo-correlator
+vigilo-correlator-enterprise
 vigilo-perfdata2vigilo
 vigilo-vigiboard
 vigilo-vigiconf
+vigilo-vigiconf-enterprise
 vigilo-vigiconf-local
 vigilo-vigimap
 vigilo-vigigraph
