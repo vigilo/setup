@@ -26,10 +26,10 @@
 +# Command definitions for Nagios plugins
 +cfg_dir=/etc/nagios/plugins.d/
  
-+# Vigilo specific file
-+cfg_file=/etc/nagios/vigilo.cfg
++# Vigilo specific files
++cfg_dir=/etc/nagios/vigilo.d/
 +
-+# Vigiconf-generated conf file
++# Vigiconf-generated conf files
 +cfg_dir=/etc/vigilo/vigiconf/prod/nagios
  
  
