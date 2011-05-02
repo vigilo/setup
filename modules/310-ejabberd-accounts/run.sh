@@ -19,7 +19,4 @@ for connector in connector-diode connector-nagios connector-metro connector-sync
         password=$connector
     fi
     ejabberdctl register $username localhost $password || :
-    echo -n "."
 done
-
-echo "."

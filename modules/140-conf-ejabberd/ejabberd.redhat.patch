@@ -12,8 +12,8 @@
  
  %% For C2S connections, all users except admins use the "normal" shaper
  {access, c2s_shaper, [{none, admin},
--                     {none, all}]}.
-+                     {veryfast, all}]}.
+-		      {normal, all}]}.
++		      {veryfast, all}]}.
  
  %% All S2S connections use the "fast" shaper
  {access, s2s_shaper, [{fast, all}]}.
