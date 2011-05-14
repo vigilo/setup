@@ -12,6 +12,7 @@ vigilo-vigiconf-local
 vigilo-connector-syncevents
 vigilo-vigimap
 vigilo-vigigraph
+vigilo-vigigraph-enterprise
 vigilo-vigiadmin
 vigilo-repoze.who.plugins.vigilo.kerberos
 "

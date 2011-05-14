@@ -18,6 +18,7 @@ vigilo-vigiconf-enterprise
 vigilo-vigiconf-local
 vigilo-vigimap
 vigilo-vigigraph
+vigilo-vigigraph-enterprise
 vigilo-vigirrd
 vigilo-vigirrd-vigiconf
 "
