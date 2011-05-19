@@ -74,7 +74,15 @@ diff -Nru /etc/nagios.orig/nagios.cfg /etc/nagios/nagios.cfg
  
  
  
-@@ -379,7 +385,7 @@
+@@ -353,6 +359,7 @@
+ 
+ #global_host_event_handler=somecommand
+ #global_service_event_handler=somecommand
++global_service_event_handler=handler-vigilo-service
+ 
+ 
+ 
+@@ -379,7 +386,7 @@
  # program start time that an initial check of all services should
  # be completed.  Default is 30 minutes.
  
@@ -83,7 +91,7 @@ diff -Nru /etc/nagios.orig/nagios.cfg /etc/nagios/nagios.cfg
  
  
  
-@@ -440,7 +446,7 @@
+@@ -440,7 +447,7 @@
  # This is the frequency (in seconds!) that Nagios will process
  # the results of host and service checks.
  
@@ -92,7 +100,7 @@ diff -Nru /etc/nagios.orig/nagios.cfg /etc/nagios/nagios.cfg
  
  
  
-@@ -607,8 +613,8 @@
+@@ -607,8 +614,8 @@
  # ocsp command, and performance data commands.  All values are in
  # seconds.
  
@@ -103,7 +111,7 @@ diff -Nru /etc/nagios.orig/nagios.cfg /etc/nagios/nagios.cfg
  event_handler_timeout=30
  notification_timeout=30
  ocsp_timeout=5
-@@ -829,7 +835,7 @@
+@@ -829,7 +836,7 @@
  # performance data.
  # Values: 1 = process performance data, 0 = do not process performance data
  
@@ -112,7 +120,7 @@ diff -Nru /etc/nagios.orig/nagios.cfg /etc/nagios/nagios.cfg
  
  
  
-@@ -841,8 +847,8 @@
+@@ -841,8 +848,8 @@
  # define in your host configuration file.  Read the HTML docs for
  # more information on performance data.
  
@@ -123,7 +131,7 @@ diff -Nru /etc/nagios.orig/nagios.cfg /etc/nagios/nagios.cfg
  
  
  
-@@ -1013,7 +1019,7 @@
+@@ -1013,7 +1020,7 @@
  # check the "freshness" of service check results.  If you have
  # disabled service freshness checking, this option has no effect.
  
@@ -132,7 +140,7 @@ diff -Nru /etc/nagios.orig/nagios.cfg /etc/nagios/nagios.cfg
  
  
  
-@@ -1024,7 +1030,7 @@
+@@ -1024,7 +1031,7 @@
  # manner.
  # Values: 1 = enabled freshness checking, 0 = disable freshness checking
  
@@ -141,7 +149,7 @@ diff -Nru /etc/nagios.orig/nagios.cfg /etc/nagios/nagios.cfg
  
  
  
-@@ -1033,7 +1039,7 @@
+@@ -1033,7 +1040,7 @@
  # check the "freshness" of host check results.  If you have
  # disabled host freshness checking, this option has no effect.
  
@@ -150,7 +158,7 @@ diff -Nru /etc/nagios.orig/nagios.cfg /etc/nagios/nagios.cfg
  
  
  
-@@ -1060,7 +1066,7 @@
+@@ -1060,7 +1067,7 @@
  # Values: 1 = enable flap detection
  #         0 = disable flap detection (default)
  
@@ -159,7 +167,7 @@ diff -Nru /etc/nagios.orig/nagios.cfg /etc/nagios/nagios.cfg
  
  
  
-@@ -1085,7 +1091,7 @@
+@@ -1085,7 +1092,7 @@
  #	strict-iso8601	(YYYY-MM-DDTHH:MM:SS)
  #
  
@@ -168,7 +176,7 @@ diff -Nru /etc/nagios.orig/nagios.cfg /etc/nagios/nagios.cfg
  
  
  
-@@ -1145,7 +1151,7 @@
+@@ -1145,7 +1152,7 @@
  # be used in host names, service descriptions, or names of other
  # object types.
  
@@ -177,7 +185,7 @@ diff -Nru /etc/nagios.orig/nagios.cfg /etc/nagios/nagios.cfg
  
  
  
-@@ -1225,7 +1231,7 @@
+@@ -1225,7 +1232,7 @@
  # Values: 1 - Enabled tweaks
  #         0 - Disable tweaks (default)
  
@@ -186,7 +194,7 @@ diff -Nru /etc/nagios.orig/nagios.cfg /etc/nagios/nagios.cfg
  
  
  
-@@ -1239,7 +1245,7 @@
+@@ -1239,7 +1246,7 @@
  # Values: 1 - Enable environment variable macros (default)
  #         0 - Disable environment variable macros
  

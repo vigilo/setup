@@ -79,7 +79,15 @@
  
  
  
-@@ -378,7 +385,7 @@
+@@ -352,6 +359,7 @@
+ 
+ #global_host_event_handler=somecommand
+ #global_service_event_handler=somecommand
++global_service_event_handler=handler-vigilo-service
+ 
+ 
+ 
+@@ -378,7 +386,7 @@
  # program start time that an initial check of all services should
  # be completed.  Default is 30 minutes.
  
@@ -88,7 +96,7 @@
  
  
  
-@@ -439,7 +446,7 @@
+@@ -439,7 +447,7 @@
  # This is the frequency (in seconds!) that Nagios will process
  # the results of host and service checks.
  
@@ -97,7 +105,7 @@
  
  
  
-@@ -606,8 +613,8 @@
+@@ -606,8 +614,8 @@
  # ocsp command, and performance data commands.  All values are in
  # seconds.
  
@@ -108,7 +116,7 @@
  event_handler_timeout=30
  notification_timeout=30
  ocsp_timeout=5
-@@ -728,7 +735,7 @@
+@@ -728,7 +736,7 @@
  # by Nagios Enterprises from the update check is processed in accordance 
  # with our privacy policy - see http://api.nagios.org for details.
  
@@ -117,7 +125,7 @@
  
  
  
-@@ -828,7 +835,7 @@
+@@ -828,7 +836,7 @@
  # performance data.
  # Values: 1 = process performance data, 0 = do not process performance data
  
@@ -126,7 +134,7 @@
  
  
  
-@@ -840,8 +847,8 @@
+@@ -840,8 +848,8 @@
  # define in your host configuration file.  Read the HTML docs for
  # more information on performance data.
  
@@ -137,7 +145,7 @@
  
  
  
-@@ -1012,7 +1019,7 @@
+@@ -1012,7 +1020,7 @@
  # check the "freshness" of service check results.  If you have
  # disabled service freshness checking, this option has no effect.
  
@@ -146,7 +154,7 @@
  
  
  
-@@ -1023,7 +1030,7 @@
+@@ -1023,7 +1031,7 @@
  # manner.
  # Values: 1 = enabled freshness checking, 0 = disable freshness checking
  
@@ -155,7 +163,7 @@
  
  
  
-@@ -1032,7 +1039,7 @@
+@@ -1032,7 +1040,7 @@
  # check the "freshness" of host check results.  If you have
  # disabled host freshness checking, this option has no effect.
  
@@ -164,7 +172,7 @@
  
  
  
-@@ -1059,7 +1066,7 @@
+@@ -1059,7 +1067,7 @@
  # Values: 1 = enable flap detection
  #         0 = disable flap detection (default)
  
@@ -173,7 +181,7 @@
  
  
  
-@@ -1084,7 +1091,7 @@
+@@ -1084,7 +1092,7 @@
  #	strict-iso8601	(YYYY-MM-DDTHH:MM:SS)
  #
  
@@ -182,7 +190,7 @@
  
  
  
-@@ -1144,7 +1151,7 @@
+@@ -1144,7 +1152,7 @@
  # be used in host names, service descriptions, or names of other
  # object types.
  
@@ -191,7 +199,7 @@
  
  
  
-@@ -1224,7 +1231,7 @@
+@@ -1224,7 +1232,7 @@
  # Values: 1 - Enabled tweaks
  #         0 - Disable tweaks (default)
  
@@ -200,7 +208,7 @@
  
  
  
-@@ -1238,7 +1245,7 @@
+@@ -1238,7 +1246,7 @@
  # Values: 1 - Enable environment variable macros (default)
  #         0 - Disable environment variable macros
  
