@@ -78,7 +78,7 @@ diff -Nru /etc/nagios.orig/nagios.cfg /etc/nagios/nagios.cfg
  
  #global_host_event_handler=somecommand
  #global_service_event_handler=somecommand
-+global_service_event_handler=handler-vigilo-service
++global_service_event_handler=handler_vigilo_service
  
  
  
