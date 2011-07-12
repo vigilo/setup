@@ -12,3 +12,4 @@ postgresql84-server
 net-snmp
 ejabberd
 memcached
+supervisor
