@@ -1,13 +1,10 @@
 %define module  setup
-%define name    vigilo-%{module}
-%define version @VERSION@
-%define release 1%{?dev}%{?dist}
 
-Name:       %{name}
+Name:       vigilo-%{module}
 Summary:    Install scripts for Vigilo
 Summary(fr): Scripts d'install de Vigilo
-Version:    %{version}
-Release:    %{release}
+Version:    @VERSION@
+Release:    @RELEASE@%{?dist}
 Source0:    %{name}-%{version}.tar.gz
 URL:        http://www.projet-vigilo.org
 Group:      System/Servers
