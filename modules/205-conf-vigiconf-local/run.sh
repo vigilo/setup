@@ -11,6 +11,7 @@ if ! grep -qs ^vigiconf /etc/sudoers; then
     echo 'Cmnd_Alias INIT = /etc/init.d/*' >> /etc/sudoers
     echo 'Cmnd_Alias VALID = /usr/sbin/nagios' >> /etc/sudoers
     echo 'vigiconf ALL=(ALL) NOPASSWD: INIT, VALID' >> /etc/sudoers
+    echo 'vigiconf ALL=(nagios) NOPASSWD: /usr/bin/pkill' >> /etc/sudoers
 fi
 
 # configuration de vigiconf pour un serveur recevant la configuration depuis l'exterieur
