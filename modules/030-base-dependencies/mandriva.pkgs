@@ -9,6 +9,7 @@ subversion-tools
 patch
 nagios-check_nrpe
 nagios-check_ntp
+nagios-check_fping
 socat
 net-snmp
 nrpe

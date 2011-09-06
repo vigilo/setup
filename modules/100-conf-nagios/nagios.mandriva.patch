@@ -203,3 +203,27 @@ diff -Nru /etc/nagios.orig/nagios.cfg /etc/nagios/nagios.cfg
  
  
  
+--- /etc/nagios/plugins.d/check_ping.cfg.orig	2011-09-06 17:12:16.000000000 +0200
++++ /etc/nagios/plugins.d/check_ping.cfg	2011-09-06 17:12:49.000000000 +0200
+@@ -7,7 +7,7 @@
+ 
+ # 'check-host-alive' command definition
+ define command{
+-	command_name	check-host-alive
++	command_name	check-host-alive_ping
+ 	command_line	/usr/lib64/nagios/plugins/check_ping -H $HOSTADDRESS$ -w 5000,100% -c 5000,100% -p 1
+ 	}
+ 
+--- /etc/nagios/plugins.d/check_fping.cfg.orig	2011-09-06 17:12:53.000000000 +0200
++++ /etc/nagios/plugins.d/check_fping.cfg	2011-09-06 17:13:08.000000000 +0200
+@@ -4,3 +4,10 @@
+ 	command_name	check_fping
+ 	command_line	/usr/lib64/nagios/plugins/check_fping -H $HOSTADDRESS$
+ 	}
++
++# 'check-host-alive' command definition
++define command{
++	command_name	check-host-alive
++	command_line	/usr/lib64/nagios/plugins/check_fping -H $HOSTADDRESS$ -w 5000,100% -c 5000,100% -n 1
++	}
++
