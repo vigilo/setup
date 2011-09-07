@@ -6,7 +6,8 @@ subversion
 subversion-tools
 patch
 socat
-nagios-check_ntp
+nagios-check_ntp_time
+nagios-check_ntp_peer
 net-snmp
 nrpe
 vigilo-nagios-plugins-cpu

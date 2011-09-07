@@ -1,4 +1,5 @@
-nagios-check_ntp
+nagios-check_ntp_peer
+nagios-check_ntp_time
 net-snmp
 patch
 nrpe

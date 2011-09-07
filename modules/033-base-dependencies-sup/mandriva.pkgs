@@ -1,7 +1,8 @@
 nagios
 nagios-www
 nagios-check_nrpe
-nagios-check_ntp
+nagios-check_ntp_time
+nagios-check_ntp_peer
 nagios-check_dummy
 net-snmp
 patch
