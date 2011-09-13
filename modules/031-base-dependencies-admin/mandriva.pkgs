@@ -2,6 +2,7 @@ postgresql8.3-server
 postgresql8.3
 python-psycopg2
 memcached
+vigilo-nagios-plugins-memcached
 subversion
 subversion-tools
 patch

@@ -13,6 +13,7 @@ vigilo-nagios-config
 vigilo-nagios-config-enterprise
 vigilo-nrpe-config
 vigilo-nrpe-config-enterprise
+vigilo-nagios-plugins-rrdcached
 glibc-devel
 snmptt
 net-snmp-trapd

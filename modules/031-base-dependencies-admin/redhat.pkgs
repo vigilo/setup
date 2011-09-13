@@ -12,4 +12,5 @@ postgresql84-server
 net-snmp
 ejabberd
 memcached
+vigilo-nagios-plugins-memcached
 patch
