@@ -9,7 +9,7 @@ if [ ! -f /etc/snmp/snmptrapd.conf.orig ]; then
 fi
 
 file="/etc/sysconfig/snmptrapd"
-if [ $DISTRO == "redhat" ]; then
+if [ "$DISTRO" == "redhat" ] && [ "$DIST_VER" == "5" ]; then
     file="/etc/sysconfig/snmptrapd.options"
 fi
 
