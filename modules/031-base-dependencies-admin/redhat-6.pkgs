@@ -12,3 +12,4 @@ postgresql-server
 net-snmp
 ejabberd
 memcached
+patch

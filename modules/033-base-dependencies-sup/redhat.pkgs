@@ -13,3 +13,4 @@ vigilo-nrpe-config
 vigilo-nrpe-config-enterprise
 net-snmp
 snmptt
+patch

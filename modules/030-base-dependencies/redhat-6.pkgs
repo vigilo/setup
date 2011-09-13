@@ -13,3 +13,4 @@ net-snmp
 ejabberd
 memcached
 supervisor
+patch
