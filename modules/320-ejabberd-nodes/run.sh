@@ -12,6 +12,7 @@ nodes=(
     /vigilo/nagios
     /vigilo/command
     /vigilo/statistics
+    /vigilo/computation_order
 )
 
 for i in `seq 1 ${#nodes[@]}`; do
