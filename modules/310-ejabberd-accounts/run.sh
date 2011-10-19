@@ -37,3 +37,17 @@ for connector in vigiconf; do
     fi
     ejabberdctl register $username localhost $password || :
 done
+
+# Connecteur vigiconf-hls.
+settings_file=/etc/vigilo/vigiconf/settings-hls.ini
+if [ -f "$settings_file" ] ; then
+    jid=`vigilo-config -s bus -g jid $settings_file 2>/dev/null || :`
+    username=`echo $jid | cut -d@ -f1`
+    password=`vigilo-config -s bus -g password $settings_file`
+else
+    # Si le serveur n'a pas tous les connecteurs installés
+    username=vigiconf-hls
+    password=vigiconf-hls
+fi
+ejabberdctl register $username localhost $password || :
+
