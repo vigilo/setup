@@ -47,3 +47,6 @@ if ! grep -qs $crdir /etc/fstab; then
     echo "tmpfs    $crdir    tmpfs   defaults    0 0" >> /etc/fstab
     mount $crdir
 fi
+
+# Lancement au boot
+chkconfig nagios on
