@@ -14,7 +14,6 @@ vigilo-vigimap
 vigilo-vigigraph
 vigilo-vigigraph-enterprise
 vigilo-vigiadmin
-vigilo-repoze.who.plugins.vigilo.kerberos
 "
 rpm -q mod_python &> /dev/null
 if [ "$?" == "0" ] ; then
