@@ -131,6 +131,24 @@ diff -Nru /etc/nagios.orig/nagios.cfg /etc/nagios/nagios.cfg
  
  
  
+@@ -922,7 +929,7 @@
+ # define in your host configuration file. Read the HTML docs for
+ # more information on implementing distributed monitoring.
+ 
+-#ocsp_command=somecommand
++#ocsp_command=ocsp-bus
+ 
+ 
+ 
+@@ -946,7 +953,7 @@
+ # define in your host configuration file. Read the HTML docs for
+ # more information on implementing distributed monitoring.
+ 
+-#ochp_command=somecommand
++#ochp_command=ochp-bus
+ 
+ 
+ 
 @@ -1013,7 +1020,7 @@
  # check the "freshness" of service check results.  If you have
  # disabled service freshness checking, this option has no effect.
