@@ -18,6 +18,7 @@ sleep 5
 if [ -f /var/lib/pgsql/data/pg_hba.conf ]; then
     if ! grep -qs vigilo /var/lib/pgsql/data/pg_hba.conf; then
         echo "Attention, l'utilisateur vigilo n'est pas autorisé à se connecter à la base de données. Je l'ajoute, mais il faudra vérifier les permissions dans /var/lib/pgsql/data/pg_hba.conf" | fmt
+        sed -i -e "/^# TYPE\s\+DATABASE\s\+USER\s\+CIDR-ADDRESS\s\+METHOD\s*$/a host $dbname $dbuser ::1/128 md5" /var/lib/pgsql/data/pg_hba.conf
         sed -i -e "/^# TYPE\s\+DATABASE\s\+USER\s\+CIDR-ADDRESS\s\+METHOD\s*$/a host $dbname $dbuser 127.0.0.1/32 md5" /var/lib/pgsql/data/pg_hba.conf
         sed -i -e "/^# TYPE\s\+DATABASE\s\+USER\s\+CIDR-ADDRESS\s\+METHOD\s*$/a #Access to vigilo database" /var/lib/pgsql/data/pg_hba.conf
         service postgresql reload
@@ -39,4 +40,3 @@ if ! sudo -u postgres psql -A -t -l | grep -qs '^'$dbname; then
     #vigilo-models-demo example1
     rm -rf log
 fi
-
