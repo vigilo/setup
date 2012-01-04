@@ -17,7 +17,7 @@ vigilo-nagios-config
 vigilo-nagios-config-enterprise
 vigilo-nrpe-config
 vigilo-nrpe-config-enterprise
-ejabberd
+rabbitmq
 apache-mpm-prefork
 glibc-devel
 # apache-mpm-prefork : pour eviter un choix interactif après

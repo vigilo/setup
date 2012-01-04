@@ -10,7 +10,7 @@ vigilo-nrpe-config
 vigilo-nrpe-config-enterprise
 postgresql84-server
 net-snmp
-ejabberd
+rabbitmq-server
 memcached
 vigilo-nagios-plugins-memcached
 patch
