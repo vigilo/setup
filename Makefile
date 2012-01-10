@@ -7,8 +7,6 @@ build: $(INFILES)
 
 include buildenv/Makefile.common.nopython
 
-SBINDIR = $(PREFIX)/sbin
-
 
 modules/150-conf-snmptrapd/run.sh: modules/150-conf-snmptrapd/run.sh.in
 	sed -e 's,@LIBEXECDIR@,$(LIBEXECDIR),g' $^ > $@
