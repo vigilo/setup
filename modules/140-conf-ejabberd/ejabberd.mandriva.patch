@@ -1,10 +1,10 @@
---- /etc/ejabberd/ejabberd.cfg.orig	2010-08-31 17:13:14.000000000 +0200
-+++ /etc/ejabberd/ejabberd.cfg	2010-08-31 17:16:24.000000000 +0200
+--- /etc/ejabberd/ejabberd.cfg.orig	2010-03-24 16:50:09.000000000 +0100
++++ /etc/ejabberd/ejabberd.cfg	2012-01-31 12:01:53.000000000 +0100
 @@ -342,6 +342,7 @@
  %% The "fast" shaper limits traffic speed to 50.000 B/s
  %%
  {shaper, fast, {maxrate, 50000}}.
-+{shaper, veryfast, {maxrate, 100000000}}. % 100 KB/s
++{shaper, veryfast, {maxrate, 100000000}}. % 100 MB/s
  
  
  %%%.   ====================
@@ -17,11 +17,12 @@
  
  %% All S2S connections use "fast" shaper
  {access, s2s_shaper, [{fast, all}]}.
-@@ -506,7 +506,13 @@
+@@ -506,7 +507,14 @@
    {mod_ping,     []},
    {mod_privacy,  []},
    {mod_private,  []},
 -  %%{mod_proxy65,[]},
++  {mod_admin_extra,  []},
 +  {mod_proxy65,  [
 +		  {access, all},
 +		  {host, "proxy65.localhost"},
