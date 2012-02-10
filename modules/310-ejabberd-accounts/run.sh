@@ -9,7 +9,7 @@ sleep 5
 ejabberdctl register vigilo-admin localhost vigilo-admin || :
 
 # Connecteurs de la version communautaire (configuration dans settings.ini)
-for connector in connector-diode connector-nagios connector-metro connector-syncevents connector-script correlator; do
+for connector in connector-nagios connector-metro connector-syncevents connector-script correlator; do
     settings_file=/etc/vigilo/$connector/settings.ini
     if [ -f "$settings_file" ] ; then
         jid=`vigilo-config -s bus -g jid $settings_file 2>/dev/null || :`
