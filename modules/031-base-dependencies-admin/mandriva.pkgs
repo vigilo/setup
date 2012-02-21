@@ -18,6 +18,7 @@ vigilo-nagios-config-enterprise
 vigilo-nrpe-config
 vigilo-nrpe-config-enterprise
 rabbitmq
+nagios-plugins-rabbitmq
 apache-mpm-prefork
 glibc-devel
 # apache-mpm-prefork : pour eviter un choix interactif après

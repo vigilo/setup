@@ -11,6 +11,7 @@ vigilo-nrpe-config-enterprise
 postgresql-server
 net-snmp
 rabbitmq-server
+nagios-plugins-rabbitmq
 memcached
 vigilo-nagios-plugins-memcached
 patch
