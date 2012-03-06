@@ -79,14 +79,6 @@
  
  
  
-@@ -352,6 +359,7 @@
- 
- #global_host_event_handler=somecommand
- #global_service_event_handler=somecommand
-+global_service_event_handler=handler_vigilo_service
- 
- 
- 
 @@ -378,7 +386,7 @@
  # program start time that an initial check of all services should
  # be completed.  Default is 30 minutes.
