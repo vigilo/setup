@@ -16,10 +16,10 @@ net-snmp
 nrpe
 vigilo-nagios-plugins-cpu
 vigilo-nagios-plugins-raid
-#vigilo-nagios-plugins-ejabberd
 vigilo-nagios-config
 vigilo-nrpe-config
 rabbitmq
+nagios-plugins-rabbitmq
 supervisor
 glibc-devel
 # glibc-devel : pour eviter un choix interactif après
