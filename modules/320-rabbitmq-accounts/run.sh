@@ -9,7 +9,7 @@ sleep 5
 rabbitmqctl add_user vigilo-admin vigilo-admin || :
 rabbitmqctl set_permissions vigilo-admin '.*' '.*' '.*'
 
-CONNECTORS="connector-nagios connector-metro connector-syncevents connector-script correlator vigiconf vigiconf-hls"
+CONNECTORS="connector-nagios connector-metro correlator"
 
 for connector in $CONNECTORS; do
     settings_files=`fgrep -l '[bus]' /etc/vigilo/$connector/*.ini 2>/dev/null`

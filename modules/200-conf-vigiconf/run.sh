@@ -14,9 +14,6 @@ fi
 [ -f /etc/vigilo/vigiconf/conf.d.example/hosts/localhost.xml ] || \
     cp -p localhost.xml /etc/vigilo/vigiconf/conf.d.example/hosts/
 
-# serveur de supervision
-sed -i -e 's/supserver.example.com/localhost/' /etc/vigilo/vigiconf/conf.d.example/general/appgroups-servers.py
-
 # SVN
 if [ -d /etc/vigilo/vigiconf/conf.d/.svn ]; then
     echo "Le répertoire de configuration de Vigiconf est déjà sous SVN, on passe à la suite..."

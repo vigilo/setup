@@ -1,5 +1,0 @@
-Directory contening scripts executed when a TRAP is received by snmptrapd.
-Examples of such scripts can be found in "/usr/share/doc/snmptt/examples/"
-
-Dossier contenant les scripts exécutés lors de la réception d'un TRAP par snmptrad.
-Des examples de tels scripts peuvent être trouvés dans "/usr/share/doc/snmptt/examples/".

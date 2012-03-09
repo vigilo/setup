@@ -1,5 +1,0 @@
---- /etc/sysconfig/snmptrapd.orig	2010-12-03 10:32:15.000000000 +0100
-+++ /etc/sysconfig/snmptrapd	2010-12-03 10:32:00.000000000 +0100
-@@ -1 +1,2 @@
- #OPTIONS=""
-+OPTIONS="-On -Lsd -p /var/run/snmptrapd.pid"
