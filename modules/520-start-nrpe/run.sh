@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 
 chkconfig nrpe on
 service nrpe status &> /dev/null

@@ -26,28 +26,29 @@ Ce programme fait partie du projet Vigilo <http://vigilo-project.org>
 
 %build
 make \
-	LIBEXECDIR=%{_libexecdir} \
-	SYSCONFDIR=%{_sysconfdir}
+    LIBEXECDIR=%{_libexecdir} \
+    SYSCONFDIR=%{_sysconfdir}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 make install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	SBINDIR=%{_sbindir} \
-	LIBEXECDIR=%{_libexecdir} \
-	SYSCONFDIR=%{_sysconfdir}
+    DESTDIR=$RPM_BUILD_ROOT \
+    SBINDIR=%{_sbindir} \
+    LIBEXECDIR=%{_libexecdir} \
+    SYSCONFDIR=%{_sysconfdir}
 
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(644,root,root,755)
+%defattr(-,root,root,755)
 %doc COPYING.txt
 %attr(755,root,root) %{_sbindir}/vigilo-setup
-%{_libexecdir}/vigilo
+%dir %{_libexecdir}/vigilo
+%{_libexecdir}/vigilo/%{module}
 %dir %{_sysconfdir}/vigilo/
-%config %{_sysconfdir}/vigilo/%{module}
+%config(noreplace) %{_sysconfdir}/vigilo/%{module}
 
 
 %changelog
