@@ -24,9 +24,8 @@ install: setup.sh setup.conf modules/150-conf-snmptrapd/run.sh $(PYTHON)
 	mkdir -p $(DESTDIR)$(LIBEXECDIR)/vigilo/setup
 	cp -pr modules/* $(DESTDIR)$(LIBEXECDIR)/vigilo/setup/
 
-clean:
+clean: clean_common
 	rm -f $(INFILES)
-	rm -rf build
 
 
 .PHONY: all build install clean
