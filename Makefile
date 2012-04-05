@@ -21,9 +21,8 @@ install: setup.sh setup.conf
 	cp -pr modules/* $(DESTDIR)$(LIBEXECDIR)/vigilo/setup/
 	chmod 755 $(DESTDIR)$(LIBEXECDIR)/vigilo/setup/*/run.sh
 
-clean:
+clean: clean_common
 	rm -f $(INFILES)
-	rm -rf build
 
 
 .PHONY: all build install clean
