@@ -6,11 +6,12 @@
 echo "Activation de l'interface de gestion"
 rabbitmq-plugins enable rabbitmq_management
 
-# SSL
-sslcert=/etc/pki/tls/certs/rabbitmq.pem
-sslkey=/etc/pki/tls/private/rabbitmq.pem
+echo "Génération du certificat SSL"
+service=rabbitmq
+sslcert=/etc/pki/tls/certs/$service.pem
+sslkey=/etc/pki/tls/private/$service.pem
 if [ ! -f $sslcert ]; then
-    echo "Generating SSL certificate for RabbitMQ..."
+    echo "Generating SSL certificate for $service..."
     HOSTNAME=$(hostname -s 2>/dev/null || echo "localhost")
     DOMAINNAME=$(hostname -d 2>/dev/null || echo "localdomain")
     openssl genrsa -out $sslkey 2048 > /dev/null 2>&1
@@ -19,9 +20,9 @@ if [ ! -f $sslcert ]; then
 .
 .
 .
-$DOMAINNAME
-$HOSTNAME
-rabbitmq
+.
+$service
+$HOSTNAME.$DOMAINNAME
 root@$HOSTNAME.$DOMAINNAME
 +++
 chown rabbitmq:rabbitmq $sslcert $sslkey
@@ -31,5 +32,13 @@ fi
 # Fichier de config
 cp -pu rabbitmq.config /etc/rabbitmq/
 
-# Redémarrage
-/etc/init.d/rabbitmq-server restart
+# démarrage
+service=rabbitmq-server
+chkconfig $service on
+service $service status &> /dev/null
+RET=$?
+if [ "$RET" == "0" ]; then
+    service $service restart || exit $?
+else
+    service $service start || exit $?
+fi

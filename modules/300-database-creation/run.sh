@@ -3,8 +3,16 @@
 # License: GNU GPL v2 <http://www.gnu.org/licenses/gpl-2.0.html>
 
 echo "Création de la base de données PostgreSQL"
-chkconfig postgresql on
-pgrep postmaster > /dev/null || (/etc/init.d/postgresql initdb &> /dev/null; /etc/init.d/postgresql start)
+service=postgresql
+chkconfig $service on
+service $service status &> /dev/null
+RET=$?
+if [ "$RET" == "0" ]; then
+    :
+else
+    service $service initdb &> /dev/null
+    service $service start || exit $?
+fi
 
 dbname=`awk -F= '/^sqlalchemy_url/ {gsub(".*/","",$2); print $2}' /etc/vigilo/models/settings.ini`
 dbuser=`awk -F= '/^sqlalchemy_url/ {gsub("\\\\w+://","",$2); gsub(":.*","",$2); print $2}' /etc/vigilo/models/settings.ini`

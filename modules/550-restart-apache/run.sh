@@ -4,5 +4,14 @@
 
 [ -f /etc/init.d/httpd ] || exit 0
 
-chkconfig httpd on
-service httpd configtest && service httpd restart
+service=httpd
+chkconfig $service on
+service $service status &> /dev/null
+RET=$?
+if [ "$RET" == "0" ]; then
+    service httpd configtest && \
+        service $service restart || exit $?
+else
+    service httpd configtest && \
+        service $service start || exit $?
+fi

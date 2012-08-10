@@ -23,8 +23,6 @@ function creation_BUS_user {
 [ -f /etc/init.d/rabbitmq-server ] || exit 0
 
 echo "Création des comptes sur le bus"
-chkconfig rabbitmq-server on
-service rabbitmq-server status &> /dev/null || service rabbitmq-server start || exit $?
 sleep 5
 rabbitmqctl add_user vigilo-admin vigilo-admin || :
 rabbitmqctl set_permissions vigilo-admin '.*' '.*' '.*'
