@@ -29,6 +29,7 @@ chown rabbitmq:rabbitmq $sslcert $sslkey
 chmod 600 $sslkey
 fi
 
+sed -i -e "s/__HOSTNAME__/$HOSTNAME/g" rabbitmq.config
 # Fichier de config
 cp -pu rabbitmq.config /etc/rabbitmq/
 
