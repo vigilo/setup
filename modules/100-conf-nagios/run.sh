@@ -35,6 +35,8 @@ if [ ! -f /etc/nagios/passwd.plaintext ]; then
     echo $passwd > /etc/nagios/passwd.plaintext
     htpasswd -c -b /etc/nagios/passwd nagios $passwd
     sed -i -e "s/nagiosadmin/nagios/g" /etc/nagios/cgi.cfg
+    # permet d'avoir des accents dans les messages de plugin
+    sed -i -e "s/escape_html_tags=0/escape_html_tags=1/g" /etc/nagios/cgi.cfg
 fi
 
 # Optimisation: mettre le répertoire des résultats de Nagios en RAM
