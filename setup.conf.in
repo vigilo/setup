@@ -9,7 +9,7 @@ export VIGICONF_SVN=file:///var/lib/svn/vigiconf
 export VIGICONF_SVN
 
 # Emplacement des RPMs
-VIGILO_REPO=http://vigilo-dev.si.c-s.fr/pkg/$DISTRO/vigilo/nightly/$DIST_TAG/`uname -m`
+VIGILO_REPO=http://vigilo-dev.si.c-s.fr/pkg/$DISTRO/nightly/master/vigilo/vigilo/$DIST_TAG/`uname -m`
 VIGILO_DEPS_REPO=http://vigilo-dev.si.c-s.fr/pkg/$DISTRO/deps/vigilo/$DIST_TAG/`uname -m`
 VIGILO_EXTRA_REPO=http://vigilo-dev.si.c-s.fr/pkg/$DISTRO/deps-epel/vigilo/$DIST_TAG/`uname -m`
 export VIGILO_REPO
