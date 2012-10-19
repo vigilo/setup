@@ -233,7 +233,7 @@ diff -Nru /etc/nagios.orig/nagios.cfg /etc/nagios/nagios.cfg
 +
 +# 'check-host-alive' command definition
 +define command{
-+	command_name	check-host-alive
++	command_name	check-host-alive_fping
 +	command_line	/usr/lib64/nagios/plugins/check_fping -H $HOSTADDRESS$ -w 5000,100% -c 5000,100% -n 1
 +	}
 +
