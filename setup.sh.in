@@ -53,16 +53,18 @@ while [ -n "$1" ]; do
 done
 
 TAG="all"
-# if one variable is positionned don't do all
+# Si des options particulières ont été spécifiées,
+# on ne traite que les actions qui leur sont associées.
 [ -z "$DO_admin" ] || TAG="admin"
 [ -z "$DO_metro" ] || TAG="$TAG,metro"
 [ -z "$DO_sup"   ] || TAG="$TAG,sup"
 
-# if all variable is positionned do all
+# Si toutes les options sont positionnées,
+# on effectue tous les traitements.
 [ -n "$DO_admin" ] && [ -n "$DO_metro" ] && [ -n "$DO_sup" ] && TAG="all"
 
-# remove caracter "," if first of all
-if [ "${TAG:0:1}" == "," ];then
+# Suppression de "," s'il s'agit du premier caractère.
+if [ "${TAG:0:1}" == "," ]; then
     TAG=${TAG:1}
 fi
 
@@ -100,7 +102,7 @@ else
     exit 1
 fi
 
-# Tous les scripts doivent être idempotent.
+# Tous les scripts doivent être idempotents.
 # Ils seront lancés depuis leur répertoire.
 vigilo_call_script() {
     script=$1
@@ -127,7 +129,7 @@ vigilo_call_script() {
     popd > /dev/null
 }
 
-# D'abord, les scripts qui n'utilisent pas les données installées localement
+# D'abord, les scripts qui n'utilisent pas les données installées localement.
 for script in `ls $SETUP_MODULES/{0,1,2}*/run.sh 2>/dev/null`; do
     vigilo_call_script $script
 done
@@ -137,7 +139,7 @@ echo "La suite de ce script va créer les utilisateurs et les bases. C'est le mo
 [ -z "$DEFAULT_PASSWORD" ] && read
 
 # Ensuite, les scripts qui utilisent les données de configuration locales
-# (notamment les mots de passe)
+# (notamment les mots de passe).
 for script in `ls $SETUP_MODULES/{3,4,5,6,7,8,9}*/run.sh 2>/dev/null`; do
     vigilo_call_script $script
 done
