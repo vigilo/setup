@@ -14,9 +14,11 @@ else
     service $service start || exit $?
 fi
 
-dbname=`awk -F= '/^sqlalchemy_url/ {gsub(".*/","",$2); print $2}' /etc/vigilo/models/settings.ini`
-dbuser=`awk -F= '/^sqlalchemy_url/ {gsub("\\\\w+://","",$2); gsub(":.*","",$2); print $2}' /etc/vigilo/models/settings.ini`
-dbpasswd=`awk -F= '/^sqlalchemy_url/ {gsub("\\\\w+://vigilo:","",$2); gsub("@.*","",$2); print $2}' /etc/vigilo/models/settings.ini`
+#postgresql://user:mdp@127.0.0.1/base
+dbuser=`  awk -F= '/^sqlalchemy_url=/ {gsub("\\\\w+://",                  "", $2); gsub(":.*", "", $2); print $2}' /etc/vigilo/models/settings.ini`
+dbpasswd=`awk -F= '/^sqlalchemy_url=/ {gsub("\\\\w+://\\\\w+:",           "", $2); gsub("@.*", "", $2); print $2}' /etc/vigilo/models/settings.ini`
+dbname=`  awk -F= '/^sqlalchemy_url=/ {gsub("\\\\w+://\\\\w+:\\\\w+@.*/", "", $2);                      print $2}' /etc/vigilo/models/settings.ini`
+
 [ -n "$dbname" -a -n "$dbuser" -a -n "$dbpasswd" ]
 echo "Base configurée: $dbname. Utilisateur configuré: $dbuser."
 sleep 5
