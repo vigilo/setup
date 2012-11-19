@@ -2,6 +2,9 @@
 # Copyright (C) 2006-2012 CS-SI
 # License: GNU GPL v2 <http://www.gnu.org/licenses/gpl-2.0.html>
 
+# Import de la couche de compatibilité.
+. "`dirname $0`/../compat.sh"
+
 echo "Configuration de Nagios"
 
 cfgpatch=nagios.$DISTRO.patch
@@ -25,7 +28,7 @@ if [ -f /etc/httpd/conf.d/nagios.conf ] && \
 fi
 
 if [ "$DISTRO" == "redhat" -a -f /usr/share/nagios/html/index.php ]; then
-    $PKG_INSTALLER php
+    install_pkg php
 fi
 
 if [ ! -f /etc/nagios/passwd.plaintext ]; then
@@ -51,4 +54,4 @@ if ! grep -qs $crdir /etc/fstab; then
 fi
 
 # Lancement au boot
-chkconfig nagios on
+change_svc nagios on

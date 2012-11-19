@@ -19,6 +19,7 @@ install: setup.sh setup.conf
 	install -D -m 644 -p setup.conf $(DESTDIR)$(SYSCONFDIR)/vigilo/setup/setup.conf
 	mkdir -p $(DESTDIR)$(LIBEXECDIR)/vigilo/setup
 	cp -pr modules/* $(DESTDIR)$(LIBEXECDIR)/vigilo/setup/
+	chmod 755 $(DESTDIR)$(LIBEXECDIR)/vigilo/setup/compat.sh
 	chmod 755 $(DESTDIR)$(LIBEXECDIR)/vigilo/setup/*/run.sh
 
 clean: clean_common

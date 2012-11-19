@@ -2,12 +2,14 @@
 # Copyright (C) 2011-2012 CS-SI
 # License: GNU GPL v2 <http://www.gnu.org/licenses/gpl-2.0.html>
 
-# Démarrage par supervisor
-cp -a memcached.ini /etc/supervisord.d/
-chkconfig memcached off
-# démarrage
+# Import de la couche de compatibilité.
+. "`dirname $0`/../compat.sh"
+
+# Démarrage par supervisor plutôt qu'autonome.
 service=supervisord
-chkconfig $service on
+cp -a memcached.ini /etc/supervisord.d/
+change_svc memcached off
+change_svc $service on
 service $service status &> /dev/null
 RET=$?
 if [ "$RET" == "0" ]; then

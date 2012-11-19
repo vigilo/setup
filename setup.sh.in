@@ -1,18 +1,18 @@
 #!/bin/sh
 
-print_help (){
+print_help(){
     cat << HELPMSG
-Usage : $0 [--admin|--metro|--sup|--no-verify-rpm|--auto|--default-password [--help|-h]]
+Usage : $0 [--admin|--metro|--sup|--no-verify-pkg|--auto|--default-password [--help|-h]]
 
 Par défaut, installe un serveur avec toutes les options.
 
 Options :
---admin installe un serveur "Administration Centrale" (expérimental)
---metro installe un serveur "Stockage de données de métrologie" (expérimental)
---sup   installe un serveur "Collecte de Supervision"
---no-verify-rpm ne vérifie pas la signature RPM des paquets
---auto ne demande pas de confirmation pour l'installation des dépendances des paquets
---default-password ne demande pas de confirmation pour l'installation des mots de passe par défaut
+--admin             installe un serveur "Administration Centrale" (expérimental)
+--metro             installe un serveur "Stockage de données de métrologie" (expérimental)
+--sup               installe un serveur "Collecte de Supervision"
+--no-verify-pkg     pas de vérification de la signature des paquets
+--auto              pas de confirmation pour l'installation des dépendances des paquets
+--default-password  pas de confirmation pour l'utilisation des mots de passe par défaut
 
 HELPMSG
     exit 0
@@ -34,16 +34,19 @@ while [ -n "$1" ]; do
             DO_sup="YES"
             shift
         ;;
-        --no-verify-rpm)
-            export RPM_SIGNATURE_CHECK=1
+        --no-verify-pkg)
+            NO_PKG_CHECK=1
+            export NO_PKG_CHECK
             shift
         ;;
         --auto)
-            export AUTO_INSTALL=1
+            AUTO_INSTALL=1
+            export AUTO_INSTALL
             shift
         ;;
         --default-password)
-            export DEFAULT_PASSWORD="--default-password"
+            DEFAULT_PASSWORD="--default-password"
+            export DEFAULT_PASSWORD
             shift
         ;;
         *)
@@ -64,33 +67,38 @@ TAG="all"
 [ -n "$DO_admin" ] && [ -n "$DO_metro" ] && [ -n "$DO_sup" ] && TAG="all"
 
 # Suppression de "," s'il s'agit du premier caractère.
-if [ "${TAG:0:1}" == "," ]; then
-    TAG=${TAG:1}
-fi
+TAG=${TAG#,}
 
-# Detection de la distribution
+# Détection de la distribution.
 if [ -f /etc/mandriva-release ]; then
     DISTRO=mandriva
     DIST_VER=`sed -e 's/.* release \([0-9]\+\).*/\1/' /etc/mandriva-release`
     DIST_TAG=mes$DIST_VER
-    PKG_INSTALLER="urpmi ${AUTO_INSTALL:+"--auto"} ${RPM_SIGNATURE_CHECK:+"--no-verify-rpm"}"
-    PYTHON=/usr/bin/python
 elif [ -f /etc/redhat-release ]; then
     DISTRO=redhat
     DIST_VER=`sed -e 's/.* release \([0-9]\+\).*/\1/' /etc/redhat-release`
     DIST_TAG=rhel$DIST_VER
-    PKG_INSTALLER="yum ${AUTO_INSTALL:+"-y"} ${RPM_SIGNATURE_CHECK:+"--nogpgcheck"} install"
-    PYTHON=/usr/bin/python2.6
+elif [ -f /etc/debian_version ]; then
+    DISTRO=debian
+    DIST_VER=`sed -e 's/^\([0-9]\+\).*/\1/' /etc/debian_version`
+    DIST_TAG=debian$DIST_VER
+elif [ -f /etc/gentoo-release ]; then
+    DISTRO=gentoo
+    DIST_VER=`sed -e 's/.* release \([0-9]\+\).*/\1/' /etc/gentoo-release`
+    DIST_TAG=gentoo$DIST_VER
 else
-    echo "WARNING: unsupported distribution. Do you want to proceed anyway ? (y/N)"
+    echo "ATTENTION : distribution non supportée."
+    echo "Êtes-vous certain de vouloir continuer ? (o/N)"
     read answer
-    if [ "$answer" != "y" ]; then
-        echo "Aborting on user request."
+    if [ "$answer" != "o" ]; then
+        echo "Abandon à la demande de l'utilisateur."
         exit 0
     fi
+    DISTRO=
+    DIST_VER=
+    DIST_TAG=unknown
 fi
-export DISTRO DIST_VER DIST_TAG PKG_INSTALLER PYTHON
-
+export DISTRO DIST_VER DIST_TAG
 
 # Lecture de la conf
 CONF=${CONF:-@SYSCONFDIR@/vigilo/setup/setup.conf}
@@ -98,9 +106,17 @@ CONF=${CONF:-@SYSCONFDIR@/vigilo/setup/setup.conf}
 if [ -f $CONF ]; then
     . $CONF
 else
-    echo "Can't find $CONF. Aborting"
+    echo "Impossible de trouver $CONF. Abandon."
     exit 1
 fi
+
+# Import de la couche de compatibilité.
+. $SETUP_MODULES/compat.sh
+
+# Évite que la couche de compatibilité ne redemande
+# confirmation sur une distribution non supportée.
+FORCE_UNSUPPORTED=1
+export FORCE_UNSUPPORTED
 
 # Tous les scripts doivent être idempotents.
 # Ils seront lancés depuis leur répertoire.
@@ -119,32 +135,33 @@ vigilo_call_script() {
             return 0
         fi
     fi
-    pushd `dirname $script` > /dev/null
+    curdir=`pwd`
+    cd "$dir" > /dev/null
     bash ./`basename $script`
     RETVAL=$?
+    cd "$curdir" > /dev/null
     if [ $RETVAL != 0 ]; then
-        echo "Script $script failed !"
+        echo "L'exécution du $script a échoué."
         exit $RETVAL
     fi
-    popd > /dev/null
 }
 
 # D'abord, les scripts qui n'utilisent pas les données installées localement.
-for script in `ls $SETUP_MODULES/{0,1,2}*/run.sh 2>/dev/null`; do
+for script in `ls $SETUP_MODULES/[0-2]*/run.sh 2>/dev/null`; do
     vigilo_call_script $script
 done
 
 echo
 echo "La suite de ce script va créer les utilisateurs et les bases. C'est le moment de changer les mots de passe par défaut. Pour cela, arrêtez ce script (Ctrl-C), changez les mots de passe dans /etc/vigilo/*/settings.ini et relancez ce script. Appuyez sur Entrée pour continuer avec les mots de passe par défaut." | fmt
-[ -z "$DEFAULT_PASSWORD" ] && read
+[ -z "$DEFAULT_PASSWORD" ] && read unused
 
 # Ensuite, les scripts qui utilisent les données de configuration locales
 # (notamment les mots de passe).
-for script in `ls $SETUP_MODULES/{3,4,5,6,7,8,9}*/run.sh 2>/dev/null`; do
+for script in `ls $SETUP_MODULES/[3-9]*/run.sh 2>/dev/null`; do
     vigilo_call_script $script
 done
 
-if [ "$TAG" == "all" ]; then
+if [ "$TAG" = "all" ]; then
     echo
     echo "Maintenant, vérifiez dans /var/log/messages que tout s'est bien passé. Nagios devrait tourner."
     echo "VigiBoard est accessible sur http://`hostname -f`/vigilo/vigiboard/"
@@ -154,7 +171,7 @@ if [ "$TAG" == "all" ]; then
 fi
 
 echo "$TAG" | grep -E -q "sup"
-if [ "$?" == "0" ]; then
+if [ "$?" = "0" ]; then
     echo
     echo "Maintenant, vérifiez dans /var/log/messages que tout s'est bien passé. Nagios devrait tourner."
     echo "Nagios est accessible sur http://`hostname -f`/nagios/ avec le login \"nagios\" et le mot de passe \"`cat /etc/nagios/passwd.plaintext`\" "
@@ -162,7 +179,7 @@ if [ "$?" == "0" ]; then
 fi
 
 echo "$TAG" | grep -E -q "admin"
-if [ "$?" == "0" ]; then
+if [ "$?" = "0" ]; then
     echo
     echo "Maintenant, vérifiez dans /var/log/messages que tout s'est bien passé."
     echo "VigiBoard est accessible sur http://`hostname -f`/vigilo/vigiboard/"
@@ -171,7 +188,7 @@ if [ "$?" == "0" ]; then
 fi
 
 echo "$TAG" | grep -E -q "metro"
-if [ "$?" == "0" ]; then
+if [ "$?" = "0" ]; then
     echo
     echo "Maintenant, vérifiez dans /var/log/messages que tout s'est bien passé."
     echo "VigiRRD est accessible sur http://`hostname -f`/vigilo/vigirrd/"

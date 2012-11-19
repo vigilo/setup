@@ -4,14 +4,15 @@
 
 [ -f /etc/init.d/httpd ] || exit 0
 
+# Import de la couche de compatibilité.
+. "`dirname $0`/../compat.sh"
+
 service=httpd
-chkconfig $service on
+change_svc $service on
 service $service status &> /dev/null
 RET=$?
 if [ "$RET" == "0" ]; then
-    service httpd configtest && \
-        service $service restart || exit $?
+    service $service configtest && service $service restart || exit $?
 else
-    service httpd configtest && \
-        service $service start || exit $?
+    service $service configtest && service $service start || exit $?
 fi
