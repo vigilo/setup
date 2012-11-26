@@ -45,6 +45,8 @@ fi
 # Optimisation: mettre le répertoire des résultats de Nagios en RAM
 if [ "$DISTRO" == "redhat" ]; then
     crdir=/var/log/nagios/spool/checkresults
+elif [ "$DISTRO" == "debian" ]; then
+    crdir=/var/lib/nagios3/spool/checkresults
 else
     crdir=/var/spool/nagios/checkresults
 fi
