@@ -113,11 +113,6 @@ fi
 # Import de la couche de compatibilité.
 . $SETUP_MODULES/compat.sh
 
-# Évite que la couche de compatibilité ne redemande
-# confirmation sur une distribution non supportée.
-FORCE_UNSUPPORTED=1
-export FORCE_UNSUPPORTED
-
 # Tous les scripts doivent être idempotents.
 # Ils seront lancés depuis leur répertoire.
 vigilo_call_script() {

@@ -18,9 +18,9 @@ else
 fi
 
 #postgresql://user:mdp@127.0.0.1/base
-dbuser=`  awk -F= '/^sqlalchemy_url=/ {gsub("\\\\w+://",                  "", $2); gsub(":.*", "", $2); print $2}' /etc/vigilo/models/settings.ini`
-dbpasswd=`awk -F= '/^sqlalchemy_url=/ {gsub("\\\\w+://\\\\w+:",           "", $2); gsub("@.*", "", $2); print $2}' /etc/vigilo/models/settings.ini`
-dbname=`  awk -F= '/^sqlalchemy_url=/ {gsub("\\\\w+://\\\\w+:\\\\w+@.*/", "", $2);                      print $2}' /etc/vigilo/models/settings.ini`
+dbuser=`  grep '^sqlalchemy_url' /etc/vigilo/models/settings.ini | sed -e 's,^.*://\([^:]\+\):.*$,\1,'          | tail -n 1`
+dbpasswd=`grep '^sqlalchemy_url' /etc/vigilo/models/settings.ini | sed -e 's,^.*://[^:]\+:\([^@]\+\)@.*$,\1,'   | tail -n 1`
+dbname=`  grep '^sqlalchemy_url' /etc/vigilo/models/settings.ini | sed -e 's,^.*/\([^/]\+\)$,\1,'               | tail -n 1`
 
 [ -n "$dbname" -a -n "$dbuser" -a -n "$dbpasswd" ]
 echo "Base configurée: $dbname. Utilisateur configuré: $dbuser."
@@ -28,12 +28,12 @@ sleep 5
 
 
 # Autoriser les connexions de l'utilisateur Vigilo
-if [ -f /var/lib/pgsql/data/pg_hba.conf ]; then
-    if ! grep -qs vigilo /var/lib/pgsql/data/pg_hba.conf; then
-        echo "Attention, l'utilisateur vigilo n'est pas autorisé à se connecter à la base de données. Je l'ajoute, mais il faudra vérifier les permissions dans /var/lib/pgsql/data/pg_hba.conf" | fmt
-        sed -i -e "/^# TYPE\s\+DATABASE\s\+USER\s\+CIDR-ADDRESS\s\+METHOD\s*$/a host $dbname $dbuser ::1/128 md5" /var/lib/pgsql/data/pg_hba.conf
-        sed -i -e "/^# TYPE\s\+DATABASE\s\+USER\s\+CIDR-ADDRESS\s\+METHOD\s*$/a host $dbname $dbuser 127.0.0.1/32 md5" /var/lib/pgsql/data/pg_hba.conf
-        sed -i -e "/^# TYPE\s\+DATABASE\s\+USER\s\+CIDR-ADDRESS\s\+METHOD\s*$/a #Access to vigilo database" /var/lib/pgsql/data/pg_hba.conf
+if [ -f "$PG_HBA" ]; then
+    if ! grep -qs vigilo "$PG_HBA"; then
+        echo "Attention, l'utilisateur vigilo n'est pas autorisé à se connecter à la base de données. Je l'ajoute, mais il faudra vérifier les permissions dans $PG_HBA" | fmt
+        sed -i -e "/^# TYPE\s\+DATABASE\s\+USER\s\+\(CIDR-\)\?ADDRESS\s\+METHOD\s*$/a host $dbname $dbuser ::1/128 md5" "$PG_HBA"
+        sed -i -e "/^# TYPE\s\+DATABASE\s\+USER\s\+\(CIDR-\)\?ADDRESS\s\+METHOD\s*$/a host $dbname $dbuser 127.0.0.1/32 md5" "$PG_HBA"
+        sed -i -e "/^# TYPE\s\+DATABASE\s\+USER\s\+\(CIDR-\)\?ADDRESS\s\+METHOD\s*$/a #Access to vigilo database" "$PG_HBA"
         service postgresql reload
     fi
 fi
