@@ -1,0 +1,16 @@
+--- a/modules/510-start-snmpd/run.sh
++++ b/modules/510-start-snmpd/run.sh
+@@ -5,10 +5,6 @@
+ 
+ service=snmpd
+ change_svc $service on
+-service $service status &> /dev/null
+-RET=$?
+-if [ "$RET" == "0" ]; then
+-    service $service restart || exit $?
+-else
+-    service $service start || exit $?
+-fi
++# on Debian, "snmpd" includes "snmptrapd" too,
++# which we don't want here.
++service $service restart

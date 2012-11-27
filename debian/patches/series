@@ -1,0 +1,9 @@
+snmpd-restart
+connectors
+nagios-passwd
+sudo
+nrpe
+nagios-config
+apache2
+rabbitmq
+supervisor

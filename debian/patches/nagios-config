@@ -1,0 +1,67 @@
+Description: Debian-specific patch for the Nagios configuration file.
+Forwarded: not-needed
+--- a/modules/100-conf-nagios/run.sh
++++ b/modules/100-conf-nagios/run.sh
+@@ -9,7 +9,7 @@
+ 
+ cfgpatch=nagios.$DISTRO.patch
+ 
+-[ -f /etc/nagios/nagios.cfg.orig ] || patch -N -b /etc/nagios/nagios.cfg < $cfgpatch
++[ -f /etc/nagios3/nagios.cfg.orig ] || patch -N -b /etc/nagios3/nagios.cfg < $cfgpatch
+ 
+ if [ "$DISTRO" == "redhat" ]; then
+     # Sur RedHat, les permissions du fichier de commandes externes ne permettent pas aux CGIs d'y écrire
+@@ -21,25 +21,25 @@
+ # dans /var/lib/vigiconf, accessible uniquement au groupe vigiconf.
+ getent group vigiconf > /dev/null && usermod -a -G vigiconf nagios || exit $?
+ 
+-if [ -f /etc/httpd/conf.d/nagios.conf ] && \
+-            grep -qs "deny from all" /etc/httpd/conf.d/nagios.conf; then
+-    sed -i -e "/^\s*deny from all/d" /etc/httpd/conf.d/nagios.conf
+-    service httpd reload
++if [ -f /etc/apache2/conf.d/nagios3.conf ] && \
++            grep -qs "deny from all" /etc/apache2/conf.d/nagios3.conf; then
++    sed -i -e "/^\s*deny from all/d" /etc/apache2/conf.d/nagios3.conf
++    service apache2 reload
+ fi
+ 
+ if [ "$DISTRO" == "redhat" -a -f /usr/share/nagios/html/index.php ]; then
+     install_pkg php
+ fi
+ 
+-if [ ! -f /etc/nagios/passwd.plaintext ]; then
++if [ ! -f /etc/nagios3/htpasswd.plaintext ]; then
+     passwd=`dd if=/dev/urandom bs=1 count=6 2>/dev/null | base64`
+-    touch /etc/nagios/passwd.plaintext
+-    chmod 600 /etc/nagios/passwd.plaintext
+-    echo $passwd > /etc/nagios/passwd.plaintext
+-    htpasswd -c -b /etc/nagios/passwd nagios $passwd
+-    sed -i -e "s/nagiosadmin/nagios/g" /etc/nagios/cgi.cfg
++    touch /etc/nagios3/htpasswd.plaintext
++    chmod 600 /etc/nagios3/htpasswd.plaintext
++    echo $passwd > /etc/nagios3/htpasswd.plaintext
++    htpasswd -c -b /etc/nagios3/htpasswd.users nagios $passwd
++    sed -i -e "s/nagiosadmin/nagios/g" /etc/nagios3/cgi.cfg
+     # permet d'avoir des accents dans les messages de plugin
+-    sed -i -e "s/escape_html_tags=1/escape_html_tags=0/g" /etc/nagios/cgi.cfg
++    sed -i -e "s/escape_html_tags=1/escape_html_tags=0/g" /etc/nagios3/cgi.cfg
+ fi
+ 
+ # Optimisation: mettre le répertoire des résultats de Nagios en RAM
+@@ -55,5 +55,15 @@
+     mount $crdir
+ fi
+ 
++# Ajustement des permissions...
++dpkg-statoverride --update --add root nagios 4750 /usr/lib/nagios/plugins/check_icmp
++dpkg-statoverride --update --add nagios www-data 2710 /var/lib/nagios3/rw
++dpkg-statoverride --update --add nagios nagios 751 /var/lib/nagios3
++# ... et des groupes:
++# - le connector-nagios doit pouvoir écrire dans le pipe Nagios.
++# - Nagios doit pouvoir envoyer des notifications au connector-nagios.
++usermod -a -G www-data vigilo-nagios
++usermod -a -G vigilo-nagios nagios
++
+ # Lancement au boot
+-change_svc nagios on
++change_svc nagios3 on

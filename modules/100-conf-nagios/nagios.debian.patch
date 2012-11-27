@@ -1,0 +1,234 @@
+--- /etc/nagios3/nagios.cfg.orig	2012-11-18 10:33:09.000000000 +0100
++++ /etc/nagios3/nagios.cfg	2012-11-18 10:44:18.000000000 +0100
+@@ -14,7 +14,7 @@
+ log_file=/var/log/nagios3/nagios.log
+ 
+ # Commands definitions
+-cfg_file=/etc/nagios3/commands.cfg
++#cfg_file=/etc/nagios3/commands.cfg
+ 
+ # Debian also defaults to using the check commands defined by the debian
+ # nagios-plugins package
+@@ -23,7 +23,7 @@
+ # Debian uses by default a configuration directory where nagios3-common,
+ # other packages and the local admin can dump or link configuration
+ # files into.
+-cfg_dir=/etc/nagios3/conf.d
++#cfg_dir=/etc/nagios3/conf.d
+ 
+ # OBJECT CONFIGURATION FILE(S)
+ # These are the object configuration files in which you define hosts,
+@@ -56,7 +56,11 @@
+ #cfg_dir=/etc/nagios3/switches
+ #cfg_dir=/etc/nagios3/routers
+ 
++# Vigilo specific files
++cfg_dir=/etc/nagios3/vigilo.d/
+ 
++# Vigiconf-generated conf files
++cfg_dir=/etc/vigilo/vigiconf/prod/nagios
+ 
+ 
+ # OBJECT CACHE FILE
+@@ -105,7 +109,7 @@
+ # The contents of the status file are deleted every time Nagios
+ #  restarts.
+ 
+-status_file=/var/cache/nagios3/status.dat
++status_file=/dev/shm/nagios-status.dat
+ 
+ 
+ 
+@@ -142,7 +146,7 @@
+ # you will have to enable this.
+ # Values: 0 = disable commands, 1 = enable commands
+ 
+-check_external_commands=0
++check_external_commands=1
+ 
+ 
+ 
+@@ -202,7 +206,7 @@
+ # is created, used, and deleted throughout the time that Nagios is
+ # running.
+ 
+-temp_file=/var/cache/nagios3/nagios.tmp
++temp_file=/dev/shm/nagios.tmp
+ 
+ 
+ 
+@@ -210,7 +214,7 @@
+ # This is path where Nagios can create temp files for service and
+ # host check results, etc.
+ 
+-temp_path=/tmp
++temp_path=/dev/shm
+ 
+ 
+ 
+@@ -332,7 +336,7 @@
+ # checks - see the option below for controlling whether or not
+ # passive checks are logged.
+ 
+-log_external_commands=1
++log_external_commands=0
+ 
+ 
+ 
+@@ -341,7 +345,7 @@
+ # this value to 0.  If passive checks should be logged, set
+ # this value to 1.
+ 
+-log_passive_checks=1
++log_passive_checks=0
+ 
+ 
+ 
+@@ -382,7 +386,7 @@
+ # program start time that an initial check of all services should
+ # be completed.  Default is 30 minutes.
+ 
+-max_service_check_spread=30
++max_service_check_spread=5
+ 
+ 
+ 
+@@ -443,7 +447,7 @@
+ # This is the frequency (in seconds!) that Nagios will process
+ # the results of host and service checks.
+ 
+-check_result_reaper_frequency=10
++check_result_reaper_frequency=3
+ 
+ 
+ 
+@@ -610,8 +614,8 @@
+ # ocsp command, and performance data commands.  All values are in
+ # seconds.
+ 
+-service_check_timeout=60
+-host_check_timeout=30
++service_check_timeout=30
++host_check_timeout=10
+ event_handler_timeout=30
+ notification_timeout=30
+ ocsp_timeout=5
+@@ -732,7 +736,7 @@
+ # by Nagios Enterprises from the update check is processed in accordance 
+ # with our privacy policy - see http://api.nagios.org for details.
+ 
+-check_for_updates=1
++check_for_updates=0
+ 
+ 
+ 
+@@ -832,7 +836,7 @@
+ # performance data.
+ # Values: 1 = process performance data, 0 = do not process performance data
+ 
+-process_performance_data=0
++process_performance_data=1
+ 
+ 
+ 
+@@ -844,8 +848,8 @@
+ # define in your host configuration file.  Read the HTML docs for
+ # more information on performance data.
+ 
+-#host_perfdata_command=process-host-perfdata
+-#service_perfdata_command=process-service-perfdata
++host_perfdata_command=process-host-perfdata
++service_perfdata_command=process-service-perfdata
+ 
+ 
+ 
+@@ -925,7 +929,7 @@
+ # define in your host configuration file. Read the HTML docs for
+ # more information on implementing distributed monitoring.
+ 
+-#ocsp_command=somecommand
++#ocsp_command=ocsp-bus
+ 
+ 
+ 
+@@ -949,7 +953,7 @@
+ # define in your host configuration file. Read the HTML docs for
+ # more information on implementing distributed monitoring.
+ 
+-#ochp_command=somecommand
++#ochp_command=ochp-bus
+ 
+ 
+ 
+@@ -1016,7 +1020,7 @@
+ # check the "freshness" of service check results.  If you have
+ # disabled service freshness checking, this option has no effect.
+ 
+-service_freshness_check_interval=60
++service_freshness_check_interval=10
+ 
+ 
+ 
+@@ -1027,7 +1031,7 @@
+ # manner.
+ # Values: 1 = enabled freshness checking, 0 = disable freshness checking
+ 
+-check_host_freshness=0
++check_host_freshness=1
+ 
+ 
+ 
+@@ -1036,7 +1040,7 @@
+ # check the "freshness" of host check results.  If you have
+ # disabled host freshness checking, this option has no effect.
+ 
+-host_freshness_check_interval=60
++host_freshness_check_interval=10
+ 
+ 
+ 
+@@ -1063,7 +1067,7 @@
+ # Values: 1 = enable flap detection
+ #         0 = disable flap detection (default)
+ 
+-enable_flap_detection=1
++enable_flap_detection=0
+ 
+ 
+ 
+@@ -1088,7 +1092,7 @@
+ #	strict-iso8601	(YYYY-MM-DDTHH:MM:SS)
+ #
+ 
+-date_format=iso8601
++date_format=euro
+ 
+ 
+ 
+@@ -1148,7 +1152,7 @@
+ # be used in host names, service descriptions, or names of other
+ # object types.
+ 
+-illegal_object_name_chars=`~!$%^&*|'"<>?,()=
++illegal_object_name_chars=`~!$%^&*|"<>?,()=
+ 
+ 
+ 
+@@ -1228,7 +1232,7 @@
+ # Values: 1 - Enabled tweaks
+ #         0 - Disable tweaks (default)
+ 
+-use_large_installation_tweaks=0
++use_large_installation_tweaks=1
+ 
+ 
+ 
+@@ -1242,7 +1246,7 @@
+ # Values: 1 - Enable environment variable macros (default)
+ #         0 - Disable environment variable macros
+ 
+-enable_environment_macros=1
++enable_environment_macros=0
+ 
+ 
+ 

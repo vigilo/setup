@@ -1,0 +1,11 @@
+vigilo-setup (3.0.0.gef2c918-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Francois Poirotte <francois.poirotte@c-s.fr>  Sat, 24 Nov 2012 13:18:02 +0100
+
+vigilo-setup (2.1.2.g0d9fe29-1) unstable; urgency=low
+
+  * Initial release
+
+ -- Francois Poirotte <francois.poirotte@c-s.fr>  Sat, 10 Nov 2012 18:14:42 +0100

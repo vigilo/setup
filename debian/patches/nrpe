@@ -1,0 +1,23 @@
+Description: account for NRPE's service name change for Debian.
+Forwarded: not-needed.
+--- a/modules/520-start-nrpe/run.sh
++++ b/modules/520-start-nrpe/run.sh
+@@ -5,7 +5,7 @@
+ # Import de la couche de compatibilité.
+ . "`dirname $0`/../compat.sh"
+ 
+-service=nrpe
++service=nagios-nrpe-server
+ change_svc $service on
+ service $service status &> /dev/null
+ RET=$?
+--- a/modules/130-conf-nrpe/run.sh
++++ b/modules/130-conf-nrpe/run.sh
+@@ -8,5 +8,5 @@
+ echo "Configuration de NRPE"
+ sed -i -e 's/^dont_blame_nrpe=0/dont_blame_nrpe=1/' /etc/nagios/nrpe.cfg
+ 
+-grep -qs "include_dir=/etc/nrpe.d" /etc/nagios/nrpe.cfg || \
+-    echo "include_dir=/etc/nrpe.d/" >> /etc/nagios/nrpe.cfg
++grep -qs "include_dir=/etc/nagios/nrpe.d" /etc/nagios/nrpe.cfg || \
++    echo "include_dir=/etc/nagios/nrpe.d/" >> /etc/nagios/nrpe.cfg
