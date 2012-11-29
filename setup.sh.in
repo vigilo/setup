@@ -7,8 +7,8 @@ Usage : $0 [--admin|--metro|--sup|--no-verify-pkg|--auto|--default-password [--h
 Par défaut, installe un serveur avec toutes les options.
 
 Options :
---admin             installe un serveur "Administration Centrale" (expérimental)
---metro             installe un serveur "Stockage de données de métrologie" (expérimental)
+--admin             installe un serveur "Administration Centrale"
+--metro             installe un serveur "Stockage de données de métrologie"
 --sup               installe un serveur "Collecte de Supervision"
 --no-verify-pkg     pas de vérification de la signature des paquets
 --auto              pas de confirmation pour l'installation des dépendances des paquets
