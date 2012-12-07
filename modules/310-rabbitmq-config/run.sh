@@ -35,6 +35,7 @@ fi
 sed -i -e "s/__HOSTNAME__/$HOSTNAME/g" rabbitmq.config
 # Fichier de config
 cp -pu rabbitmq.config /etc/rabbitmq/
+chown rabbitmq:rabbitmq /etc/rabbitmq/rabbitmq.config
 
 # démarrage
 service=rabbitmq-server
