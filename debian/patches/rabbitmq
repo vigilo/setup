@@ -28,11 +28,3 @@ Forwarded: not-needed
  if [ ! -f $sslcert ]; then
      echo "Generating SSL certificate for $service..."
      HOSTNAME=$(hostname -s 2>/dev/null || echo "localhost")
---- a/modules/330-rabbitmq-items/run.sh
-+++ b/modules/330-rabbitmq-items/run.sh
-@@ -7,4 +7,4 @@
- 
- echo "Création des exchanges sur le bus AMQP"
- 
--vigilo-bus-config -u vigilo-admin -p vigilo-admin read-config exchanges.ini
-+vigilo-bus-config -u vigilo-admin -p vigilo-admin read-config exchanges.ini || :
