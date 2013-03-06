@@ -31,7 +31,7 @@ if [ "$DISTRO" == "redhat" -a -f /usr/share/nagios/html/index.php ]; then
 fi
 
 if [ ! -f /etc/nagios/passwd.plaintext ]; then
-    passwd=`dd if=/dev/urandom bs=1 count=6 2>/dev/null | base64`
+    passwd=`dd if=/dev/urandom | tr -dc A-Za-z0-9 | head -c8`
     touch /etc/nagios/passwd.plaintext
     chmod 600 /etc/nagios/passwd.plaintext
     echo $passwd > /etc/nagios/passwd.plaintext
