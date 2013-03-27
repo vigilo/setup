@@ -36,6 +36,8 @@ Depends:
  vigilo-correlator,
  vigilo-models,
  vigilo-nagios-config,
+ vigilo-nagios-plugins-cpu,
+ vigilo-nagios-plugins-raid,
  vigilo-nrpe-config,
  vigilo-perfdata2vigilo,
  vigilo-setup,
