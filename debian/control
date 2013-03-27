@@ -8,7 +8,7 @@ Homepage: http://www.projet-vigilo.org/
 
 Package: vigilo-setup
 Architecture: all
-Depends: ${misc:Depends}
+Depends: ${misc:Depends}, patch
 Description: Configure Vigilo-based monitoring.
  The vigilo-setup package provides the vigilo-setup command
  which prepares the system to monitoring using the Vigilo suite.

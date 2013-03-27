@@ -10,8 +10,8 @@ URL:        http://www.projet-vigilo.org
 Group:      Applications/System
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-build
 License:    GPLv2
-
 #Buildarch:  noarch  # Sur mandriva _libexecdir == _libdir
+Requires:   patch
 
 
 %description

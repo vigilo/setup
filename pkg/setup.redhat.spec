@@ -11,7 +11,7 @@ Group:      Applications/System
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-build
 License:    GPLv2
 Buildarch:  noarch
-
+Requires:   patch
 
 %description
 This module contains the Vigilo install script
