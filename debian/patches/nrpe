@@ -2,15 +2,26 @@ Description: account for NRPE's service name change for Debian.
 Forwarded: not-needed.
 --- a/modules/520-start-nrpe/run.sh
 +++ b/modules/520-start-nrpe/run.sh
-@@ -5,7 +5,7 @@
+@@ -4,10 +4,16 @@
  # Import de la couche de compatibilité.
  . "`dirname $0`/../compat.sh"
  
 -service=nrpe
 +service=nagios-nrpe-server
  change_svc $service on
- service $service status &> /dev/null
- RET=$?
+-service $service status &> /dev/null
+-RET=$?
++
++# sur debian la commande status n'existe pas => il faut forcer le redémarrage
++if [ "$DISTRO" == "debian" ]; then
++    RET=0
++elif
++    service $service status &> /dev/null
++    RET=$?
++fi
+ if [ "$RET" == "0" ]; then
+     service $service restart || exit $?
+ else
 --- a/modules/130-conf-nrpe/run.sh
 +++ b/modules/130-conf-nrpe/run.sh
 @@ -8,5 +8,5 @@
