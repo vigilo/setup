@@ -15,7 +15,7 @@ Forwarded: not-needed.
 +# sur debian la commande status n'existe pas => il faut forcer le redémarrage
 +if [ "$DISTRO" == "debian" ]; then
 +    RET=0
-+elif
++else
 +    service $service status &> /dev/null
 +    RET=$?
 +fi
