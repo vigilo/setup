@@ -24,7 +24,6 @@ Depends:
  postgresql-client-9.1,
  postgresql-contrib-9.1,
  snmpd,
- python-numpy,
  nagios-nrpe-plugin,
  python-initgroups (>= 2.13.0),
  python-txamqp (>= 0.6.1-0~ppa1),
