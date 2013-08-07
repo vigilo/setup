@@ -142,12 +142,30 @@
  
  
  
+@@ -913,7 +920,7 @@
+ # implementing distributed monitoring.
+ # Values: 1 = obsess over services, 0 = do not obsess (default)
+ 
+-obsess_over_services=0
++obsess_over_services=1
+ 
+ 
+ 
 @@ -925,7 +929,7 @@
  # define in your host configuration file. Read the HTML docs for
  # more information on implementing distributed monitoring.
  
 -#ocsp_command=somecommand
-+#ocsp_command=ocsp-bus
++ocsp_command=ocsp-bus
+ 
+ 
+ 
+@@ -937,7 +944,7 @@
+ # implementing distributed monitoring.
+ # Values: 1 = obsess over hosts, 0 = do not obsess (default)
+ 
+-obsess_over_hosts=0
++obsess_over_hosts=1
  
  
  
@@ -156,7 +174,7 @@
  # more information on implementing distributed monitoring.
  
 -#ochp_command=somecommand
-+#ochp_command=ochp-bus
++ochp_command=ochp-bus
  
  
  
