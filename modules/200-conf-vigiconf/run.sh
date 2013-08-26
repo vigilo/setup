@@ -36,7 +36,7 @@ if [[ "$svnurl" =~ ^file:// ]]; then
 fi
 
 pushd /etc/vigilo/vigiconf/conf.d.example
-svn import . $svnurl -m "Initial import"
+su -c 'svn import . $svnurl -m "Initial import"' vigiconf
 cd ..
 svn co $svnurl conf.d
 svn propset svn:keywords Rev conf.d/general/apps.py
