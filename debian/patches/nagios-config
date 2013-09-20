@@ -11,7 +11,7 @@ Forwarded: not-needed
  
  if [ "$DISTRO" == "redhat" ]; then
      # Sur RedHat, les permissions du fichier de commandes externes ne permettent pas aux CGIs d'y écrire
-@@ -21,25 +21,25 @@
+@@ -21,26 +21,26 @@
  # dans /var/lib/vigiconf, accessible uniquement au groupe vigiconf.
  getent group vigiconf > /dev/null && usermod -a -G vigiconf nagios || exit $?
  
@@ -36,11 +36,13 @@ Forwarded: not-needed
 -    chmod 600 /etc/nagios/passwd.plaintext
 -    echo $passwd > /etc/nagios/passwd.plaintext
 -    htpasswd -c -b /etc/nagios/passwd nagios $passwd
+-    chmod 644 /etc/nagios/passwd
 -    sed -i -e "s/nagiosadmin/nagios/g" /etc/nagios/cgi.cfg
 +    touch /etc/nagios3/htpasswd.plaintext
 +    chmod 600 /etc/nagios3/htpasswd.plaintext
 +    echo $passwd > /etc/nagios3/htpasswd.plaintext
 +    htpasswd -c -b /etc/nagios3/htpasswd.users nagios $passwd
++    chmod 644 /etc/nagios3/htpasswd.users
 +    sed -i -e "s/nagiosadmin/nagios/g" /etc/nagios3/cgi.cfg
      # permet d'avoir des accents dans les messages de plugin
 -    sed -i -e "s/escape_html_tags=1/escape_html_tags=0/g" /etc/nagios/cgi.cfg
@@ -48,7 +50,7 @@ Forwarded: not-needed
  fi
  
  # Optimisation: mettre le répertoire des résultats de Nagios en RAM
-@@ -55,5 +55,15 @@
+@@ -56,5 +56,15 @@
      mount $crdir
  fi
  

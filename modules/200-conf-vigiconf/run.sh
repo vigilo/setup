@@ -30,6 +30,7 @@ if [[ "$svnurl" =~ ^file:// ]]; then
     dir=`echo $svnurl | sed -e s,file://,,g`
     if [ ! -d $dir ]; then
         mkdir -p $dir
+        chmod -R 755 $dir/..
         svnadmin create $dir
         chown vigiconf:vigiconf -R $dir
     fi

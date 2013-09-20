@@ -39,12 +39,12 @@ fi
 
 
 # Utilisateur
-sudo -u postgres psql -A -t -c '\du' | grep -qs '^'$dbuser || \
-    sudo -u postgres psql -c "CREATE ROLE $dbuser PASSWORD '$dbpasswd' NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN;"
+su -c "psql -A -t -c '\du'" postgres | grep -qs '^'$dbuser || \
+    su -c "psql -c \"CREATE ROLE $dbuser PASSWORD '$dbpasswd' NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN;\"" postgres
 
 # Base de données
-if ! sudo -u postgres psql -A -t -l | grep -qs '^'$dbname; then
-    sudo -u postgres createdb $dbname --owner $dbuser --encoding UTF8 -T template0 || exit $?
+if ! su -c 'psql -A -t -l' postgres | grep -qs '^'$dbname; then
+    su -c "createdb $dbname --owner $dbuser --encoding UTF8 -T template0" postgres || exit $?
     echo "Création des tables dans la base de données PostgreSQL"
     mkdir -p log
     vigilo-updatedb || exit $?

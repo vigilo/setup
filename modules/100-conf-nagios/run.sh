@@ -36,6 +36,7 @@ if [ ! -f /etc/nagios/passwd.plaintext ]; then
     chmod 600 /etc/nagios/passwd.plaintext
     echo $passwd > /etc/nagios/passwd.plaintext
     htpasswd -c -b /etc/nagios/passwd nagios $passwd
+    chmod 644 /etc/nagios/passwd
     sed -i -e "s/nagiosadmin/nagios/g" /etc/nagios/cgi.cfg
     # permet d'avoir des accents dans les messages de plugin
     sed -i -e "s/escape_html_tags=1/escape_html_tags=0/g" /etc/nagios/cgi.cfg
