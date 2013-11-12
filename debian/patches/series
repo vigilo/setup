@@ -6,4 +6,3 @@ nrpe
 nagios-config
 apache2
 rabbitmq
-supervisor

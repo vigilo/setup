@@ -4,9 +4,15 @@
 # Import de la couche de compatibilité.
 . "`dirname $0`/../compat.sh"
 
+if [ "$DISTRO" == "debian" ]; then
+    cp -a memcached.conf /etc/supervisor/conf.d/
+    service=supervisor
+else
+    cp -a memcached.ini /etc/supervisord.d/
+    service=supervisord
+fi
+
 # Démarrage par supervisor plutôt qu'autonome.
-service=supervisord
-cp -a memcached.ini /etc/supervisord.d/
 change_svc memcached off
 change_svc $service on
 service $service status &> /dev/null
