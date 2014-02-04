@@ -16,7 +16,3 @@ export VIGILO_REPO
 export VIGILO_DEPS_REPO
 export VIGILO_EXTRA_REPO
 
-# Emplacement du fichier pg_hba.conf
-# de la base PostgreSQL à utiliser.
-PG_HBA=/var/lib/pgsql/data/pg_hba.conf
-export PG_HBA

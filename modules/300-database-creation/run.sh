@@ -3,9 +3,28 @@
 
 # Import de la couche de compatibilité.
 . "`dirname $0`/../compat.sh"
+case "$DISTRO" in
+    mandriva|debian)
+        service=postgresql
+        PG_HBA=/var/lib/pgsql/data/pg_hba.conf
+        ;;
+    redhat)
+        service="postgresql-9.2"
+        PG_HBA=/var/lib/pgsql/9.2/data/pg_hba.conf
+        ;;
+    *)
+        service=postgresql
+        PG_HBA=/var/lib/pgsql/data/pg_hba.conf
+        echo "ATTENTION : distribution inconnue."
+        echo "Les valeurs suivantes seront utilisées :"
+        echo "    service=$service"
+        echo "    PG_HBA=$PG_HBA"
+        echo "Appuyez sur Entrée pour continuer."
+        read unused
+        ;;
+esac
 
 echo "Création de la base de données PostgreSQL"
-service=postgresql
 change_svc $service on
 service $service status &> /dev/null
 RET=$?
@@ -33,7 +52,7 @@ if [ -f "$PG_HBA" ]; then
         sed -i -e "/^# TYPE\s\+DATABASE\s\+USER\s\+\(CIDR-\)\?ADDRESS\s\+METHOD\s*$/a host $dbname $dbuser ::1/128 md5" "$PG_HBA"
         sed -i -e "/^# TYPE\s\+DATABASE\s\+USER\s\+\(CIDR-\)\?ADDRESS\s\+METHOD\s*$/a host $dbname $dbuser 127.0.0.1/32 md5" "$PG_HBA"
         sed -i -e "/^# TYPE\s\+DATABASE\s\+USER\s\+\(CIDR-\)\?ADDRESS\s\+METHOD\s*$/a #Access to vigilo database" "$PG_HBA"
-        service postgresql reload
+        service $service reload
     fi
 fi
 
