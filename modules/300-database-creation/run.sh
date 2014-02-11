@@ -4,13 +4,17 @@
 # Import de la couche de compatibilité.
 . "`dirname $0`/../compat.sh"
 case "$DISTRO" in
-    mandriva|debian)
+    mandriva)
         service=postgresql
         PG_HBA=/var/lib/pgsql/data/pg_hba.conf
         ;;
     redhat)
         service="postgresql-9.2"
         PG_HBA=/var/lib/pgsql/9.2/data/pg_hba.conf
+        ;;
+    debian)
+        service=postgresql
+        PG_HBA=/etc/postgresql/9.1/main/pg_hba.conf
         ;;
     *)
         service=postgresql
