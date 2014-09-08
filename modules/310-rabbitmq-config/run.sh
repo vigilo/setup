@@ -6,7 +6,14 @@
 
 # Management
 echo "Activation de l'interface de gestion"
+# Sous RHEL/CentOS, rabbitmq-plugins se trouve désormais
+# dans un dossier non standard (cf. #1274).
+old_PATH=$PATH
+PATH=$PATH:/usr/lib/rabbitmq/bin/
+export PATH
 rabbitmq-plugins enable rabbitmq_management
+PATH=$old_PATH
+export PATH
 
 echo "Génération du certificat SSL"
 service=rabbitmq
