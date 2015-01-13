@@ -2,7 +2,7 @@ Description: Debian-specific tricks for Apache.
 Forwarded: not-needed
 --- a/modules/550-restart-apache/run.sh
 +++ b/modules/550-restart-apache/run.sh
-@@ -2,17 +2,24 @@
+@@ -1,17 +1,24 @@
  # Copyright (C) 2011-2015 CS-SI
  # License: GNU GPL v2 <http://www.gnu.org/licenses/gpl-2.0.html>
  
