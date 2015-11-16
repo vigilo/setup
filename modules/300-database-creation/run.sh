@@ -39,15 +39,26 @@ else
     service $service start || exit $?
 fi
 
-#postgresql://user:mdp@127.0.0.1/base
-dbuser=`  grep '^sqlalchemy_url' /etc/vigilo/models/settings.ini | sed -e 's,^.*://\([^:]\+\):.*$,\1,'          | tail -n 1`
-dbpasswd=`grep '^sqlalchemy_url' /etc/vigilo/models/settings.ini | sed -e 's,^.*://[^:]\+:\([^@]\+\)@.*$,\1,'   | tail -n 1`
-dbname=`  grep '^sqlalchemy_url' /etc/vigilo/models/settings.ini | sed -e 's,^.*/\([^/]\+\)$,\1,'               | tail -n 1`
+#postgresql://user:mdp@hote:port/base
+# L'expression régulière éclate la valeur pour obtenir
+# les différents champs (un par ligne).
+# Le port est optionnel et vaut 5432 si omis.
+while true; do
+    read dbuser
+    read dbpass
+    read dbhost
+    read dbport
+    if [ -z "$dbport" ]; then
+        dbport=5432
+    fi
+    read dbname
+    break
+done < <(grep '^sqlalchemy_url' /etc/vigilo/models/settings.ini | \
+         sed -re 's,^.*://([^:]+):([^@]+)@([^:/]+)(:([0-9]+))?/(.*)$,\1\n\2\n\3\n\5\n\6,')
 
-[ -n "$dbname" -a -n "$dbuser" -a -n "$dbpasswd" ]
+[ -n "$dbuser" -a -n "$dbpass" -a -n "$dbhost" -a -n "$dbname" ]
 echo "Base configurée: $dbname. Utilisateur configuré: $dbuser."
 sleep 5
-
 
 # Autoriser les connexions de l'utilisateur Vigilo
 if [ -f "$PG_HBA" ]; then
@@ -62,16 +73,14 @@ fi
 
 
 # Utilisateur
-su -c "psql -A -t -c '\du'" postgres | grep -qs '^'$dbuser || \
-    su -c "psql -c \"CREATE ROLE $dbuser PASSWORD '$dbpasswd' NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN;\"" postgres
+su -c "psql -p $dbport -h '$dbhost' -A -t -c '\du'" postgres | grep -qs '^'$dbuser || \
+    su -c "psql -p $dbport -h '$dbhost' -c \"CREATE ROLE $dbuser PASSWORD '$dbpass' \
+           NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN;\"" postgres
 
 # Base de données
-if ! su -c 'psql -A -t -l' postgres | grep -qs '^'$dbname; then
-    su -c "createdb $dbname --owner $dbuser --encoding UTF8 -T template0" postgres || exit $?
+if ! su -c "psql -p $dbport -h '$dbhost' -A -t -l" postgres | grep -qs '^'$dbname; then
+    su -c "createdb -p $dbport -h '$dbhost' $dbname --owner $dbuser --encoding UTF8 \
+           -T template0" postgres || exit $?
     echo "Création des tables dans la base de données PostgreSQL"
-    mkdir -p log
-    vigilo-updatedb || exit $?
-    echo "(Désactivé) Remplissage de la base de données PostgreSQL"
-    #vigilo-models-demo example1
-    rm -rf log
+    vigilo-updatedb
 fi
