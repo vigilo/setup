@@ -3,7 +3,7 @@ Forwarded: not-needed
 --- a/modules/550-restart-apache/run.sh
 +++ b/modules/550-restart-apache/run.sh
 @@ -1,17 +1,24 @@
- # Copyright (C) 2011-2015 CS-SI
+ # Copyright (C) 2011-2016 CS-SI
  # License: GNU GPL v2 <http://www.gnu.org/licenses/gpl-2.0.html>
  
 -[ -f /etc/init.d/httpd ] || exit 0
