@@ -5,7 +5,7 @@ SETUP_MODULES=@LIBEXECDIR@/vigilo/setup
 export SETUP_MODULES
 
 # vigiconf
-export VIGICONF_SVN=file:///var/lib/svn/vigiconf
+VIGICONF_SVN=file:///var/lib/svn/vigiconf
 export VIGICONF_SVN
 
 # Emplacement des RPMs
@@ -15,4 +15,8 @@ VIGILO_EXTRA_REPO=http://vigilo-dev.si.c-s.fr/pkg/$DISTRO/deps-epel/vigilo/$DIST
 export VIGILO_REPO
 export VIGILO_DEPS_REPO
 export VIGILO_EXTRA_REPO
+
+# accès administrateur à la base de données
+CONN_INFO="user=postgres"
+export CONN_INFO
 

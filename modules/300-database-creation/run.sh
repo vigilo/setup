@@ -3,6 +3,12 @@
 
 # Import de la couche de compatibilité.
 . "`dirname $0`/../compat.sh"
+
+if [ -z "$CONN_INFO" ]; then
+    echo "La variable CONN_INFO n'est pas déclarée." >&2
+    exit 1
+fi
+
 case "$DISTRO" in
     mandriva)
         service=postgresql
@@ -39,25 +45,41 @@ else
     service $service start || exit $?
 fi
 
-#postgresql://user:mdp@hote:port/base
+#postgresql://user:mdp@hote:port/base?arg1=val1&argN=valN
 # L'expression régulière éclate la valeur pour obtenir
 # les différents champs (un par ligne).
-# Le port est optionnel et vaut 5432 si omis.
 while true; do
     read dbuser
     read dbpass
     read dbhost
     read dbport
-    if [ -z "$dbport" ]; then
-        dbport=5432
-    fi
     read dbname
+    read args
     break
 done < <(grep '^sqlalchemy_url' /etc/vigilo/models/settings.ini | \
-         sed -re 's,^.*://([^:]+):([^@]+)@([^:/]+)(:([0-9]+))?/(.*)$,\1\n\2\n\3\n\5\n\6,')
+         sed -nre 's,^.*://([^:]+):([^@]+)@([^:/]*)(:([0-9]+))?/([^?]+)(\?([^#]*))?(#.*)?$,\1\n\2\n\3\n\5\n\6\n\8,p')
 
-[ -n "$dbuser" -a -n "$dbpass" -a -n "$dbhost" -a -n "$dbname" ]
-echo "Base configurée: $dbname. Utilisateur configuré: $dbuser."
+if [ -n "$args" ]; then
+    while true; do
+        read var_name
+        read var_value
+
+        var_value=`printf "%s" "$var_$value" | perl -pe 's/\%(\w\w)/chr hex $1/ge'`
+        case "$var_name" in
+            user)       dbuser="$var_value";;
+            password)   dbpass="$var_value";;
+            dbname)     dbname="$var_value";;
+            host)       dbhost="$var_value";;
+            port)       dbport="$var_value";;
+        esac
+    done < <(printf "%s" "$args" | sed -nre 's,[&=],\n,gp')
+fi
+
+# Il faut obligatoirement un nom d'utilisateur et un mot de passe.
+[ -n "$dbuser" -a -n "$dbpass" -a -n "$dbname" ]
+
+echo "Base de données           : $dbname"
+echo "Utilisateur               : $dbuser"
 sleep 5
 
 # Autoriser les connexions de l'utilisateur Vigilo
@@ -71,16 +93,13 @@ if [ -f "$PG_HBA" ]; then
     fi
 fi
 
-
 # Utilisateur
-su -c "psql -p $dbport -h '$dbhost' -A -t -c '\du'" postgres | grep -qs '^'$dbuser || \
-    su -c "psql -p $dbport -h '$dbhost' -c \"CREATE ROLE $dbuser PASSWORD '$dbpass' \
-           NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN;\"" postgres
+su -c "psql -A -t -c '\du' \"$CONN_INFO\"" postgres | grep -qs '^'$dbuser || \
+    su -c "psql -c \"CREATE ROLE $dbuser PASSWORD '$dbpass' NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN;\" \"$CONN_INFO\"" postgres
 
 # Base de données
-if ! su -c "psql -p $dbport -h '$dbhost' -A -t -l" postgres | grep -qs '^'$dbname; then
-    su -c "createdb -p $dbport -h '$dbhost' $dbname --owner $dbuser --encoding UTF8 \
-           -T template0" postgres || exit $?
+if ! su -c "psql -A -t -l \"$CONN_INFO\"" postgres | grep -qs '^'$dbname; then
+    su -c "createdb $dbname --owner $dbuser --encoding UTF8 -T template0 \"$CONN_INFO\"" postgres || exit $?
     echo "Création des tables dans la base de données PostgreSQL"
     vigilo-updatedb
 fi
