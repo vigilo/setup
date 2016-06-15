@@ -6,6 +6,7 @@
 
 # Management
 echo "Activation de l'interface de gestion"
+
 # Sous RHEL/CentOS, rabbitmq-plugins se trouve désormais
 # dans un dossier non standard (cf. #1274).
 old_PATH=$PATH

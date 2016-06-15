@@ -110,6 +110,10 @@ else
     exit 1
 fi
 
+# Configuration des variables d'environnement.
+PATH=/sbin:/usr/sbin:/bin:/usr/bin:$PATH
+export PATH
+
 # Import de la couche de compatibilité.
 . $SETUP_MODULES/compat.sh
 
