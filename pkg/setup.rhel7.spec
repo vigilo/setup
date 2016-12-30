@@ -10,9 +10,8 @@ URL:        http://www.projet-vigilo.org
 Group:      Applications/System
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-build
 License:    GPLv2
-#Buildarch:  noarch  # Sur mandriva _libexecdir == _libdir
+Buildarch:  noarch
 Requires:   patch
-
 
 %description
 This module contains the Vigilo install script
@@ -39,14 +38,13 @@ make install \
     SYSCONFDIR=%{_sysconfdir}
 
 mkdir -p $RPM_BUILD_ROOT/%{_libexecdir}/vigilo/setup
-install -m 755 pkg/compat.mandriva.sh $RPM_BUILD_ROOT/%{_libexecdir}/vigilo/setup/compat.sh
-
+install -m 755 pkg/compat.rhel7.sh $RPM_BUILD_ROOT/%{_libexecdir}/vigilo/setup/compat.sh
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(-,root,root,755)
+%defattr(644,root,root,755)
 %doc COPYING.txt
 %attr(755,root,root) %{_sbindir}/vigilo-setup
 %dir %{_libexecdir}/vigilo

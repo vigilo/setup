@@ -4,12 +4,14 @@
 # Import de la couche de compatibilité.
 . "`dirname $0`/../compat.sh"
 
-[ -f /etc/init.d/rabbitmq-server ] || exit 0
+# Fonctions de base
+. "`dirname $0`/../common.sh"
+
+check_svc "rabbitmq-server" || exit 0
 
 echo "Création des comptes sur le bus"
 sleep 5
-rabbitmqctl add_user vigilo-admin vigilo-admin || :
-rabbitmqctl set_permissions vigilo-admin '.*' '.*' '.*'
+create_bus_user vigilo-admin
 
 CONNECTORS="connector-nagios connector-metro correlator"
 

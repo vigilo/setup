@@ -6,7 +6,8 @@
 
 echo "Configuration de Nagios"
 
-cfgpatch=nagios.$DISTRO.patch
+cfgpatch=nagios.$DISTRO.patch;
+if [ -f "nagios.$DIST_TAG.patch" ]; then cfgpatch=nagios.$DIST_TAG.patch; fi
 
 [ -f /etc/nagios/nagios.cfg.orig ] || patch -N -b /etc/nagios/nagios.cfg < $cfgpatch
 

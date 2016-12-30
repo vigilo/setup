@@ -3,8 +3,8 @@ Forwarded: not-needed
 --- a/modules/100-conf-nagios/run.sh
 +++ b/modules/100-conf-nagios/run.sh
 @@ -9,7 +9,7 @@
- 
- cfgpatch=nagios.$DISTRO.patch
+ cfgpatch=nagios.$DISTRO.patch;
+ if [ -f "nagios.$DIST_TAG.patch" ]; then cfgpatch=nagios.$DIST_TAG.patch; fi
  
 -[ -f /etc/nagios/nagios.cfg.orig ] || patch -N -b /etc/nagios/nagios.cfg < $cfgpatch
 +[ -f /etc/nagios3/nagios.cfg.orig ] || patch -N -b /etc/nagios3/nagios.cfg < $cfgpatch
@@ -50,7 +50,7 @@ Forwarded: not-needed
  fi
  
  # Optimisation: mettre le répertoire des résultats de Nagios en RAM
-@@ -56,5 +56,15 @@
+@@ -56,5 +56,16 @@
      mount $crdir
  fi
  
@@ -63,6 +63,7 @@ Forwarded: not-needed
 +# - Nagios doit pouvoir envoyer des notifications au connector-nagios.
 +usermod -a -G www-data vigilo-nagios
 +usermod -a -G vigilo-nagios nagios
++
 +
  # Lancement au boot
 -change_svc nagios on

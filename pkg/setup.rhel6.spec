@@ -37,6 +37,8 @@ make install \
     LIBEXECDIR=%{_libexecdir} \
     SYSCONFDIR=%{_sysconfdir}
 
+mkdir -p $RPM_BUILD_ROOT/%{_libexecdir}/vigilo/setup
+install -m 755 pkg/compat.rhel6.sh $RPM_BUILD_ROOT/%{_libexecdir}/vigilo/setup/compat.sh
 
 %clean
 rm -rf $RPM_BUILD_ROOT

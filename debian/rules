@@ -24,6 +24,7 @@ endif
 
 override_dh_auto_install:
 	dh_auto_install DESTDIR=debian/$(PKGNAME)
+	install -m 755 pkg/compat.debian.sh debian/tmp/usr/lib/vigilo/setup/compat.sh
 
 .PHONY: override_dh_auto_clean \
 		override_dh_auto_install

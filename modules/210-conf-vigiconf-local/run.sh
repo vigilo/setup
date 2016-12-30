@@ -10,8 +10,8 @@ echo "Configuration de VigiConf-local"
 if ! grep -qs ^vigiconf /etc/sudoers; then
     echo '# VigiConf' >> /etc/sudoers
     echo 'Defaults:vigiconf !requiretty' >> /etc/sudoers
-    echo 'Cmnd_Alias INIT = /etc/init.d/*' >> /etc/sudoers
-    echo 'Cmnd_Alias VALID = /usr/sbin/nagios' >> /etc/sudoers
-    echo 'vigiconf ALL=(ALL) NOPASSWD: INIT, VALID' >> /etc/sudoers
+    echo 'Cmnd_Alias SVC_MGMT = /etc/init.d/*, /sbin/service, /usr/bin/systemctl' >> /etc/sudoers
+    echo 'Cmnd_Alias VALID = /usr/sbin/nagios, /usr/sbin/nagios3' >> /etc/sudoers
+    echo 'vigiconf ALL=(ALL) NOPASSWD: SVC_MGMT, VALID' >> /etc/sudoers
     echo 'vigiconf ALL=(nagios) NOPASSWD: /usr/bin/pkill' >> /etc/sudoers
 fi

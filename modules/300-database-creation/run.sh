@@ -9,6 +9,7 @@ if [ -z "$CONN_INFO" ]; then
     exit 1
 fi
 
+# @FIXME On ne devrait pas avoir recours à ce "sniffing".
 case "$DISTRO" in
     mandriva)
         service=postgresql
@@ -38,12 +39,17 @@ echo "Création de la base de données PostgreSQL"
 change_svc $service on
 service $service status &> /dev/null
 RET=$?
-if [ "$RET" == "0" ]; then
+if [ $RET -eq 0 ]; then
+    # Rien de plus à faire, le service est déjà fonctionnel.
     :
+elif [ -f /usr/pgsql-9.2/bin/postgresql92-setup ]; then
+    # Lorsque PostgreSQL a été installé via un paquet provenant
+    # du site officiel du projet.
+    /usr/pgsql-9.2/bin/postgresql92-setup initdb &> /dev/null
 else
     service $service initdb &> /dev/null
-    service $service start || exit $?
 fi
+service $service start || exit $?
 
 #postgresql://user:mdp@hote:port/base?arg1=val1&argN=valN
 # L'expression régulière éclate la valeur pour obtenir
