@@ -1,7 +1,0 @@
-snmpd-restart
-connectors
-nagios-passwd
-nrpe
-nagios-config
-apache2
-rabbitmq
