@@ -1,5 +1,5 @@
---- nagios.cfg.orig	2017-03-01 17:57:23.517000000 +0100
-+++ nagios.cfg	2017-03-01 18:09:49.515000000 +0100
+--- /etc/nagios/nagios.cfg.orig	2017-06-28 20:55:25.000000000 +0200
++++ /etc/nagios/nagios.cfg	2017-09-01 16:03:11.346000000 +0200
 @@ -26,13 +26,13 @@
  # if you wish (as shown below), or keep them all in a single config file.
  
