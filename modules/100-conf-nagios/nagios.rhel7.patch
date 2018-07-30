@@ -1,5 +1,5 @@
---- nagios.cfg.v4.3.4-5	2018-07-30 10:15:23.257000000 +0200
-+++ nagios.cfg.vigilo	2018-07-30 10:37:12.993000000 +0200
+--- /etc/nagios/nagios.cfg.orig	2018-07-30 11:32:50.345000000 +0200
++++ /etc/nagios/nagios.cfg	2018-07-30 11:38:30.853000000 +0200
 @@ -26,13 +26,13 @@
  # if you wish (as shown below), or keep them all in a single config file.
  
@@ -34,6 +34,24 @@
  
  
  
+@@ -65,7 +73,7 @@
+ # directly) in order to prevent inconsistencies that can occur
+ # when the config files are modified after Nagios starts.
+ 
+-object_cache_file=/var/spool/nagios/objects.cache
++object_cache_file=/dev/shm/nagios/objects.cache
+ 
+ 
+ 
+@@ -81,7 +89,7 @@
+ # Read the documentation section on optimizing Nagios to find our more
+ # about how this feature works.
+ 
+-precached_object_file=/var/spool/nagios/objects.precache
++precached_object_file=/dev/shm/nagios/objects.precache
+ 
+ 
+ 
 @@ -104,7 +112,7 @@
  # The contents of the status file are deleted every time Nagios
  #  restarts.
@@ -43,7 +61,15 @@
  
  
  
-@@ -160,7 +168,7 @@
+@@ -153,14 +161,14 @@
+ # directory level instead of on the file, as the file is deleted every
+ # time its contents are processed.
+ 
+-command_file=/var/spool/nagios/cmd/nagios.cmd
++command_file=/dev/shm/nagios/nagios.cmd
+ 
+ 
+ 
  # QUERY HANDLER INTERFACE
  # This is the socket that is created for the Query Handler interface
  
@@ -103,6 +129,15 @@
  
 -check_result_reaper_frequency=10
 +check_result_reaper_frequency=3
+ 
+ 
+ 
+@@ -451,7 +459,7 @@
+ # Note: Make sure that only one instance of Nagios has access
+ # to this directory!  
+ 
+-check_result_path=/var/spool/nagios/checkresults
++check_result_path=/dev/shm/nagios/checkresults
  
  
  
