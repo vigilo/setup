@@ -1,5 +1,5 @@
---- /etc/nagios/nagios.cfg.orig	2017-06-28 20:55:25.000000000 +0200
-+++ /etc/nagios/nagios.cfg	2017-09-01 16:03:11.346000000 +0200
+--- nagios.cfg.v4.3.4-5	2018-07-30 10:15:23.257000000 +0200
++++ nagios.cfg.vigilo	2018-07-30 10:37:12.993000000 +0200
 @@ -26,13 +26,13 @@
  # if you wish (as shown below), or keep them all in a single config file.
  
@@ -38,31 +38,39 @@
  # The contents of the status file are deleted every time Nagios
  #  restarts.
  
--status_file=/var/spool/nagios/status.dat
-+status_file=/dev/shm/nagios-status.dat
+-status_file=/var/log/nagios/status.dat
++status_file=/dev/shm/nagios/status.dat
  
  
  
-@@ -178,16 +186,14 @@
+@@ -160,7 +168,7 @@
+ # QUERY HANDLER INTERFACE
+ # This is the socket that is created for the Query Handler interface
+ 
+-#query_socket=/var/spool/nagios/cmd/nagios.qh
++query_socket=/dev/shm/nagios/nagios.qh
+ 
+ 
+ 
+@@ -178,7 +186,7 @@
  # is created, used, and deleted throughout the time that Nagios is
  # running.
  
 -temp_file=/var/spool/nagios/nagios.tmp
--
-+temp_file=/dev/shm/nagios.tmp
++temp_file=/dev/shm/nagios/temp_file
  
  
- # TEMP PATH
+ 
+@@ -186,7 +194,7 @@
  # This is path where Nagios can create temp files for service and
  # host check results, etc.
  
 -temp_path=/tmp
--
-+temp_path=/dev/shm
++temp_path=/dev/shm/nagios/tmp
  
  
- # EVENT BROKER OPTIONS
-@@ -317,7 +323,7 @@
+ 
+@@ -317,7 +325,7 @@
  # checks - see the option below for controlling whether or not
  # passive checks are logged.
  
@@ -71,7 +79,7 @@
  
  
  
-@@ -326,7 +332,7 @@
+@@ -326,7 +334,7 @@
  # this value to 0.  If passive checks should be logged, set
  # this value to 1.
  
@@ -80,7 +88,7 @@
  
  
  
-@@ -367,7 +373,7 @@
+@@ -367,7 +375,7 @@
  # program start time that an initial check of all services should
  # be completed.  Default is 30 minutes.
  
@@ -89,7 +97,7 @@
  
  
  
-@@ -428,7 +434,7 @@
+@@ -428,7 +436,7 @@
  # This is the frequency (in seconds!) that Nagios will process
  # the results of host and service checks.
  
@@ -98,7 +106,7 @@
  
  
  
-@@ -587,8 +593,8 @@
+@@ -587,8 +595,8 @@
  # ocsp command, and performance data commands.  All values are in
  # seconds.
  
@@ -109,7 +117,7 @@
  event_handler_timeout=30
  notification_timeout=30
  ocsp_timeout=5
-@@ -709,7 +715,7 @@
+@@ -709,7 +717,7 @@
  # by Nagios Enterprises from the update check is processed in accordance 
  # with our privacy policy - see https://api.nagios.org for details.
  
@@ -118,7 +126,7 @@
  
  
  
-@@ -809,7 +815,7 @@
+@@ -809,7 +817,7 @@
  # performance data.
  # Values: 1 = process performance data, 0 = do not process performance data
  
@@ -127,18 +135,19 @@
  
  
  
-@@ -821,8 +827,8 @@
+@@ -821,9 +829,8 @@
  # define in your host configuration file.  Read the HTML docs for
  # more information on performance data.
  
 -#host_perfdata_command=process-host-perfdata
 -#service_perfdata_command=process-service-perfdata
+-
 +host_perfdata_command=process-host-perfdata
 +service_perfdata_command=process-service-perfdata
  
  
- 
-@@ -902,7 +908,7 @@
+ # HOST AND SERVICE PERFORMANCE DATA FILES
+@@ -902,7 +909,7 @@
  # implementing distributed monitoring.
  # Values: 1 = obsess over services, 0 = do not obsess (default)
  
@@ -147,7 +156,7 @@
  
  
  
-@@ -914,7 +920,7 @@
+@@ -914,7 +921,7 @@
  # define in your host configuration file. Read the HTML docs for
  # more information on implementing distributed monitoring.
  
@@ -156,7 +165,7 @@
  
  
  
-@@ -926,7 +932,7 @@
+@@ -926,7 +933,7 @@
  # implementing distributed monitoring.
  # Values: 1 = obsess over hosts, 0 = do not obsess (default)
  
@@ -165,7 +174,7 @@
  
  
  
-@@ -938,7 +944,7 @@
+@@ -938,7 +945,7 @@
  # define in your host configuration file. Read the HTML docs for
  # more information on implementing distributed monitoring.
  
@@ -174,7 +183,7 @@
  
  
  
-@@ -1005,7 +1011,7 @@
+@@ -1005,7 +1012,7 @@
  # check the "freshness" of service check results.  If you have
  # disabled service freshness checking, this option has no effect.
  
@@ -183,7 +192,7 @@
  
  
  
-@@ -1032,7 +1038,7 @@
+@@ -1032,7 +1039,7 @@
  # manner.
  # Values: 1 = enabled freshness checking, 0 = disable freshness checking
  
@@ -192,7 +201,7 @@
  
  
  
-@@ -1041,7 +1047,7 @@
+@@ -1041,7 +1048,7 @@
  # check the "freshness" of host check results.  If you have
  # disabled host freshness checking, this option has no effect.
  
@@ -201,7 +210,7 @@
  
  
  
-@@ -1068,7 +1074,7 @@
+@@ -1068,7 +1075,7 @@
  # Values: 1 = enable flap detection
  #         0 = disable flap detection (default)
  
@@ -210,7 +219,7 @@
  
  
  
-@@ -1093,7 +1099,7 @@
+@@ -1093,7 +1100,7 @@
  #	strict-iso8601	(YYYY-MM-DDTHH:MM:SS)
  #
  
@@ -219,17 +228,16 @@
  
  
  
-@@ -1122,8 +1128,7 @@
+@@ -1122,7 +1129,7 @@
  # be used in host names, service descriptions, or names of other
  # object types.
  
 -illegal_object_name_chars=`~!$%^&*|'"<>?,()=
--
 +illegal_object_name_chars=`~!$%^&*|"<>?,()=
  
  
- # ILLEGAL MACRO OUTPUT CHARACTERS
-@@ -1204,7 +1209,7 @@
+ 
+@@ -1204,7 +1211,7 @@
  # Values: 1 - Enabled tweaks
  #         0 - Disable tweaks (default)
  
