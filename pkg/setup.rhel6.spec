@@ -6,7 +6,7 @@ Summary(fr): Scripts d'install de Vigilo
 Version:    @VERSION@
 Release:    @RELEASE@%{?dist}
 Source0:    %{name}-%{version}.tar.gz
-URL:        http://www.vigilo-nms.com
+URL:        https://www.vigilo-nms.com
 Group:      Applications/System
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-build
 License:    GPLv2
@@ -15,11 +15,11 @@ Requires:   patch
 
 %description
 This module contains the Vigilo install script
-This application is part of the Vigilo Project <http://vigilo-nms.com>
+This application is part of the Vigilo Project <https://www.vigilo-nms.com>
 
 %description -l fr
 Ce module contient les scripts d'installation de Vigilo.
-Ce programme fait partie du projet Vigilo <http://vigilo-nms.com>
+Ce programme fait partie du projet Vigilo <https://www.vigilo-nms.com>
 
 %prep
 %setup -q
