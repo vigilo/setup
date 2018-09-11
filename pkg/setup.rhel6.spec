@@ -5,7 +5,7 @@ Summary:    Install scripts for Vigilo
 Summary(fr): Scripts d'install de Vigilo
 Version:    @VERSION@
 Release:    @RELEASE@%{?dist}
-Source0:    %{name}-%{version}.tar.gz
+Source0:    %{name}-%{version}@PREVERSION@.tar.gz
 URL:        https://www.vigilo-nms.com
 Group:      Applications/System
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-build
@@ -22,7 +22,7 @@ Ce module contient les scripts d'installation de Vigilo.
 Ce programme fait partie du projet Vigilo <https://www.vigilo-nms.com>
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}@PREVERSION@
 
 %build
 make \
