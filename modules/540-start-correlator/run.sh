@@ -5,11 +5,8 @@
 . "`dirname $0`/../compat.sh"
 
 service=vigilo-correlator
-change_svc $service on
-service $service status &> /dev/null
-RET=$?
-if [ "$RET" == "0" ]; then
-    service $service restart || exit $?
-else
-    service $service start || exit $?
+start_service $service
+if [ "$DISTRO" = "redhat" ] && [ $((0$DIST_VER + 0)) -ge 7 ];
+    # Sur RHEL/CentOS 7+, on doit aussi démarrer une instance du template.
+    start_service $service@1
 fi

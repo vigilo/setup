@@ -19,3 +19,12 @@ create_bus_user() {
     fi
 }
 
+start_service() {
+    change_svc $1 on
+    service $1 status &> /dev/null
+    if [ $? -eq 0 ]; then
+        service $1 restart || exit $?
+    else
+        service $1 start || exit $?
+    fi
+}
