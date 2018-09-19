@@ -7,7 +7,7 @@
 
 service=vigilo-connector-metro
 start_service $service
-if [ "$DISTRO" = "redhat" ] && [ $((0$DIST_VER + 0)) -ge 7 ];
+if [ "$DISTRO" = "redhat" ] && [ $((0$DIST_VER + 0)) -ge 7 ]; then
     # Sur RHEL/CentOS 7+, on doit aussi démarrer une instance du template.
     start_service $service@1
 fi
