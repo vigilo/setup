@@ -3,6 +3,7 @@
 
 # Import de la couche de compatibilité.
 . "`dirname $0`/../compat.sh"
+. "`dirname $0`/../common.sh"
 
 service=vigilo-connector-nagios
 start_service $service

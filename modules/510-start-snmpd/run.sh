@@ -3,6 +3,7 @@
 
 # Import de la couche de compatibilité.
 . "`dirname $0`/../compat.sh"
+. "`dirname $0`/../common.sh"
 
 service=snmpd
 start_service $service
