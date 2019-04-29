@@ -16,8 +16,8 @@ case "$DISTRO" in
         PG_HBA=/var/lib/pgsql/data/pg_hba.conf
         ;;
     redhat)
-        service="postgresql-9.2"
-        PG_HBA=/var/lib/pgsql/9.2/data/pg_hba.conf
+        service="postgresql"
+        PG_HBA=/var/lib/pgsql/data/pg_hba.conf
         ;;
     debian)
         service=postgresql
@@ -42,11 +42,11 @@ RET=$?
 if [ $RET -eq 0 ]; then
     # Rien de plus à faire, le service est déjà fonctionnel.
     :
-elif [ -f /usr/pgsql-9.2/bin/postgresql92-setup ]; then
-    # Lorsque PostgreSQL a été installé via un paquet provenant
-    # du site officiel du projet.
-    /usr/pgsql-9.2/bin/postgresql92-setup initdb &> /dev/null
+elif [ -f /usr/bin/postgresql-setup ]; then
+    # Cas d'une distribution utilisant systemd.
+    /usr/bin/postgresql-setup initdb &> /dev/null
 else
+    # Cas d'une distribution utilisant initrc.
     service $service initdb &> /dev/null
 fi
 service $service start || exit $?
