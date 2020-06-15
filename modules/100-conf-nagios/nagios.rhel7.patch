@@ -1,5 +1,6 @@
---- /etc/nagios/nagios.cfg.orig	2018-07-30 11:32:50.345000000 +0200
-+++ /etc/nagios/nagios.cfg	2018-07-30 11:38:30.853000000 +0200
+Basé sur Nagios 4.4.5.
+--- /etc/nagios/nagios.cfg.orig	2020-04-07 19:04:58.000000000 +0200
++++ /etc/nagios/nagios.cfg	2020-06-16 11:50:25.991201177 +0200
 @@ -26,13 +26,13 @@
  # if you wish (as shown below), or keep them all in a single config file.
  
@@ -21,7 +22,7 @@
  #cfg_file=/etc/nagios/objects/windows.cfg
 @@ -55,6 +55,14 @@
  
- cfg_dir=/etc/nagios/conf.d
+ 
  
 +# Command definitions for Nagios plugins
 +cfg_dir=/etc/nagios/plugins.d/
@@ -32,9 +33,9 @@
 +# Vigiconf-generated conf files
 +cfg_dir=/etc/vigilo/vigiconf/prod/nagios
  
- 
- 
-@@ -65,7 +73,7 @@
+ # OBJECT CACHE FILE
+ # This option determines where object definitions are cached when
+@@ -63,7 +71,7 @@
  # directly) in order to prevent inconsistencies that can occur
  # when the config files are modified after Nagios starts.
  
@@ -43,7 +44,7 @@
  
  
  
-@@ -81,7 +89,7 @@
+@@ -79,7 +87,7 @@
  # Read the documentation section on optimizing Nagios to find our more
  # about how this feature works.
  
@@ -52,16 +53,16 @@
  
  
  
-@@ -104,7 +112,7 @@
+@@ -102,7 +110,7 @@
  # The contents of the status file are deleted every time Nagios
  #  restarts.
  
--status_file=/var/log/nagios/status.dat
+-status_file=/var/spool/nagios/status.dat
 +status_file=/dev/shm/nagios/status.dat
  
  
  
-@@ -153,14 +161,14 @@
+@@ -151,14 +159,14 @@
  # directory level instead of on the file, as the file is deleted every
  # time its contents are processed.
  
@@ -78,7 +79,7 @@
  
  
  
-@@ -178,7 +186,7 @@
+@@ -176,7 +184,7 @@
  # is created, used, and deleted throughout the time that Nagios is
  # running.
  
@@ -87,7 +88,7 @@
  
  
  
-@@ -186,7 +194,7 @@
+@@ -184,7 +192,7 @@
  # This is path where Nagios can create temp files for service and
  # host check results, etc.
  
@@ -96,7 +97,7 @@
  
  
  
-@@ -317,7 +325,7 @@
+@@ -316,7 +324,7 @@
  # checks - see the option below for controlling whether or not
  # passive checks are logged.
  
@@ -105,7 +106,7 @@
  
  
  
-@@ -326,7 +334,7 @@
+@@ -325,7 +333,7 @@
  # this value to 0.  If passive checks should be logged, set
  # this value to 1.
  
@@ -114,7 +115,7 @@
  
  
  
-@@ -367,7 +375,7 @@
+@@ -366,7 +374,7 @@
  # program start time that an initial check of all services should
  # be completed.  Default is 30 minutes.
  
@@ -123,7 +124,7 @@
  
  
  
-@@ -428,7 +436,7 @@
+@@ -427,7 +435,7 @@
  # This is the frequency (in seconds!) that Nagios will process
  # the results of host and service checks.
  
@@ -132,16 +133,16 @@
  
  
  
-@@ -451,7 +459,7 @@
+@@ -450,7 +458,7 @@
  # Note: Make sure that only one instance of Nagios has access
- # to this directory!  
+ # to this directory!
  
 -check_result_path=/var/spool/nagios/checkresults
 +check_result_path=/dev/shm/nagios/checkresults
  
  
  
-@@ -587,8 +595,8 @@
+@@ -586,8 +594,8 @@
  # ocsp command, and performance data commands.  All values are in
  # seconds.
  
@@ -153,7 +154,7 @@
  notification_timeout=30
  ocsp_timeout=5
 @@ -709,7 +717,7 @@
- # by Nagios Enterprises from the update check is processed in accordance 
+ # by Nagios Enterprises from the update check is processed in accordance
  # with our privacy policy - see https://api.nagios.org for details.
  
 -check_for_updates=1
