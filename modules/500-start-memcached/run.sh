@@ -5,20 +5,16 @@
 . "`dirname $0`/../compat.sh"
 
 if [ "$DISTRO" == "debian" ]; then
-    cp -a memcached.conf /etc/supervisor/conf.d/
-    service=supervisor
+    sed -ri 's/^ENABLE_MEMCACHED=.*$/ENABLE_MEMCACHED=yes/' /etc/default/memcached
 else
-    cp -a memcached.ini /etc/supervisord.d/
-    service=supervisord
+    sed -ri 's/^PORT=.*$/PORT="11211"/;s/^OPTIONS=.*$/OPTIONS="-U 0"/' /etc/sysconfig/memcached
 fi
 
-# Démarrage par supervisor plutôt qu'autonome.
-change_svc memcached off
-change_svc $service on
-service $service status &> /dev/null
+change_svc memcached on
+service memcached status &> /dev/null
 RET=$?
 if [ "$RET" == "0" ]; then
     :
 else
-    service $service start || exit $?
+    service memcached start || exit $?
 fi
